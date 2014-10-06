@@ -4,11 +4,14 @@ __author__ = 'filippov'
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-
+# import pydevd
+#
+# pydevd.settrace('localhost', port=53801, stdoutToServer=True, stderrToServer=True)
 
 class CreatePoints():
-    def __init__(self, iface):
+    def __init__(self, iface, isnewpoint):
         self.iface = iface
+        self.is_new_point = isnewpoint
 
         if (self.iface.mapCanvas().currentLayer() is not None) \
                 and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
@@ -30,7 +33,7 @@ class CreatePoints():
         if (self.selection is None):
             return False
         self.targetLayer.startEditing()
-        numPoint = 0
+        numPoint = self.getLastPointName()
         iter = 0
         for every in self.selection:
             geom = every.geometry()
@@ -65,7 +68,25 @@ class CreatePoints():
         feature = QgsFeature()
         feature.initAttributes(len(self.targetLayer.dataProvider().attributeIndexes()))
         feature.setGeometry(QgsGeometry.fromPoint(point))
+        if (self.is_new_point):
+            numvalue = u'н' + str(name)
+        else:
+            numvalue = str(name)
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'name'), u'н' + str(name))
         self.targetLayer.dataProvider().addFeatures([feature])
         del feature
         return True
+
+
+    def getLastPointName(self):
+        maxValue = 0
+        iter = self.targetLayer.getFeatures()
+        for feature in iter:
+            idx = self.targetLayer.fieldNameIndex('name')
+            val = feature.attributes()[idx]
+            if (val[:1] == u'н'):
+                val = val[1:]
+            if val > maxValue:
+                maxValue = val
+                print maxValue
+        return maxValue

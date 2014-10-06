@@ -221,7 +221,7 @@ class QVertex:
             pass
 
     def doCreatepoint(self):
-        f = CreatePoints(self.iface)
+        f = CreatePoints(self.iface, True)
         f.Create()
 
     def doCreateCoordcatalog(self):
