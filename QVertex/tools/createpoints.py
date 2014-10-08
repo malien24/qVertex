@@ -34,6 +34,7 @@ class CreatePoints():
             return False
         self.targetLayer.startEditing()
         numPoint = self.getLastPointName()
+        print u'номер последней точки ' + unicode(numPoint)
         iter = 0
         for every in self.selection:
             geom = every.geometry()
@@ -86,7 +87,8 @@ class CreatePoints():
             val = feature.attributes()[idx]
             if (val[:1] == u'н'):
                 val = val[1:]
+
             if val > maxValue:
                 maxValue = val
                 print maxValue
-        return maxValue
+        return int(maxValue)
