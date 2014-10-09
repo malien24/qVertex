@@ -26,6 +26,7 @@ class Measure():
         self.len = -1
         self.angle = ''
         self.lenght = ''
+        self.rumb = u''
         self.calclenght()
         self.calcangle()
 
@@ -64,7 +65,41 @@ class Measure():
     def calcdegmin(self):
         a = int(self.ang)
         minute = (self.ang - a) * 60
-        self.angle = unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
+        if (self.rumb <> u''):
+            self.angle = self.rumb + unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
+            self.rumb = u''
+        else:
+            self.angle = unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
+
+    def calcRumb(self):
+        if self.ddx == 0:
+            if self.ddy < 0:
+                self.angle = u'З:0°0,0\''
+            else:
+                self.angle = u'В:0°0,0\''
+        else:
+            alfa = math.fabs(math.atan(self.ddy / self.ddx) \
+                             * (180 / math.pi))
+            if (self.ddx > 0) and (self.ddy > 0):
+                self.ang = alfa
+                self.rumb = u'СВ:'
+                self.calcdegmin()
+            elif (self.ddx < 0) and (self.ddy > 0):
+                self.ang = 180 - alfa
+                self.rumb = u'ЮВ:'
+                self.calcdegmin()
+            elif (self.ddx < 0) and (self.ddy < 0):
+                self.ang = alfa - 180
+                self.rumb = u'ЮЗ:'
+                self.calcdegmin()
+            elif (self.ddx > 0) and (self.ddy < 0):
+                self.ang = 360 - alfa
+                self.rumb = u'СЗ:'
+                self.calcdegmin()
+            elif (self.ddx > 0) and (self.ddy == 0):
+                self.angle = u'С:0°0\''
+            elif (self.ddx < 0) and (self.ddy == 0):
+                self.angle = u'Ю:180°0\''
 
 
 class CatalogData():
