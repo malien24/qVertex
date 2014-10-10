@@ -173,6 +173,10 @@ class QVertex:
         self.qvertex_createPoint.setEnabled(True)
         #self.qvertex_createPoint.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
 
+        self.qvertex_createNewPoint = QAction(u"Создать новые точки", self.iface.mainWindow())
+        self.qvertex_createNewPoint.setEnabled(True)
+        #self.qvertex_createNewPoint.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+
         self.qvertex_createCtalog = QAction(u"Создать ведомость координат", self.iface.mainWindow())
         self.qvertex_createCtalog.setEnabled(True)
         # self.qvertex_createCtalog.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
@@ -181,7 +185,8 @@ class QVertex:
         self.qvertex_createGeodata.setEnabled(True)
         # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
 
-        self.menu.addActions([self.qvertex_createPoint, self.qvertex_createCtalog, self.qvertex_createGeodata])
+        self.menu.addActions([self.qvertex_createPoint, self.qvertex_createNewPoint,
+                              self.qvertex_createCtalog, self.qvertex_createGeodata])
         menu_bar = self.iface.mainWindow().menuBar()
         actions = menu_bar.actions()
         lastAction = actions[len(actions) - 1]
@@ -195,6 +200,7 @@ class QVertex:
 
 
         QObject.connect(self.qvertex_createPoint, SIGNAL("triggered()"), self.doCreatepoint)
+        QObject.connect(self.qvertex_createNewPoint, SIGNAL("triggered()"), self.doCreateNewpoint)
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
         QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
 
@@ -221,6 +227,10 @@ class QVertex:
             pass
 
     def doCreatepoint(self):
+        f = CreatePoints(self.iface, False)
+        f.Create()
+
+    def doCreateNewpoint(self):
         f = CreatePoints(self.iface, True)
         f.Create()
 

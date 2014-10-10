@@ -73,7 +73,7 @@ class CreatePoints():
             numvalue = u'н' + str(name)
         else:
             numvalue = str(name)
-        feature.setAttribute(self.targetLayer.fieldNameIndex(u'name'), u'н' + str(name))
+        feature.setAttribute(self.targetLayer.fieldNameIndex(u'name'), numvalue)
         self.targetLayer.dataProvider().addFeatures([feature])
         del feature
         return True
@@ -86,9 +86,12 @@ class CreatePoints():
             idx = self.targetLayer.fieldNameIndex('name')
             val = feature.attributes()[idx]
             if (val[:1] == u'н'):
-                val = val[1:]
+                val = int(val[1:])
+            else:
+                int(val)
+            print str(val)
 
             if val > maxValue:
                 maxValue = val
                 print maxValue
-        return int(maxValue)
+        return maxValue
