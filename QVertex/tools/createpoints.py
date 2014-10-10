@@ -78,7 +78,6 @@ class CreatePoints():
         del feature
         return True
 
-
     def getLastPointName(self):
         maxValue = 0
         iter = self.targetLayer.getFeatures()
