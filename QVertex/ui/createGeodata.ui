@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>876</width>
+    <width>369</width>
     <height>682</height>
    </rect>
   </property>
@@ -24,19 +24,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="radioBtnNewPoint">
+    <widget class="QCheckBox" name="radioBtnRumb">
      <property name="text">
-      <string>Новые точки</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="radioBtnZiped">
-     <property name="text">
-      <string>Сжатые геоданные</string>
+      <string>Румбы</string>
      </property>
     </widget>
    </item>
@@ -53,7 +43,7 @@
       <bool>true</bool>
      </property>
      <property name="currentText">
-      <string>размер листа</string>
+      <string/>
      </property>
      <property name="currentIndex">
       <number>-1</number>

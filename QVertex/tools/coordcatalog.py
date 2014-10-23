@@ -28,7 +28,10 @@ class Measure():
         self.lenght = ''
         self.rumb = u''
         self.calclenght()
-        self.calcangle()
+        # if()
+        #     #self.calcangle()
+        # else:
+        self.calcrumb()
 
     def calclenght(self):
         a = math.pow(self.ddx, 2)
@@ -39,9 +42,9 @@ class Measure():
     def calcangle(self):
         if self.ddx == 0:
             if self.ddy < 0:
-                self.angle = u'270°0,0\''
+                self.angle = u'270°0\''
             else:
-                self.angle = u'90°0,0\''
+                self.angle = u'90°0\''
         else:
             alfa = math.fabs(math.atan(self.ddy / self.ddx) \
                              * (180 / math.pi))
@@ -64,42 +67,43 @@ class Measure():
 
     def calcdegmin(self):
         a = int(self.ang)
+        print(a)
         minute = (self.ang - a) * 60
-        if (self.rumb <> u''):
+        if self.rumb != u'':
             self.angle = self.rumb + unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
             self.rumb = u''
         else:
             self.angle = unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
 
-    def calcRumb(self):
+    def calcrumb(self):
         if self.ddx == 0:
             if self.ddy < 0:
-                self.angle = u'З:0°0,0\''
+                self.angle = u'З:0°0.0\''
             else:
-                self.angle = u'В:0°0,0\''
+                self.angle = u'В:0°0.0\''
         else:
-            alfa = math.fabs(math.atan(self.ddy / self.ddx) \
-                             * (180 / math.pi))
+            alfa = math.fabs(math.atan(self.ddy / self.ddx) * (180 / math.pi))
+            print(alfa)
             if (self.ddx > 0) and (self.ddy > 0):
                 self.ang = alfa
                 self.rumb = u'СВ:'
                 self.calcdegmin()
             elif (self.ddx < 0) and (self.ddy > 0):
-                self.ang = 180 - alfa
+                self.ang = alfa
                 self.rumb = u'ЮВ:'
                 self.calcdegmin()
             elif (self.ddx < 0) and (self.ddy < 0):
-                self.ang = alfa - 180
+                self.ang = alfa
                 self.rumb = u'ЮЗ:'
                 self.calcdegmin()
             elif (self.ddx > 0) and (self.ddy < 0):
-                self.ang = 360 - alfa
+                self.ang = alfa
                 self.rumb = u'СЗ:'
                 self.calcdegmin()
             elif (self.ddx > 0) and (self.ddy == 0):
-                self.angle = u'С:0°0\''
+                self.angle = u'С:0°0.0\''
             elif (self.ddx < 0) and (self.ddy == 0):
-                self.angle = u'Ю:180°0\''
+                self.angle = u'Ю:0°0.0\''
 
 
 class CatalogData():
@@ -112,7 +116,7 @@ class CatalogData():
             self.fontsize = u'medium'
         elif font_size == 4:
             self.fontsize = u'large'
-        self.is_ziped = is_ziped
+        #self.is_ziped = is_ziped
         self.list_contours = []  # 1 (если полигон) или N конутуров мультполигона
         self.list_ring = []  # контуры текущего полигона
         self.catalog = u'<HEAD><meta http-equiv=\"Content-type\" ' \
@@ -203,7 +207,7 @@ class CatalogData():
                         point_num = unicode(number)
                         first_pt_num = unicode(first_num)
 
-                    if iter_node > 0 and iter_node < len(ring) - 1:
+                    if (iter_node > 0) and (iter_node < len(ring) - 1):
                         point1 = Point(ring[iter_node - 1][0],
                                        ring[iter_node - 1][1])
                         point2 = Point(ring[iter_node][0],
