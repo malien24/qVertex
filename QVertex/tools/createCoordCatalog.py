@@ -26,9 +26,8 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
     def calculate(self):
         if (self.iface.mapCanvas().currentLayer() is not None) \
             and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
-            #for feature in self.iface.mapCanvas().currentLayer().selectedFeatures():
-            ved = CatalogData(self.iface.mapCanvas().currentLayer().selectedFeatures(),
-                              self.radioBtnNewPoint.isChecked(), False, self.spinBoxFontSize.value())
+
+            ved = CatalogData(self.iface, self.radioBtnNewPoint.isChecked(), False, self.spinBoxFontSize.value())
             data = ved.catalog
             self.textEdit.setHtml(data)
             self.btnSave.setEnabled(True)

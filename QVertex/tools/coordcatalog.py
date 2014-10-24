@@ -6,11 +6,11 @@ __author__ = 'Filippov Vladislav'
 #from pydev import pydevd
 import math
 #from common import *
-#from qgis.core import QGis
+from qgis.core import *
 
 
 class Point():
-    def __init__(self, x, y):
+    def __init__(self, x, y, ):
         self.x = x
         self.y = y
 
@@ -107,8 +107,15 @@ class Measure():
 
 
 class CatalogData():
-    def __init__(self, features, is_new_point, is_ziped, font_size):
-        self.features = features
+    def __init__(self, iface, is_new_point, is_ziped, font_size):
+        self.features = iface.mapCanvas().currentLayer().selectedFeatures()
+        for clayer in iface.mapCanvas().layers():
+            if clayer.name() == u'Точки':
+                self.pointLayer = clayer
+                break
+            else:
+                self.pointLayer = None
+
         self.fontsize = u'xx-small'
         if font_size == 2:
             self.fontsize = u'small'
@@ -144,6 +151,7 @@ class CatalogData():
                 self.list_ring = []
                 self.parse_polygon(geom.asPolygon())
         else:
+            print(len(self.features))
             geom = self.features[0].geometry()
             self.area.append(round(geom.area(), 0))
             self.perimeter.append(round(geom.length(), 2))
@@ -157,14 +165,18 @@ class CatalogData():
                 # Тут происходит переход к геодезической СК
                 x = round(node.y(), 2)
                 y = round(node.x(), 2)
-                list_ponts.append([x, y])
+                name = u""
+                for pointfeature in self.pointLayer.getFeatures():
+                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(node.x(), node.y()))):
+                        name += pointfeature.attribute(u'name')
+                list_ponts.append([x, y, name])
             self.list_ring.append(list_ponts)
         self.list_contours.append(self.list_ring)
 
     def calculate(self):
         iter_contour = 0
         iter_ring = 0
-        number = 1
+        #number = 1
         catalog_all_data = u''  # вся ведомость со всеми контурами
         geodata_all_data = u''  # вся ведомость со всеми контурами
         for polygon in self.list_contours:
@@ -198,15 +210,9 @@ class CatalogData():
 
             for ring in polygon:
                 iter_node = 0
-                first_num = number  # номер первой точки внутреннего контура
+                #first_num = number  # номер первой точки внутреннего контура
                 for point in ring:
-                    if self.is_new_point:
-                        point_num = u'н' + unicode(number)
-                        first_pt_num = u'н' + unicode(first_num)
-                    else:
-                        point_num = unicode(number)
-                        first_pt_num = unicode(first_num)
-
+                    point_num = ring[iter_node][2]
                     if (iter_node > 0) and (iter_node < len(ring) - 1):
                         point1 = Point(ring[iter_node - 1][0],
                                        ring[iter_node - 1][1])
@@ -219,7 +225,7 @@ class CatalogData():
                              unicode(measure.lenght)])
                         geodata_data += self.decorate_geodatavalue_html(
                             [point_num, measure.angle, unicode(measure.lenght)])
-                        number += 1
+                        #number += 1
 
                     elif iter_node == len(ring) - 1:
                         point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
@@ -231,10 +237,10 @@ class CatalogData():
                              unicode(ring[iter_node - 1][1]), measure.angle,
                              unicode(measure.lenght)])
                         geodata_data += self.decorate_geodatavalue_html(
-                            [point_num, measure.angle, unicode(measure.lenght)])
+                            [unicode(ring[0][2]), measure.angle, unicode(measure.lenght)])
                         catalog_data += self.decorate_value_html(
-                            [first_pt_num, unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
-                        number += 1
+                            [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
+                        #number += 1
 
                     iter_node += 1
                 iter_ring += 1
