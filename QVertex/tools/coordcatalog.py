@@ -5,7 +5,7 @@ __author__ = 'Filippov Vladislav'
 
 #from pydev import pydevd
 import math
-#from common import *
+import svgwrite
 from qgis.core import *
 
 
@@ -104,7 +104,6 @@ class Measure():
             self.rumb = u''
         else:
             self.angle = unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
-
 
 
 class CatalogData():
@@ -295,6 +294,13 @@ class CatalogData():
             return row1.format(data1) + row2.format(data2)
         else:
             return row1.format(data1)
+
+    def createSvgGeodata(self):
+        canvas = svgwrite.Drawing('geodata.svg', profile='tiny')
+
+        canvas.add(canvas.text('', insert=(0, 0.2), fill='black'))
+
+        canvas.save()
 
     # Геоданные только "сжатые" - всё в одной строке
     def decorate_geodatavalue_html(self, value):
