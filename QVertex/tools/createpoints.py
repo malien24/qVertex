@@ -33,13 +33,14 @@ class CreatePoints():
         if (self.selection is None):
             return False
         self.targetLayer.startEditing()
-        numPoint = self.getLastPointName()
-        print u'номер последней точки ' + unicode(numPoint)
+        numPoint = int(self.getLastPointName())
+        #print u'номер последней точки ' + unicode(numPoint)
         iter = 0
         for every in self.selection:
             geom = every.geometry()
             if geom.isMultipart():
                 polygons = geom.asMultiPolygon()
+                # TODO Нужно без мультиполигонов, через несколько полигонов в selection
                 for polygone in polygons:
                     self.numberRing = 0
                     for ring in polygone:
@@ -87,10 +88,10 @@ class CreatePoints():
             if (val[:1] == u'н'):
                 val = int(val[1:])
             else:
-                int(val)
-            print str(val)
+                val=int(val)
+            print 'val'+str(val)
 
             if val > maxValue:
                 maxValue = val
-                print maxValue
+                print 'max'+str(maxValue)
         return maxValue
