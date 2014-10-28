@@ -34,7 +34,7 @@ class Ui_CoordCatalog(object):
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.verticalLayout.addWidget(self.textEdit)
         self.radioBtnNewPoint = QtGui.QCheckBox(CoordCatalog)
-        self.radioBtnNewPoint.setChecked(True)
+        self.radioBtnNewPoint.setChecked(False)
         self.radioBtnNewPoint.setObjectName(_fromUtf8("radioBtnNewPoint"))
         self.verticalLayout.addWidget(self.radioBtnNewPoint)
         self.line_3 = QtGui.QFrame(CoordCatalog)
@@ -83,7 +83,7 @@ class Ui_CoordCatalog(object):
 
     def retranslateUi(self, CoordCatalog):
         CoordCatalog.setWindowTitle(_translate("CoordCatalog", "Ведомость координат", None))
-        self.radioBtnNewPoint.setText(_translate("CoordCatalog", "Новые точки", None))
+        self.radioBtnNewPoint.setText(_translate("CoordCatalog", "Румбы", None))
         self.label.setText(_translate("CoordCatalog", "Размер шрифта", None))
         self.btnCreateCoord.setText(_translate("CoordCatalog", "Создать ведомость выделенного ЗУ", None))
         self.btnSave.setText(_translate("CoordCatalog", "Сохранить HTML", None))

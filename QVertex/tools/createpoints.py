@@ -34,7 +34,7 @@ class CreatePoints():
             return False
         self.targetLayer.startEditing()
         numPoint = int(self.getLastPointName())
-        #print u'номер последней точки ' + unicode(numPoint)
+        #print u'номер последней точки ' + str(numPoint)
         iter = 0
         for every in self.selection:
             geom = every.geometry()

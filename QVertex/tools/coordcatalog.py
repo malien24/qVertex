@@ -16,8 +16,8 @@ class Point():
 
 
 class Measure():
-# Измерение дирекционного угла и горизонтального проложения
-    def __init__(self, point1, point2):
+# Измерение дирекционного угла (румба) и горизонтального проложения
+    def __init__(self, point1, point2, is_rumb):
         self.point1 = point1
         self.point2 = point2
         self.ddx = self.point2.x - self.point1.x
@@ -28,10 +28,10 @@ class Measure():
         self.lenght = ''
         self.rumb = u''
         self.calclenght()
-        # if()
-        #     #self.calcangle()
-        # else:
-        self.calcrumb()
+        if is_rumb:
+            self.calcrumb()
+        else:
+            self.calcangle()
 
     def calclenght(self):
         a = math.pow(self.ddx, 2)
@@ -65,16 +65,6 @@ class Measure():
             elif (self.ddx < 0) and (self.ddy == 0):
                 self.angle = u'180°0\''
 
-    def calcdegmin(self):
-        a = int(self.ang)
-        print(a)
-        minute = (self.ang - a) * 60
-        if self.rumb != u'':
-            self.angle = self.rumb + unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
-            self.rumb = u''
-        else:
-            self.angle = unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
-
     def calcrumb(self):
         if self.ddx == 0:
             if self.ddy < 0:
@@ -105,9 +95,20 @@ class Measure():
             elif (self.ddx < 0) and (self.ddy == 0):
                 self.angle = u'Ю:0°0.0\''
 
+    def calcdegmin(self):
+        a = int(self.ang)
+        #print(a)
+        minute = (self.ang - a) * 60
+        if self.rumb != u'':
+            self.angle = self.rumb + unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
+            self.rumb = u''
+        else:
+            self.angle = unicode(a) + u'°' + unicode('{0:.1f}'.format(minute)) + u'\''
+
+
 
 class CatalogData():
-    def __init__(self, iface, is_new_point, is_ziped, font_size):
+    def __init__(self, iface, is_rumb, font_size):
         self.features = iface.mapCanvas().currentLayer().selectedFeatures()
         for clayer in iface.mapCanvas().layers():
             if clayer.name() == u'Точки':
@@ -123,7 +124,7 @@ class CatalogData():
             self.fontsize = u'medium'
         elif font_size == 4:
             self.fontsize = u'large'
-        #self.is_ziped = is_ziped
+
         self.list_contours = []  # 1 (если полигон) или N конутуров мультполигона
         self.list_ring = []  # контуры текущего полигона
         self.catalog = u'<HEAD><meta http-equiv=\"Content-type\" ' \
@@ -132,11 +133,13 @@ class CatalogData():
         self.geodata = u'<HEAD><meta http-equiv=\"Content-type\" ' \
                        u'content=\"text/html;charset=UTF-8\"><style>table { font-size: xx-small; font-family: Arial;} ' \
                        u'p { font-size: xx-small; font-family: Arial;}</style><HEAD/>'
+        # TODO доделать на несколько полигонов
         self.multi = False
         self.area = []
         self.perimeter = []
-        self.is_new_point = is_new_point
+        self.is_rumb = is_rumb
         self.prepare_data()
+        #print self.list_contours[0]
         self.calculate()
 
     def prepare_data(self):
@@ -151,7 +154,7 @@ class CatalogData():
                 self.list_ring = []
                 self.parse_polygon(geom.asPolygon())
         else:
-            print(len(self.features))
+            #print(len(self.features))
             geom = self.features[0].geometry()
             self.area.append(round(geom.area(), 0))
             self.perimeter.append(round(geom.length(), 2))
@@ -168,8 +171,9 @@ class CatalogData():
                 name = u""
                 for pointfeature in self.pointLayer.getFeatures():
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(node.x(), node.y()))):
-                        name += pointfeature.attribute(u'name')
+                        name += unicode(pointfeature.attribute(u'name'))
                 list_ponts.append([x, y, name])
+                #print str(name) + str(node.x()) + ";" + str(node.y())
             self.list_ring.append(list_ponts)
         self.list_contours.append(self.list_ring)
 
@@ -179,7 +183,7 @@ class CatalogData():
         #number = 1
         catalog_all_data = u''  # вся ведомость со всеми контурами
         geodata_all_data = u''  # вся ведомость со всеми контурами
-        for polygon in self.list_contours:
+        for zu in self.list_contours:
             contour_table = u''  # ведомость одного контура
             catalog_data = u''
             catalog_header = u''
@@ -200,50 +204,57 @@ class CatalogData():
             geodata_header += empty.format(u'№')
             catalog_header += empty.format(u'X, м')
             catalog_header += empty.format(u'Y, м')
-            catalog_header += empty.format(u'Дирекционный угол')
+            if self.is_rumb:
+                catalog_header += empty.format(u'Румб')
+                geodata_header += empty.format(u'Румб')
+            else:
+                catalog_header += empty.format(u'Дирекционный угол')
+                geodata_header += empty.format(u'Дирекционный угол')
             catalog_header += empty.format(u'Расстояние, м')
-            geodata_header += empty.format(u'Дирекционный угол')
             geodata_header += empty.format(u'Расстояние, м')
 
             catalog_data += u'<TR>{0}</TR>'.format(catalog_header)
             geodata_data += u'<TR>{0}</TR>'.format(geodata_header)
 
-            for ring in polygon:
+            for ring in zu:
                 iter_node = 0
                 #first_num = number  # номер первой точки внутреннего контура
                 for point in ring:
-                    point_num = ring[iter_node][2]
-                    if (iter_node > 0) and (iter_node < len(ring) - 1):
-                        point1 = Point(ring[iter_node - 1][0],
-                                       ring[iter_node - 1][1])
-                        point2 = Point(ring[iter_node][0],
+                    point_num = point[2]
+                    #print point
+                    if (iter_node >= 0) and (iter_node < len(ring) - 1):
+                        point1 = Point(ring[iter_node][0],
                                        ring[iter_node][1])
-                        measure = Measure(point1, point2)
+                        point2 = Point(ring[iter_node + 1][0],
+                                       ring[iter_node + 1][1])
+                        measure = Measure(point1, point2, self.is_rumb)
                         catalog_data += self.decorate_value_html(
-                            [point_num, unicode(ring[iter_node - 1][0]),
-                             unicode(ring[iter_node - 1][1]), measure.angle,
+                            [point_num, unicode(ring[iter_node][0]),
+                             unicode(ring[iter_node][1]), measure.angle,
                              unicode(measure.lenght)])
                         geodata_data += self.decorate_geodatavalue_html(
-                            [point_num, measure.angle, unicode(measure.lenght)])
-                        #number += 1
-
-                    elif iter_node == len(ring) - 1:
-                        point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
-                        point2 = Point(ring[0][0], ring[0][1])
-                        measure = Measure(point1, point2)
-
-                        catalog_data += self.decorate_value_html(
-                            [point_num, unicode(ring[iter_node - 1][0]),
-                             unicode(ring[iter_node - 1][1]), measure.angle,
+                            [point_num + "-" + ring[iter_node + 1][2], measure.angle,
                              unicode(measure.lenght)])
-                        geodata_data += self.decorate_geodatavalue_html(
-                            [unicode(ring[0][2]), measure.angle, unicode(measure.lenght)])
-                        catalog_data += self.decorate_value_html(
-                            [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
                         #number += 1
+
+                    # elif iter_node == len(ring) - 1:
+                    #     point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
+                    #     point2 = Point(ring[0][0], ring[0][1])
+                    #     measure = Measure(point1, point2, self.is_rumb)
+                    #
+                    #     catalog_data += self.decorate_value_html(
+                    #         [point_num, unicode(ring[iter_node - 1][0]),
+                    #          unicode(ring[iter_node - 1][1]), measure.angle,
+                    #          unicode(measure.lenght)])
+                    #     geodata_data += self.decorate_geodatavalue_html(
+                    #         [unicode(ring[iter_node - 1][2]) + "-" + unicode(ring[0][2]), measure.angle, unicode(measure.lenght)])
+                    #     catalog_data += self.decorate_value_html(
+                    #         [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
+                    #     #number += 1
 
                     iter_node += 1
                 iter_ring += 1
+                # Отделение 'дырки'
                 if len(self.list_ring) > 1:
                     if iter_ring != len(self.list_ring):
                         catalog_data += empty.format('--')+empty.format('--')+\
@@ -285,7 +296,7 @@ class CatalogData():
         else:
             return row1.format(data1)
 
-    # Геоданные толко "сжатые" - всё в одной строке
+    # Геоданные только "сжатые" - всё в одной строке
     def decorate_geodatavalue_html(self, value):
         row1 = u'<TR>{0}</TR>'
         empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: ' \

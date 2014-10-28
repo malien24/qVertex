@@ -35,7 +35,7 @@ class Ui_Geodata(object):
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.verticalLayout.addWidget(self.textEdit)
         self.radioBtnNewPoint = QtGui.QCheckBox(CoordCatalog)
-        self.radioBtnNewPoint.setChecked(True)
+        self.radioBtnNewPoint.setChecked(False)
         self.radioBtnNewPoint.setObjectName(_fromUtf8("radioBtnNewPoint"))
         self.verticalLayout.addWidget(self.radioBtnNewPoint)
         self.radioBtnZiped = QtGui.QCheckBox(CoordCatalog)
@@ -83,7 +83,7 @@ class Ui_Geodata(object):
 
     def retranslateUi(self, CoordCatalog):
         CoordCatalog.setWindowTitle(_translate("CoordCatalog", "Ведомость координат", None))
-        self.radioBtnNewPoint.setText(_translate("CoordCatalog", "Новые точки", None))
+        self.radioBtnNewPoint.setText(_translate("CoordCatalog", "Румбы", None))
         self.radioBtnZiped.setText(_translate("CoordCatalog", "Сжатые геоданные", None))
         #self.cmbSheetSize.setCurrentText(_translate("CoordCatalog", "размер листа", None))
         self.btnGeodata.setText(_translate("CoordCatalog", "Создать геоданные выделенного ЗУ", None))
