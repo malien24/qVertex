@@ -236,20 +236,20 @@ class CatalogData():
                              unicode(measure.lenght)])
                         #number += 1
 
-                    # elif iter_node == len(ring) - 1:
-                    #     point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
-                    #     point2 = Point(ring[0][0], ring[0][1])
-                    #     measure = Measure(point1, point2, self.is_rumb)
-                    #
-                    #     catalog_data += self.decorate_value_html(
-                    #         [point_num, unicode(ring[iter_node - 1][0]),
-                    #          unicode(ring[iter_node - 1][1]), measure.angle,
-                    #          unicode(measure.lenght)])
-                    #     geodata_data += self.decorate_geodatavalue_html(
-                    #         [unicode(ring[iter_node - 1][2]) + "-" + unicode(ring[0][2]), measure.angle, unicode(measure.lenght)])
-                    #     catalog_data += self.decorate_value_html(
-                    #         [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
-                    #     #number += 1
+                    elif iter_node == len(ring) - 1:
+                        point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
+                        point2 = Point(ring[0][0], ring[0][1])
+                        measure = Measure(point1, point2, self.is_rumb)
+
+                        # catalog_data += self.decorate_value_html(
+                        #     [point_num, unicode(ring[iter_node - 1][0]),
+                        #      unicode(ring[iter_node - 1][1]), measure.angle,
+                        #      unicode(measure.lenght)])
+                        # geodata_data += self.decorate_geodatavalue_html(
+                        #     [unicode(ring[iter_node - 1][2]) + "-" + unicode(ring[0][2]), measure.angle, unicode(measure.lenght)])
+                        catalog_data += self.decorate_value_html(
+                            [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
+                        #number += 1
 
                     iter_node += 1
                 iter_ring += 1

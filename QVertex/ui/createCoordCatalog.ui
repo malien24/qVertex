@@ -24,12 +24,15 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="radioBtnNewPoint">
+    <widget class="QCheckBox" name="radioBtnRumb">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="text">
-      <string>Новые точки</string>
+      <string>Румбы</string>
      </property>
      <property name="checked">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -73,7 +76,7 @@
    <item>
     <widget class="QPushButton" name="btnCreateCoord">
      <property name="text">
-      <string>Создать ведомость выделенного ЗУ</string>
+      <string>Создать ведомость</string>
      </property>
     </widget>
    </item>

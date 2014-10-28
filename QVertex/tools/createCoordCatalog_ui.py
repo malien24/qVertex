@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'createCoordCatalog.ui'
 #
-# Created: Fri Dec 20 21:30:58 2013
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Tue Oct 28 23:15:16 2014
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -33,10 +33,11 @@ class Ui_CoordCatalog(object):
         self.textEdit.setUrl(QtCore.QUrl(_fromUtf8("about:blank")))
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.verticalLayout.addWidget(self.textEdit)
-        self.radioBtnNewPoint = QtGui.QCheckBox(CoordCatalog)
-        self.radioBtnNewPoint.setChecked(False)
-        self.radioBtnNewPoint.setObjectName(_fromUtf8("radioBtnNewPoint"))
-        self.verticalLayout.addWidget(self.radioBtnNewPoint)
+        self.radioBtnRumb = QtGui.QCheckBox(CoordCatalog)
+        self.radioBtnRumb.setEnabled(True)
+        self.radioBtnRumb.setChecked(False)
+        self.radioBtnRumb.setObjectName(_fromUtf8("radioBtnRumb"))
+        self.verticalLayout.addWidget(self.radioBtnRumb)
         self.line_3 = QtGui.QFrame(CoordCatalog)
         self.line_3.setFrameShape(QtGui.QFrame.HLine)
         self.line_3.setFrameShadow(QtGui.QFrame.Sunken)
@@ -83,9 +84,9 @@ class Ui_CoordCatalog(object):
 
     def retranslateUi(self, CoordCatalog):
         CoordCatalog.setWindowTitle(_translate("CoordCatalog", "Ведомость координат", None))
-        self.radioBtnNewPoint.setText(_translate("CoordCatalog", "Румбы", None))
+        self.radioBtnRumb.setText(_translate("CoordCatalog", "Румбы", None))
         self.label.setText(_translate("CoordCatalog", "Размер шрифта", None))
-        self.btnCreateCoord.setText(_translate("CoordCatalog", "Создать ведомость выделенного ЗУ", None))
+        self.btnCreateCoord.setText(_translate("CoordCatalog", "Создать ведомость", None))
         self.btnSave.setText(_translate("CoordCatalog", "Сохранить HTML", None))
 
 from PyQt4 import QtWebKit

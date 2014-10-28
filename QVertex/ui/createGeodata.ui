@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CoordCatalog</class>
- <widget class="QDialog" name="CoordCatalog">
+ <class>CoordGeodata</class>
+ <widget class="QDialog" name="CoordGeodata">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
+    <width>624</width>
     <height>682</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Ведомость координат</string>
+   <string>Геоданные</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -38,19 +38,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QComboBox" name="cmbSheetSize">
-     <property name="editable">
-      <bool>true</bool>
-     </property>
-     <property name="currentText">
-      <string/>
-     </property>
-     <property name="currentIndex">
-      <number>-1</number>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="Line" name="line_2">
      <property name="lineWidth">
       <number>4</number>
@@ -63,7 +50,7 @@
    <item>
     <widget class="QPushButton" name="btnGeodata">
      <property name="text">
-      <string>Создать геоданные выделенного ЗУ</string>
+      <string>Создать геоданные</string>
      </property>
     </widget>
    </item>
@@ -83,7 +70,7 @@
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Сохранить HTML</string>
+      <string>Сохранить SVG</string>
      </property>
     </widget>
    </item>
@@ -111,7 +98,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>CoordCatalog</receiver>
+   <receiver>CoordGeodata</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -127,7 +114,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>CoordCatalog</receiver>
+   <receiver>CoordGeodata</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
