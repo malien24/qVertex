@@ -33,6 +33,7 @@ from PyQt4.QtGui import *
 from tools.createpoints import CreatePoints
 from tools.createCoordCatalog import CreateCoordCatalog
 from tools.createGeodata import CreateGeodata
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools/svgwrite'))
 
 
 class QVertex:
@@ -169,24 +170,35 @@ class QVertex:
         self.menu = QMenu()
         self.menu.setTitle(u"Землеустройство")
 
+        self.pointMenu = QMenu()
+        self.pointMenu.setTitle(u"Точки")
+
         self.qvertex_createPoint = QAction(u"Создать точки", self.iface.mainWindow())
         self.qvertex_createPoint.setEnabled(True)
-        #self.qvertex_createPoint.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+        #self.qvertex_createPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 
         self.qvertex_createNewPoint = QAction(u"Создать новые точки", self.iface.mainWindow())
         self.qvertex_createNewPoint.setEnabled(True)
-        #self.qvertex_createNewPoint.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+        #self.qvertex_createNewPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.pointMenu.addActions([self.qvertex_createPoint, self.qvertex_createNewPoint])
+        self.menu.addMenu(self.pointMenu)
+
+        self.reportMenu = QMenu()
+        self.reportMenu.setTitle(u"Отчёты")
 
         self.qvertex_createCtalog = QAction(u"Создать ведомость координат", self.iface.mainWindow())
         self.qvertex_createCtalog.setEnabled(True)
-        # self.qvertex_createCtalog.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+        # self.qvertex_createCtalog.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 
         self.qvertex_createGeodata = QAction(u"Создать выноску геоданных", self.iface.mainWindow())
         self.qvertex_createGeodata.setEnabled(True)
-        # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/openland/icons/importkk.png"))
+        # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
+        self.menu.addMenu(self.reportMenu)
 
-        self.menu.addActions([self.qvertex_createPoint, self.qvertex_createNewPoint,
-                              self.qvertex_createCtalog, self.qvertex_createGeodata])
+        #self.menu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
+
+
         menu_bar = self.iface.mainWindow().menuBar()
         actions = menu_bar.actions()
         lastAction = actions[len(actions) - 1]
@@ -204,7 +216,6 @@ class QVertex:
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
         QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -212,7 +223,6 @@ class QVertex:
                 self.tr(u'&qVertex'),
                 action)
             self.iface.removeToolBarIcon(action)
-
 
     def run(self):
         """Run method that performs all the real work"""
@@ -225,6 +235,7 @@ class QVertex:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
             pass
+
 
     def doCreatepoint(self):
         f = CreatePoints(self.iface, False)

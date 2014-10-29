@@ -4,19 +4,23 @@ __version__ = '0.1'
 __author__ = 'Filippov Vladislav'
 
 #from pydev import pydevd
+import os.path, sys
+
 import math
-import svgwrite
+# from svgwrite.container import *
+# from svgwrite.drawing import *
 from qgis.core import *
 
 
 class Point():
-    def __init__(self, x, y, ):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
 
 
-class Measure():
 # Измерение дирекционного угла (румба) и горизонтального проложения
+class Measure():
+
     def __init__(self, point1, point2, is_rumb):
         self.point1 = point1
         self.point2 = point2
@@ -107,6 +111,7 @@ class Measure():
 
 
 class CatalogData():
+
     def __init__(self, iface, is_rumb, font_size):
         self.features = iface.mapCanvas().currentLayer().selectedFeatures()
         for clayer in iface.mapCanvas().layers():
@@ -181,7 +186,7 @@ class CatalogData():
         iter_ring = 0
         #number = 1
         catalog_all_data = u''  # вся ведомость со всеми контурами
-        geodata_all_data = u''  # вся ведомость со всеми контурами
+        geodata_all_data = u''  # все геоданные со всеми контурами
         for zu in self.list_contours:
             contour_table = u''  # ведомость одного контура
             catalog_data = u''
@@ -191,7 +196,7 @@ class CatalogData():
             geodata_header = u''
             if self.multi and len(self.list_contours) > 1:
                 contour_header = u'<h3>Контур ' + unicode(iter_contour + 1) + u'</h3>'
-                geodata_header = u'<h3>Контур ' + unicode(iter_contour + 1) + u'</h3>'
+                geodata_header = u'<h4>Контур ' + unicode(iter_contour + 1) + u'</h4>'
                 contour_table += contour_header
                 geodata_table += geodata_header
             contour_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" WIDTH=\"120\"></COLGROUP>{0}</TABLE>'
@@ -295,11 +300,9 @@ class CatalogData():
         else:
             return row1.format(data1)
 
-    def createSvgGeodata(self):
-        canvas = svgwrite.Drawing('geodata.svg', profile='tiny')
-
+    def createSvgGeodata(self, path):
+        canvas = Drawing(path + '/geodata.svg', profile='tiny')
         canvas.add(canvas.text('', insert=(0, 0.2), fill='black'))
-
         canvas.save()
 
     # Геоданные только "сжатые" - всё в одной строке

@@ -39,18 +39,20 @@ class CreatePoints():
         for every in self.selection:
             geom = every.geometry()
             if geom.isMultipart():
-                polygons = geom.asMultiPolygon()
-                # TODO Нужно без мультиполигонов, через несколько полигонов в selection
-                for polygone in polygons:
-                    self.numberRing = 0
-                    for ring in polygone:
-                        iter = 0
-                        self.numberRing += 1
-                        for i in ring:
-                            if iter < len(ring)-1:
-                                numPoint += 1
-                                self.createPointOnLayer(i, numPoint)
-                            iter += 1
+                print 'Multipart geometry not support'
+                return False
+                # polygons = geom.asMultiPolygon()
+                # # TODO Нужно без мультиполигонов, через несколько полигонов в selection
+                # for polygone in polygons:
+                #     self.numberRing = 0
+                #     for ring in polygone:
+                #         iter = 0
+                #         self.numberRing += 1
+                #         for i in ring:
+                #             if iter < len(ring)-1:
+                #                 numPoint += 1
+                #                 self.createPointOnLayer(i, numPoint)
+                #             iter += 1
 
             else:
                 self.numberRing = 0
