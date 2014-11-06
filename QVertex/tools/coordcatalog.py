@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from svgwrite import Drawing
-
 __name__ = 'coordcatalog'
 __version__ = '0.1'
 __author__ = 'Filippov Vladislav'
@@ -11,7 +9,7 @@ import os
 from __builtin__ import round
 import math
 # Библиотека в site-packages
-
+from svgwrite import drawing, text, path, shapes, mm
 from qgis.core import *
 
 
@@ -140,6 +138,9 @@ class CatalogData():
         self.geodata = u'<HEAD><meta http-equiv=\"Content-type\" ' \
                        u'content=\"text/html;charset=UTF-8\"><style>table { font-size: xx-small; font-family: Arial;} ' \
                        u'p { font-size: xx-small; font-family: Arial;}</style><HEAD/>'
+
+        self.geodata_w = 420
+        self.geodata_h = 297
         # TODO доделать на несколько полигонов
         self.multi = False
         self.area = []
@@ -304,9 +305,16 @@ class CatalogData():
             return row1.format(data1)
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
-        canvas = Drawing(path + '/geodata.svg', profile='tiny')
-        canvas.add(canvas.text('Fuck!!!', insert=(0, 0.2), fill='black'))
+        canvas = drawing.Drawing(path + '/geodata.svg', profile='tiny')
+        self.createTableRow(canvas)
+        canvas.add(canvas.text('Fuck!!!', insert=(20, 20), fill='black'))
         canvas.save()
+
+    # http://nullege.com/codes/search/svgwrite.Drawing.rect
+    def createTableRow(self, canvas):
+        row = canvas.rect(insert=(5 * mm, 5 * mm), size=(45 * mm, 45 * mm), stroke='red', stroke_width=3)
+        canvas.add(row)
+        pass
 
     # Геоданные только "сжатые" - всё в одной строке
     def decorate_geodatavalue_html(self, value):
