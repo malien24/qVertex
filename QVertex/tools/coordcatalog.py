@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
+from svgwrite import Drawing
+
 __name__ = 'coordcatalog'
 __version__ = '0.1'
 __author__ = 'Filippov Vladislav'
 
 #from pydev import pydevd
-import os.path, sys
-
+#from QVertex.tools.svgwrite.drawing import Drawing
+import os
+from __builtin__ import round
 import math
-# from svgwrite.container import *
-# from svgwrite.drawing import *
+# Библиотека в site-packages
+
 from qgis.core import *
 
 
@@ -300,9 +303,9 @@ class CatalogData():
         else:
             return row1.format(data1)
 
-    def createSvgGeodata(self, path):
+    def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         canvas = Drawing(path + '/geodata.svg', profile='tiny')
-        canvas.add(canvas.text('', insert=(0, 0.2), fill='black'))
+        canvas.add(canvas.text('Fuck!!!', insert=(0, 0.2), fill='black'))
         canvas.save()
 
     # Геоданные только "сжатые" - всё в одной строке

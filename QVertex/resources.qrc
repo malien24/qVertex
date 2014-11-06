@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/QVertex" >
-        <file>icon.png</file>
+    <qresource prefix="/plugins/QVertex/icons" >
+        <file>create_coordcatalog.png</file>
     </qresource>
 </RCC>

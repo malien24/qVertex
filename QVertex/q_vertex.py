@@ -30,18 +30,17 @@ import os.path, sys
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
+#sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools/svgwrite'))
 from tools.createpoints import CreatePoints
 from tools.createCoordCatalog import CreateCoordCatalog
 from tools.createGeodata import CreateGeodata
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools/svgwrite'))
-
 
 class QVertex:
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
         """Constructor.
-
+		print os.path.abspath(os.path.dirname(__file__) + '/svgwrite'
         :param iface: An interface instance that will be passed to this class
             which provides the hook by which you can manipulate the QGIS
             application at run time.
