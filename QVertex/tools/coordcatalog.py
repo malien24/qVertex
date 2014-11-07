@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import sys
+
 __name__ = 'coordcatalog'
 __version__ = '0.1'
 __author__ = 'Filippov Vladislav'
@@ -307,14 +309,19 @@ class CatalogData():
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         canvas = drawing.Drawing(path + '/geodata.svg', profile='tiny')
         self.createTableRow(canvas)
-        canvas.add(canvas.text('Fuck!!!', insert=(20, 20), fill='black'))
+        canvas.add(canvas.text(u'н12345', insert=(5.1 * mm, 7.5 * mm), fill='black', font_family='Arial', font_size='9'))
         canvas.save()
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
     def createTableRow(self, canvas):
-        row = canvas.rect(insert=(5 * mm, 5 * mm), size=(45 * mm, 45 * mm), stroke='red', stroke_width=3)
-        canvas.add(row)
-        pass
+
+        row_n = canvas.rect(size=(10 * mm, 3.5 * mm), insert=(5 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
+        row_a = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(15 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
+        row_l = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(30 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
+        canvas.add(row_n)
+        canvas.add(row_a)
+        canvas.add(row_l)
+        print sys.path
 
     # Геоданные только "сжатые" - всё в одной строке
     def decorate_geodatavalue_html(self, value):
