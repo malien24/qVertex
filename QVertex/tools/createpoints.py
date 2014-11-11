@@ -11,7 +11,7 @@ from qgis.core import *
 class CreatePoints():
     def __init__(self, iface, isnewpoint):
         self.iface = iface
-        self.is_new_point = isnewpoint
+        self.is_new_point = bool(isnewpoint)
 
         if (self.iface.mapCanvas().currentLayer() is not None) \
                 and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
@@ -41,32 +41,18 @@ class CreatePoints():
             if geom.isMultipart():
                 print 'Multipart geometry not support'
                 return False
-                # polygons = geom.asMultiPolygon()
-                # # TODO Нужно без мультиполигонов, через несколько полигонов в selection
-                # for polygone in polygons:
-                #     self.numberRing = 0
-                #     for ring in polygone:
-                #         iter = 0
-                #         self.numberRing += 1
-                #         for i in ring:
-                #             if iter < len(ring)-1:
-                #                 numPoint += 1
-                #                 self.createPointOnLayer(i, numPoint)
-                #             iter += 1
-
             else:
                 self.numberRing = 0
                 rings = geom.asPolygon()
                 for ring in rings:
-                    iter = 0
                     self.numberRing += 1
                     for i in ring:
                         if iter < len(ring)-1:
                             numPoint += 1
-                            self.createPointOnLayer(i, numPoint)
-                        iter += 1
+                            if not self.checkExistPoint(i):
+                                self.createPointOnLayer(i, numPoint)
 
-        self.targetLayer.commitChanges()
+        #self.targetLayer.commitChanges()
 
     def createPointOnLayer(self, point, name):
         feature = QgsFeature()
@@ -81,6 +67,13 @@ class CreatePoints():
         del feature
         return True
 
+    def checkExistPoint(self, point):
+        geom = QgsGeometry.fromPoint(point)
+        features = self.targetLayer.getFeatures()
+        for feature in features:
+            if feature.geometry().intersects(geom):
+                return True
+
     def getLastPointName(self):
         maxValue = 0
         iter = self.targetLayer.getFeatures()
@@ -90,10 +83,10 @@ class CreatePoints():
             if (val[:1] == u'н'):
                 val = int(val[1:])
             else:
-                val=int(val)
-            print 'val'+str(val)
+                val = int(val)
+            #print 'val' + str(val)
 
             if val > maxValue:
                 maxValue = val
-                print 'max'+str(maxValue)
+                #print 'max'+str(maxValue)
         return maxValue
