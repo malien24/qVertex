@@ -244,11 +244,15 @@ class CatalogData():
                         geodata_data += self.decorate_geodatavalue_html(
                             [point_num + "-" + ring[iter_node + 1][2], measure.angle,
                              unicode(measure.lenght)])
+                        self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.angle)
+                        self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.lenght)
 
                     elif iter_node == len(ring) - 1:
-                        #point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
-                        #point2 = Point(ring[0][0], ring[0][1])
-                        #measure = Measure(point1, point2, self.is_rumb)
+                        point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
+                        point2 = Point(ring[0][0], ring[0][1])
+                        measure = Measure(point1, point2, self.is_rumb)
+                        self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.angle)
+                        self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.lenght)
                         catalog_data += self.decorate_value_html(
                             [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
 
@@ -278,6 +282,7 @@ class CatalogData():
             self.geodata += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area, 0)),
                                                                                                  str(sum(self.perimeter,
                                                                                                          0)))
+            print self.zu_multi
 
     def decorate_value_html(self, value, last=False):
         row1 = u'<TR>{0}</TR>'
@@ -299,25 +304,72 @@ class CatalogData():
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         canvas = drawing.Drawing(path + '/geodata.svg', profile='tiny')
         self.createTableRow(canvas)
-
         canvas.save()
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
     def createTableRow(self, canvas):
-        if len(self.zu_multi) > 1:
-            # наименование контура
-            pass
-        for zum in self.zu_multi:
+        step = 3.5
+        place = step
+        limit = 200
+        iter_point = 0
+        iter_contour = 1
+
+        name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
+        canvas.add(canvas.text(name, insert=(5 * mm, 5 * mm), fill='black',
+                               font_family='Arial', font_size='11'))
+        for zu in self.zu_multi:
+            if len(self.zu_multi) > 1:
+                # наименование контура
+                canvas.add(canvas.text(u'Контур '+str(iter_contour), insert=(5 * mm, 10 + place * mm), fill='black',
+                                       font_family='Arial', font_size='10'))
             # заголовок таблицы ЗУ
-            for zu in zum:
-                # строки с данными
-                row_n = canvas.rect(size=(10 * mm, 3.5 * mm), insert=(5 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
-                row_a = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(15 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
-                row_l = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(30 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
-                canvas.add(row_n)
-                canvas.add(row_a)
-                canvas.add(row_l)
-                canvas.add(canvas.text(zu, insert=(5.1 * mm, 7.5 * mm), fill='black', font_family='Arial', font_size='9'))
+            canvas.add(canvas.rect(size=(15 * mm, 3.5 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
+                                fill='none', stroke_width=0.35 * mm))
+            canvas.add(canvas.rect(size=(15 * mm, 3.5 * mm), insert=(20 * mm, (5 + place) * mm), stroke='black',
+                                fill='none', stroke_width=0.35 * mm))
+            canvas.add(canvas.rect(size=(15 * mm, 3.5 * mm), insert=(35 * mm, (5 + place) * mm), stroke='black',
+                                fill='none', stroke_width=0.35 * mm))
+            canvas.add(
+                canvas.text(u'№ точки', insert=(5.3 * mm, (7.5 + place) * mm),
+                            fill='black', font_family='Arial', font_size='9'))
+            if self.is_rumb:
+                ar = u'Румб'
+            else:
+                ar = u'Дир. угол'
+            canvas.add(
+                canvas.text(ar, insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                            font_size='9'))
+            canvas.add(
+                canvas.text(u'Расст, м', insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                            font_size='9'))
+            place += step
+
+            for ring in zu:
+                iter_point = 0
+                for point in ring:
+                    if iter_point == len(ring) - 1:
+                        continue
+                    # строки с данными
+                    row_n = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_a = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(20 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_l = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(35 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    canvas.add(row_n)
+                    canvas.add(row_a)
+                    canvas.add(row_l)
+                    canvas.add(
+                        canvas.text(point[2] + '-' + ring[iter_point+1][2], insert=(5.3 * mm, (7.5 + place) * mm),
+                                    fill='black', font_family='Arial', font_size='9'))
+                    canvas.add(
+                        canvas.text(point[3], insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                                    font_size='9'))
+                    canvas.add(
+                        canvas.text(point[4], insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                                    font_size='9'))
+                    place += step
+                    iter_point += 1
 
     # Геоданные только "сжатые" - всё в одной строке
     def decorate_geodatavalue_html(self, value):
