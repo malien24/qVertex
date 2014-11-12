@@ -132,8 +132,8 @@ class CatalogData():
         elif font_size == 4:
             self.fontsize = u'large'
 
-        self.list_contours = []  # 1 (если полигон) или N конутуров мультполигона
-        self.list_ring = []  # контуры текущего полигона
+        self.zu_multi = []  # 1 (если полигон) или N конутуров мультполигона
+        self.zu = []  # контуры текущего полигона
         self.catalog = u'<HEAD><meta http-equiv=\"Content-type\" ' \
                        u'content=\"text/html;charset=UTF-8\"><style>table { font-size: '+self\
             .fontsize+u'; font-family: Arial;} p { font-size: '+self.fontsize+u'; font-family: Arial;}</style><HEAD/>'
@@ -161,7 +161,7 @@ class CatalogData():
                 geom = feat.geometry()
                 self.area.append(round(geom.area(), 0))
                 self.perimeter.append(round(geom.length(), 2))
-                self.list_ring = []
+                self.zu = []
                 self.parse_polygon(geom.asPolygon())
         else:
             #print(len(self.features))
@@ -184,8 +184,8 @@ class CatalogData():
                         name += unicode(pointfeature.attribute(u'name'))
                 list_ponts.append([x, y, name])
                 #print str(name) + str(node.x()) + ";" + str(node.y())
-            self.list_ring.append(list_ponts)
-        self.list_contours.append(self.list_ring)
+            self.zu.append(list_ponts)
+        self.zu_multi.append(self.zu)
 
     def calculate(self):
         iter_contour = 0
@@ -193,14 +193,14 @@ class CatalogData():
         #number = 1
         catalog_all_data = u''  # вся ведомость со всеми контурами
         geodata_all_data = u''  # все геоданные со всеми контурами
-        for zu in self.list_contours:
+        for zu in self.zu_multi:
             contour_table = u''  # ведомость одного контура
             catalog_data = u''
             catalog_header = u''
             geodata_table = u''
             geodata_data = u''
             geodata_header = u''
-            if self.multi and len(self.list_contours) > 1:
+            if self.multi and len(self.zu_multi) > 1:
                 contour_header = u'<h3>Контур ' + unicode(iter_contour + 1) + u'</h3>'
                 geodata_header = u'<h4>Контур ' + unicode(iter_contour + 1) + u'</h4>'
                 contour_table += contour_header
@@ -228,7 +228,6 @@ class CatalogData():
 
             for ring in zu:
                 iter_node = 0
-                #first_num = number  # номер первой точки внутреннего контура
                 for point in ring:
                     point_num = point[2]
                     #print point
@@ -245,31 +244,22 @@ class CatalogData():
                         geodata_data += self.decorate_geodatavalue_html(
                             [point_num + "-" + ring[iter_node + 1][2], measure.angle,
                              unicode(measure.lenght)])
-                        #number += 1
 
                     elif iter_node == len(ring) - 1:
-                        point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
-                        point2 = Point(ring[0][0], ring[0][1])
-                        measure = Measure(point1, point2, self.is_rumb)
-
-                        # catalog_data += self.decorate_value_html(
-                        #     [point_num, unicode(ring[iter_node - 1][0]),
-                        #      unicode(ring[iter_node - 1][1]), measure.angle,
-                        #      unicode(measure.lenght)])
-                        # geodata_data += self.decorate_geodatavalue_html(
-                        #     [unicode(ring[iter_node - 1][2]) + "-" + unicode(ring[0][2]), measure.angle, unicode(measure.lenght)])
+                        #point1 = Point(ring[iter_node - 1][0], ring[iter_node - 1][1])
+                        #point2 = Point(ring[0][0], ring[0][1])
+                        #measure = Measure(point1, point2, self.is_rumb)
                         catalog_data += self.decorate_value_html(
                             [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
-                        #number += 1
 
                     iter_node += 1
                 iter_ring += 1
                 # Отделение 'дырки'
-                if len(self.list_ring) > 1:
-                    if iter_ring != len(self.list_ring):
-                        catalog_data += empty.format('--')+empty.format('--')+\
-                                        empty.format('--')+empty.format('--')+empty.format('--')
-                        geodata_data += empty.format('--') + empty.format('--') + empty.format('--')
+                if len(self.zu) > 1:
+                    if iter_ring != len(self.zu):
+                        catalog_data += empty.format(u'--')+empty.format(u'--')+\
+                                        empty.format(u'--')+empty.format(u'--')+empty.format('--')
+                        geodata_data += empty.format(u'--') + empty.format(u'--') + empty.format('--')
 
             catalog_all_data += catalog_data
             geodata_all_data += geodata_data
@@ -309,19 +299,25 @@ class CatalogData():
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         canvas = drawing.Drawing(path + '/geodata.svg', profile='tiny')
         self.createTableRow(canvas)
-        canvas.add(canvas.text(u'н12345', insert=(5.1 * mm, 7.5 * mm), fill='black', font_family='Arial', font_size='9'))
+
         canvas.save()
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
     def createTableRow(self, canvas):
-
-        row_n = canvas.rect(size=(10 * mm, 3.5 * mm), insert=(5 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
-        row_a = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(15 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
-        row_l = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(30 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
-        canvas.add(row_n)
-        canvas.add(row_a)
-        canvas.add(row_l)
-        print sys.path
+        if len(self.zu_multi) > 1:
+            # наименование контура
+            pass
+        for zum in self.zu_multi:
+            # заголовок таблицы ЗУ
+            for zu in zum:
+                # строки с данными
+                row_n = canvas.rect(size=(10 * mm, 3.5 * mm), insert=(5 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
+                row_a = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(15 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
+                row_l = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(30 * mm, 5 * mm), stroke='black', fill='none', stroke_width=0.35 * mm)
+                canvas.add(row_n)
+                canvas.add(row_a)
+                canvas.add(row_l)
+                canvas.add(canvas.text(zu, insert=(5.1 * mm, 7.5 * mm), fill='black', font_family='Arial', font_size='9'))
 
     # Геоданные только "сжатые" - всё в одной строке
     def decorate_geodatavalue_html(self, value):

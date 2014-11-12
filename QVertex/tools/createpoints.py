@@ -55,6 +55,7 @@ class CreatePoints():
         #self.targetLayer.commitChanges()
 
     def createPointOnLayer(self, point, name):
+
         feature = QgsFeature()
         feature.initAttributes(len(self.targetLayer.dataProvider().attributeIndexes()))
         feature.setGeometry(QgsGeometry.fromPoint(point))
