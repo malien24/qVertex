@@ -282,7 +282,7 @@ class CatalogData():
             self.geodata += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area, 0)),
                                                                                                  str(sum(self.perimeter,
                                                                                                          0)))
-            print self.zu_multi
+            #print self.zu_multi
 
     def decorate_value_html(self, value, last=False):
         row1 = u'<TR>{0}</TR>'
@@ -303,11 +303,11 @@ class CatalogData():
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         canvas = drawing.Drawing(path + '/geodata.svg', profile='tiny')
-        self.createTableRow(canvas)
+        self.createTableSvg(canvas)
         canvas.save()
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
-    def createTableRow(self, canvas):
+    def createTableSvg(self, canvas):
         step = 3.5
         place = step
         limit = 200
@@ -320,8 +320,11 @@ class CatalogData():
         for zu in self.zu_multi:
             if len(self.zu_multi) > 1:
                 # наименование контура
-                canvas.add(canvas.text(u'Контур '+str(iter_contour), insert=(5 * mm, 10 + place * mm), fill='black',
+
+                cntName = u'Контур ' + unicode(iter_contour)
+                canvas.add(canvas.text(cntName, insert=(5 * mm, (5 + place) * mm), fill='black',
                                        font_family='Arial', font_size='10'))
+                place += step
             # заголовок таблицы ЗУ
             canvas.add(canvas.rect(size=(15 * mm, 3.5 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
                                 fill='none', stroke_width=0.35 * mm))
@@ -343,8 +346,30 @@ class CatalogData():
                 canvas.text(u'Расст, м', insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                             font_size='9'))
             place += step
-
+            iter_ring = 0
             for ring in zu:
+                if len(zu) > 1 and iter_ring > 0:
+                    # строка-разделитель контуров
+                    row_n = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_a = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(20 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_l = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(35 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    canvas.add(row_n)
+                    canvas.add(row_a)
+                    canvas.add(row_l)
+                    canvas.add(
+                        canvas.text('-', insert=(5.3 * mm, (7.5 + place) * mm),
+                                    fill='black', font_family='Arial', font_size='9'))
+                    canvas.add(
+                        canvas.text('-', insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                                    font_size='9'))
+                    canvas.add(
+                        canvas.text('-', insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                                    font_size='9'))
+                    place += step
+
                 iter_point = 0
                 for point in ring:
                     if iter_point == len(ring) - 1:
@@ -370,6 +395,9 @@ class CatalogData():
                                     font_size='9'))
                     place += step
                     iter_point += 1
+                iter_ring += 1
+            place += step
+            iter_contour +=1
 
     # Геоданные только "сжатые" - всё в одной строке
     def decorate_geodatavalue_html(self, value):
