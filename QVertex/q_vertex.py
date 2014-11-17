@@ -34,6 +34,8 @@ from PyQt4.QtGui import *
 from tools.createpoints import CreatePoints
 from tools.createCoordCatalog import CreateCoordCatalog
 from tools.createGeodata import CreateGeodata
+import shutil
+import ConfigParser
 
 class QVertex:
     """QGIS Plugin Implementation."""
@@ -169,6 +171,11 @@ class QVertex:
         self.menu = QMenu()
         self.menu.setTitle(u"Землеустройство")
 
+        self.qvertex_createProject = QAction(u"Создать проект", self.iface.mainWindow())
+        self.qvertex_createProject.setEnabled(True)
+        # self.qvertex_createProject.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.menu.addAction(self.qvertex_createProject)
+
         self.pointMenu = QMenu()
         self.pointMenu.setTitle(u"Точки")
 
@@ -209,7 +216,7 @@ class QVertex:
         #     callback=self.run,
         #     parent=self.iface.mainWindow())
 
-
+        QObject.connect(self.qvertex_createProject, SIGNAL("triggered()"), self.doCreateProject)
         QObject.connect(self.qvertex_createPoint, SIGNAL("triggered()"), self.doCreatepoint)
         QObject.connect(self.qvertex_createNewPoint, SIGNAL("triggered()"), self.doCreateNewpoint)
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
@@ -235,6 +242,25 @@ class QVertex:
             # substitute with your code.
             pass
 
+    # копирование шаблонных шейпов и прочего составляющего проект
+    def doCreateProject(self):
+        config = ConfigParser.ConfigParser()
+        config.read(self.plugin_dir + '/configVertex.conf')
+        curr_path = config.get('main', 'current_dir', 0)
+        if curr_path == u'':
+            curr_path = os.getcwd()
+        current_path = u''
+        work_dir_name = QFileDialog.getExistingDirectory(None, u'Выберите папку для нового проекта', curr_path)
+        if not work_dir_name is None or not work_dir_name == u'':
+            if sys.platform.startswith('win'):
+                current_path = work_dir_name.encode('cp1251')
+            else:
+                current_path = work_dir_name
+        try:
+            shutil.copytree(self.plugin_dir+'/start', current_path + '/qvertex')
+            config.set('main', 'current_dir', curr_path)
+        except shutil.Error as ex:
+            print ex.message
 
     def doCreatepoint(self):
         f = CreatePoints(self.iface, False)
