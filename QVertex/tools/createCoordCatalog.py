@@ -43,7 +43,7 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
         if not file_name is None or not file_name == u'':
             current_path = os.path.dirname(unicode(file_name))
             self.curr_path = current_path
-            filepath = file_name  #os.path.join(current_path, '.html')
+            filepath = os.path.join(current_path, '.html')
             ccf = open(filepath, 'w')
             ccf.write(self.html_cataloga_data.encode('utf8'))
             ccf.close()

@@ -137,10 +137,10 @@ class CatalogData():
         self.catalog = u'<HEAD><meta http-equiv=\"Content-type\" ' \
                        u'content=\"text/html;charset=UTF-8\"><style>table { font-size: '+self\
             .fontsize+u'; font-family: Arial;} p { font-size: '+self.fontsize+u'; font-family: Arial;}</style><HEAD/>'
-        self.geodata = u'<HEAD><meta http-equiv=\"Content-type\" ' \
-                       u'content=\"text/html;charset=UTF-8\"><style>table { font-size: xx-small; font-family: Arial;} ' \
-                       u'p { font-size: xx-small; font-family: Arial;}</style><HEAD/>'
-
+        # self.geodata = u'<HEAD><meta http-equiv=\"Content-type\" ' \
+        #                u'content=\"text/html;charset=UTF-8\"><style>table { font-size: xx-small; font-family: Arial;} ' \
+        #                u'p { font-size: xx-small; font-family: Arial;}</style><HEAD/>'
+        self.geodataSVG = None
         self.geodata_w = 420
         self.geodata_h = 297
         # TODO доделать на несколько полигонов
@@ -192,39 +192,38 @@ class CatalogData():
         iter_ring = 0
         #number = 1
         catalog_all_data = u''  # вся ведомость со всеми контурами
-        geodata_all_data = u''  # все геоданные со всеми контурами
         for zu in self.zu_multi:
             contour_table = u''  # ведомость одного контура
             catalog_data = u''
             catalog_header = u''
-            geodata_table = u''
-            geodata_data = u''
-            geodata_header = u''
+            #geodata_table = u''
+            #geodata_data = u''
+            #geodata_header = u''
             if self.multi and len(self.zu_multi) > 1:
                 contour_header = u'<h3>Контур ' + unicode(iter_contour + 1) + u'</h3>'
-                geodata_header = u'<h4>Контур ' + unicode(iter_contour + 1) + u'</h4>'
+                #geodata_header = u'<h4>Контур ' + unicode(iter_contour + 1) + u'</h4>'
                 contour_table += contour_header
-                geodata_table += geodata_header
+                #geodata_table += geodata_header
             contour_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" WIDTH=\"120\"></COLGROUP>{0}</TABLE>'
-            geodata_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" ' \
-                             u'WIDTH=\"30\"></COLGROUP>{0}</TABLE>'
+            #geodata_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" ' \
+            #                 u'WIDTH=\"30\"></COLGROUP>{0}</TABLE>'
             empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; ' \
                     u'border-left: 1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
             catalog_header += empty.format(u'№')
-            geodata_header += empty.format(u'№')
+            #geodata_header += empty.format(u'№')
             catalog_header += empty.format(u'X, м')
             catalog_header += empty.format(u'Y, м')
             if self.is_rumb:
                 catalog_header += empty.format(u'Румб')
-                geodata_header += empty.format(u'Румб')
+                #geodata_header += empty.format(u'Румб')
             else:
                 catalog_header += empty.format(u'Дирекционный угол')
-                geodata_header += empty.format(u'Дирекционный угол')
+                #geodata_header += empty.format(u'Дирекционный угол')
             catalog_header += empty.format(u'Расстояние, м')
-            geodata_header += empty.format(u'Расстояние, м')
+            #geodata_header += empty.format(u'Расстояние, м')
 
             catalog_data += u'<TR>{0}</TR>'.format(catalog_header)
-            geodata_data += u'<TR>{0}</TR>'.format(geodata_header)
+            #geodata_data += u'<TR>{0}</TR>'.format(geodata_header)
 
             for ring in zu:
                 iter_node = 0
@@ -241,9 +240,9 @@ class CatalogData():
                             [point_num, unicode(ring[iter_node][0]),
                              unicode(ring[iter_node][1]), measure.angle,
                              unicode(measure.lenght)])
-                        geodata_data += self.decorate_geodatavalue_html(
-                            [point_num + "-" + ring[iter_node + 1][2], measure.angle,
-                             unicode(measure.lenght)])
+                        # geodata_data += self.decorate_geodatavalue_html(
+                        #     [point_num + "-" + ring[iter_node + 1][2], measure.angle,
+                        #      unicode(measure.lenght)])
                         self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.angle)
                         self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.lenght)
 
@@ -255,7 +254,6 @@ class CatalogData():
                         self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.lenght)
                         catalog_data += self.decorate_value_html(
                             [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
-
                     iter_node += 1
                 iter_ring += 1
                 # Отделение 'дырки'
@@ -263,25 +261,25 @@ class CatalogData():
                     if iter_ring != len(self.zu):
                         catalog_data += empty.format(u'--')+empty.format(u'--')+\
                                         empty.format(u'--')+empty.format(u'--')+empty.format('--')
-                        geodata_data += empty.format(u'--') + empty.format(u'--') + empty.format('--')
+                        #geodata_data += empty.format(u'--') + empty.format(u'--') + empty.format('--')
 
             catalog_all_data += catalog_data
-            geodata_all_data += geodata_data
+            #geodata_all_data += geodata_data
             self.catalog += contour_table.format(catalog_data)
-            self.geodata += contour_table.format(geodata_data)
+            #self.geodata += contour_table.format(geodata_data)
             self.catalog += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(self.area[iter_contour], self.perimeter[
                 iter_contour])
-            self.geodata += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(self.area[iter_contour], self.perimeter[
-                iter_contour])
+            #self.geodata += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(self.area[iter_contour], self.perimeter[
+            #    iter_contour])
+            self.geodata = u'Нажмитие Сохранить SVG для сохранения геоданных в файл.'
             iter_contour += 1
             iter_ring = 0
         if self.multi:
             self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area, 0)),
-                                                                                                 str(sum(self.perimeter,
-                                                                                                         0)))
-            self.geodata += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area, 0)),
-                                                                                                 str(sum(self.perimeter,
-                                                                                                         0)))
+                                                                                                 str(sum(self.perimeter,0)))
+            # self.geodata += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area, 0)),
+            #                                                                                      str(sum(self.perimeter,
+            #                                                                                              0)))
             #print self.zu_multi
 
     def decorate_value_html(self, value, last=False):
@@ -302,9 +300,9 @@ class CatalogData():
             return row1.format(data1)
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
-        canvas = drawing.Drawing(path + '/geodata.svg', profile='tiny')
-        self.createTableSvg(canvas)
-        canvas.save()
+        self.geodataSVG = drawing.Drawing(path + '/geodata.svg', profile='tiny')
+        self.createTableSvg(self.geodataSVG)
+        self.geodataSVG.save()
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
     def createTableSvg(self, canvas):
