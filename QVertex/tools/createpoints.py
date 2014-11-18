@@ -52,7 +52,7 @@ class CreatePoints():
                             if not self.checkExistPoint(i):
                                 self.createPointOnLayer(i, numPoint)
 
-        #self.targetLayer.commitChanges()
+        self.targetLayer.commitChanges()
 
     def createPointOnLayer(self, point, name):
 

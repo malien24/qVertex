@@ -23,6 +23,7 @@
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QObject, SIGNAL
 from PyQt4.QtGui import QAction, QIcon, QMenu
 # Initialize Qt resources from file resources.py
+from qgis._core import QgsGeometry
 import resources_rc
 # Import the code for the dialog
 from q_vertex_dialog import QVertexDialog
@@ -179,14 +180,18 @@ class QVertex:
         self.pointMenu = QMenu()
         self.pointMenu.setTitle(u"Точки")
 
-        self.qvertex_createPoint = QAction(u"Создать точки", self.iface.mainWindow())
+        self.qvertex_createVertex = QAction(u"Создать общие вершины для ЗУ", self.iface.mainWindow())
+        self.qvertex_createVertex.setEnabled(True)
+        # self.qvertex_createVertex.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+
+        self.qvertex_createPoint = QAction(u"Создать характерные точки", self.iface.mainWindow())
         self.qvertex_createPoint.setEnabled(True)
         #self.qvertex_createPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 
-        self.qvertex_createNewPoint = QAction(u"Создать новые точки", self.iface.mainWindow())
+        self.qvertex_createNewPoint = QAction(u"Создать новые характерные точки", self.iface.mainWindow())
         self.qvertex_createNewPoint.setEnabled(True)
         #self.qvertex_createNewPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
-        self.pointMenu.addActions([self.qvertex_createPoint, self.qvertex_createNewPoint])
+        self.pointMenu.addActions([self.qvertex_createVertex, self.qvertex_createPoint, self.qvertex_createNewPoint])
         self.menu.addMenu(self.pointMenu)
 
         self.reportMenu = QMenu()
@@ -217,6 +222,7 @@ class QVertex:
         #     parent=self.iface.mainWindow())
 
         QObject.connect(self.qvertex_createProject, SIGNAL("triggered()"), self.doCreateProject)
+        QObject.connect(self.qvertex_createVertex, SIGNAL("triggered()"), self.doCreatePublicVertexes)
         QObject.connect(self.qvertex_createPoint, SIGNAL("triggered()"), self.doCreatepoint)
         QObject.connect(self.qvertex_createNewPoint, SIGNAL("triggered()"), self.doCreateNewpoint)
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
@@ -241,6 +247,38 @@ class QVertex:
             # Do something useful here - delete the line containing pass and
             # substitute with your code.
             pass
+
+    def isObjectsSelected(self):
+        if self.iface.mapCanvas().currentLayer().selectedFeatures() is not None:
+            return True
+        else:
+            return False
+
+    def doCreatePublicVertexes(self):
+        for clayer in self.iface.mapCanvas().layers():
+            if clayer.name() == u'ЗУ':
+                pointLayer = clayer
+                break
+            else:
+                pointLayer = None
+        if self.isObjectsSelected() and pointLayer is not None:
+            pointLayer.startEditing()
+            print 'edit'
+            try:
+                for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
+                    geom = feat.geometry()
+                    for ring in geom.asPolygon():
+                        for point in ring:
+                            # pt = QgsGeometry.fromPoint(point)
+                            # print point
+                            succ = pointLayer.addTopologicalPoints(point)
+                            print str(succ)
+            except:
+                pass
+            finally:
+                print 'commit'
+                pointLayer.commitChanges()
+
 
     # копирование шаблонных шейпов и прочего составляющего проект
     def doCreateProject(self):
