@@ -23,24 +23,26 @@
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QObject, SIGNAL
 from PyQt4.QtGui import QAction, QIcon, QMenu
 # Initialize Qt resources from file resources.py
+from _codecs import encode
 from qgis._core import QgsGeometry
 import resources_rc
 # Import the code for the dialog
 from q_vertex_dialog import QVertexDialog
+from qgis.core import *
 import os.path, sys
+import os
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+import qgis.utils
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools/svgwrite'))
 from tools.createpoints import CreatePoints
 from tools.createCoordCatalog import CreateCoordCatalog
 from tools.createGeodata import CreateGeodata
 import shutil
-import ConfigParser
 
 class QVertex:
     """QGIS Plugin Implementation."""
-
     def __init__(self, iface):
         """Constructor.
 		print os.path.abspath(os.path.dirname(__file__) + '/svgwrite'
@@ -77,6 +79,13 @@ class QVertex:
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'QVertex')
         self.toolbar.setObjectName(u'QVertex')
+
+        # Настройки http://gis-lab.info/docs/qgis/cookbook/settings.html
+        self.settings = QSettings(self.plugin_dir, 'config.ini')
+        if sys.platform.startswith('win'):
+            self.lastDir = self.settings.value('last_dir', self.plugin_dir)
+        else:
+            self.lastDir = self.settings.value('last_dir', self.plugin_dir)
 
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
@@ -279,26 +288,28 @@ class QVertex:
                 print 'commit'
                 pointLayer.commitChanges()
 
-
     # копирование шаблонных шейпов и прочего составляющего проект
     def doCreateProject(self):
-        config = ConfigParser.ConfigParser()
-        config.read(self.plugin_dir + '/configVertex.conf')
-        curr_path = config.get('main', 'current_dir', 0)
+        curr_path = self.lastDir
         if curr_path == u'':
             curr_path = os.getcwd()
-        current_path = u''
         work_dir_name = QFileDialog.getExistingDirectory(None, u'Выберите папку для нового проекта', curr_path)
+
         if not work_dir_name is None or not work_dir_name == u'':
             if sys.platform.startswith('win'):
                 current_path = work_dir_name.encode('cp1251')
             else:
                 current_path = work_dir_name
-        try:
-            shutil.copytree(self.plugin_dir+'/start', current_path + '/qvertex')
-            config.set('main', 'current_dir', curr_path)
-        except shutil.Error as ex:
-            print ex.message
+            try:
+                shutil.copytree(self.plugin_dir+ os.sep + 'start', current_path + os.sep + 'qvertex')
+                #print 'shutil.copytree'
+                self.settings.setValue('last_dir', current_path + os.sep + 'qvertex')
+                proj = QgsProject.instance()
+                proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'defproj.qgs'))
+            except shutil.Error as ex:
+                print ex.message
+            finally:
+                pass
 
     def doCreatepoint(self):
         f = CreatePoints(self.iface, False)
