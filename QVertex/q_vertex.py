@@ -312,12 +312,10 @@ class QVertex:
                 pass
 
     def doCreatepoint(self):
-        f = CreatePoints(self.iface, False)
-        f.Create()
+        CreatePoints(self.iface, False)
 
     def doCreateNewpoint(self):
-        f = CreatePoints(self.iface, True)
-        f.Create()
+        CreatePoints(self.iface, True)
 
     def doCreateCoordcatalog(self):
         if self.dlg_coordcatalog is None:

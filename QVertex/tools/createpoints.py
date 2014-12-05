@@ -16,22 +16,18 @@ class CreatePoints():
         if (self.iface.mapCanvas().currentLayer() is not None) \
                 and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
             self.selection = self.iface.mapCanvas().currentLayer().selectedFeatures()
+            self.layermap = QgsMapLayerRegistry.instance().mapLayers()
+            for name, layer in self.layermap.iteritems():
+                if layer.type() == QgsMapLayer.VectorLayer and layer.name() == u"Точки":
+                    if layer.isValid():
+                        self.targetLayer = layer
+                        self.Create()
+                    else:
+                        self.selection = None
         else:
-            QMessageBox.warning(self.iface.mainWindow(), 'Нет выбранных объектов', QMessageBox.Ok, QMessageBox.Ok)
-            return False
-
-        self.layermap = QgsMapLayerRegistry.instance().mapLayers()
-        for name, layer in self.layermap.iteritems():
-            #QMessageBox.information(self.iface.mainWindow(), layer.name(), str())
-            if layer.type() == QgsMapLayer.VectorLayer and layer.name() == u"Точки":
-                if layer.isValid():
-                    self.targetLayer = layer
-                else:
-                    self.selection = None
+            print('selection is None and targetLayer is None')
 
     def Create(self):
-        if (self.selection is None):
-            return False
         self.targetLayer.startEditing()
         numPoint = int(self.getLastPointName())
         #print u'номер последней точки ' + str(numPoint)
@@ -40,9 +36,8 @@ class CreatePoints():
             geom = every.geometry()
             if geom.isMultipart():
                 print 'Multipart geometry not support'
-                return False
             else:
-                self.numberRing = 0
+                #self.numberRing = 0
                 rings = geom.asPolygon()
                 for ring in rings:
                     self.numberRing += 1
@@ -59,7 +54,7 @@ class CreatePoints():
         feature = QgsFeature()
         feature.initAttributes(len(self.targetLayer.dataProvider().attributeIndexes()))
         feature.setGeometry(QgsGeometry.fromPoint(point))
-        if (self.is_new_point):
+        if self.is_new_point:
             numvalue = u'н' + str(name)
         else:
             numvalue = str(name)
