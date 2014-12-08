@@ -189,7 +189,7 @@ class QVertex:
         self.pointMenu = QMenu()
         self.pointMenu.setTitle(u"Точки")
 
-        self.qvertex_createVertex = QAction(u"Создать общие вершины для ЗУ", self.iface.mainWindow())
+        self.qvertex_createVertex = QAction(u"Создать общие вершины для ЗУ и чЗУ", self.iface.mainWindow())
         self.qvertex_createVertex.setEnabled(True)
         # self.qvertex_createVertex.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 

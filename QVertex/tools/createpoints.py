@@ -55,6 +55,7 @@ class CreatePoints():
                                 self.createPointOnLayer(i, numPoint)
 
         self.targetLayer.commitChanges()
+        self.targetLayer.triggerRepaint()
 
     def createPointOnLayer(self, point, name):
 
