@@ -35,12 +35,19 @@ class CreatePoints():
         for every in self.selection:
             geom = every.geometry()
             if geom.isMultipart():
-                print 'Multipart geometry not support'
+                print 'Multipart geometry now support'
+                polygons = geom.asMultiPolygon()
+                for polygone in polygons:
+                    for ring in polygone:
+                        for i in ring:
+                            if iter < len(ring) - 1:
+                                numPoint += 1
+                                if not self.checkExistPoint(i):
+                                    self.createPointOnLayer(i, numPoint)
+
             else:
-                #self.numberRing = 0
                 rings = geom.asPolygon()
                 for ring in rings:
-                    self.numberRing += 1
                     for i in ring:
                         if iter < len(ring)-1:
                             numPoint += 1
@@ -76,7 +83,7 @@ class CreatePoints():
         for feature in iter:
             idx = self.targetLayer.fieldNameIndex('name')
             val = feature.attributes()[idx]
-            if (val[:1] == u'н'):
+            if val[:1] == u'н':
                 val = int(val[1:])
             else:
                 val = int(val)
