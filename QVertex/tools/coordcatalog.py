@@ -153,8 +153,7 @@ class CatalogData():
         self.calculate()
 
     def prepare_data(self):
-        # используется принцип openland - мультиполигоны не используются
-        # многоконтурные ЗУ собираются по ID из простых полиногов
+        # Создаётся на один объект
         if len(self.features) > 1:
             self.multi = True
             for feat in self.features:
@@ -166,9 +165,22 @@ class CatalogData():
         else:
             #print(len(self.features))
             geom = self.features[0].geometry()
-            self.area.append(round(geom.area(), 0))
-            self.perimeter.append(round(geom.length(), 2))
-            self.parse_polygon(geom.asPolygon())
+
+            if geom.isMultipart():
+                self.multi = True
+                multiGeom = geom.asMultiPolygon()
+                for i in multiGeom:
+                    poly = QgsGeometry().fromPolygon(i)
+                    #print str(poly.area())
+                    self.area.append(round(poly.area(), 0))
+                    self.perimeter.append(round(poly.length(), 2))
+                    self.zu = []
+                    print poly
+                    self.parse_polygon(poly.asPolygon())
+            else:
+                self.area.append(round(geom.area(), 0))
+                self.perimeter.append(round(geom.length(), 2))
+                self.parse_polygon(geom.asPolygon())
 
     # полигон может содержать один внешний и от нуля до N внутренних контуров (дырок)
     def parse_polygon(self, polygon):
