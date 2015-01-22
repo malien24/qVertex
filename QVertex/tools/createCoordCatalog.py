@@ -47,4 +47,4 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
             ccf = open(filepath, 'w')
             ccf.write(self.html_cataloga_data.encode('utf8'))
             ccf.close()
-            self.textEdit.setHtml('Сохранение завершено')
+            self.textEdit.setHtml(u'Сохранение завершено')
