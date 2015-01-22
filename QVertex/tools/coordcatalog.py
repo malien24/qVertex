@@ -316,6 +316,7 @@ class CatalogData():
         self.createTableSvg(self.geodataSVG)
         self.geodataSVG.save()
 
+
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
     def createTableSvg(self, canvas):
         step = 3.5

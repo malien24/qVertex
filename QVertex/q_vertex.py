@@ -305,7 +305,7 @@ class QVertex:
                 #print 'shutil.copytree'
                 self.settings.setValue('last_dir', current_path + os.sep + 'qvertex')
                 proj = QgsProject.instance()
-                proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'defproj.qgs'))
+                proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'landproj-gpzu.qgs'))
             except shutil.Error as ex:
                 print ex.message
             finally:

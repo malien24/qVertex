@@ -31,16 +31,19 @@ class CreatePoints():
         self.targetLayer.startEditing()
         numPoint = int(self.getLastPointName())
         #print u'номер последней точки ' + str(numPoint)
-        iter = 0
+
         for every in self.selection:
+            count = 0
             geom = every.geometry()
             if geom.isMultipart():
-                print 'Multipart geometry now support'
+                print 'Multipart geometry'
                 polygons = geom.asMultiPolygon()
                 for polygone in polygons:
                     for ring in polygone:
+                        count = 0
                         for i in ring:
-                            if iter < len(ring) - 1:
+                            if count < len(ring) - 1:
+                                count += 1
                                 numPoint += 1
                                 if not self.checkExistPoint(i):
                                     self.createPointOnLayer(i, numPoint)
@@ -48,8 +51,10 @@ class CreatePoints():
             else:
                 rings = geom.asPolygon()
                 for ring in rings:
+                    count = 0
                     for i in ring:
-                        if iter < len(ring)-1:
+                        if count < len(ring) - 1:
+                            count += 1
                             numPoint += 1
                             if not self.checkExistPoint(i):
                                 self.createPointOnLayer(i, numPoint)
@@ -58,7 +63,6 @@ class CreatePoints():
         self.targetLayer.triggerRepaint()
 
     def createPointOnLayer(self, point, name):
-
         feature = QgsFeature()
         feature.initAttributes(len(self.targetLayer.dataProvider().attributeIndexes()))
         feature.setGeometry(QgsGeometry.fromPoint(point))
@@ -80,8 +84,8 @@ class CreatePoints():
 
     def getLastPointName(self):
         maxValue = 0
-        iter = self.targetLayer.getFeatures()
-        for feature in iter:
+        featiter = self.targetLayer.getFeatures()
+        for feature in featiter:
             idx = self.targetLayer.fieldNameIndex('name')
             val = feature.attributes()[idx]
             if val[:1] == u'н':
@@ -92,5 +96,7 @@ class CreatePoints():
 
             if val > maxValue:
                 maxValue = val
+                if maxValue == 0:
+                    maxValue = 1
                 #print 'max'+str(maxValue)
         return maxValue
