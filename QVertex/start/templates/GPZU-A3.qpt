@@ -1,0 +1,127 @@
+<Composer title="90" visible="1">
+ <Composition gridVisible="0" printResolution="300" paperWidth="420" snapGridOffsetX="0" guidesVisible="1" snapGridResolution="10" snapGridOffsetY="0" alignmentSnap="1" snapping="0" snapTolerancePixels="5" numPages="1" paperHeight="297" smartGuides="1" printAsRaster="0" generateWorldFile="0">
+  <symbol alpha="1" type="fill" name="">
+   <layer pass="0" class="SimpleFill" locked="0">
+    <prop k="border_width_map_unit_scale" v="0,0"/>
+    <prop k="color" v="255,255,255,255"/>
+    <prop k="joinstyle" v="miter"/>
+    <prop k="offset" v="0,0"/>
+    <prop k="offset_map_unit_scale" v="0,0"/>
+    <prop k="offset_unit" v="MM"/>
+    <prop k="outline_color" v="0,0,0,255"/>
+    <prop k="outline_style" v="no"/>
+    <prop k="outline_width" v="0.26"/>
+    <prop k="outline_width_unit" v="MM"/>
+    <prop k="style" v="solid"/>
+   </layer>
+  </symbol>
+  <ComposerLabel valign="32" labelText="Места допустимого размещения зданий, строений, сооружений.&#xa;Нумерация объектов." htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="264.984" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="70.6657" y="264.984" visibility="1" zValue="45" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="123.305" outlineWidth="0.3" excludeFromExports="0" uuid="{8aefbbac-805b-4f27-ac09-5921b6dc7431}" height="16.9376" itemRotation="0" frame="false" pagex="70.6657">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="41.9373" file="C:/Users/Рубин/Desktop/кугис/templates/templates/gpzu/06gpzu.png" pictureHeight="14.216" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="263.519" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="18.0881" y="263.519" visibility="1" zValue="42" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="41.9373" outlineWidth="0.3" excludeFromExports="0" uuid="{aeb3de93-db12-49b0-bc0c-83c21eb152e6}" height="15.389" itemRotation="0" frame="false" pagex="18.0881">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="44.6372" file="C:/Users/Рубин/Desktop/кугис/templates/templates/gpzu/03gpzu.png" pictureHeight="15.6093" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="235.444" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="16.7382" y="235.444" visibility="1" zValue="35" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="44.6372" outlineWidth="0.3" excludeFromExports="0" uuid="{76869817-25d0-46c9-a26b-1e97144859c2}" height="17.0089" itemRotation="0" frame="false" pagex="16.7382">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerLabel valign="32" labelText="Минимальные отступы от границ земельного участка в целях определения мест допустимого размещения зданий, строений, сооружений, за пределами которых запрещено троительство зданий, строений, сооружений. Нумерация объектов" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="234.742" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="71.6657" y="234.742" visibility="1" zValue="34" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="182.341" outlineWidth="0.3" excludeFromExports="0" uuid="{0979a6de-07e3-48ad-8738-f45feb118577}" height="18.4131" itemRotation="0" frame="false" pagex="71.6657">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="47.2655" file="C:/Users/Рубин/Desktop/кугис/templates/templates/gpzu/01gpzu.png" pictureHeight="18.5179" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="207.131" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="16.7382" y="207.131" visibility="1" zValue="24" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="47.2655" outlineWidth="0.3" excludeFromExports="0" uuid="{b1f90d89-2ba9-4ff1-88fd-50060fa41278}" height="19.3488" itemRotation="0" frame="false" pagex="16.7382">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerLabel valign="32" labelText="Границы земельного участка&#xa;Точки поворота границ земельного участка&#xa;Координаты точек поворотных углов земельного участка" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="208.131" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="72.2655" y="208.131" visibility="1" zValue="24" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="175.141" outlineWidth="0.3" excludeFromExports="0" uuid="{3a81da8e-959c-46c2-b4d6-2b05521abfab}" height="17.9539" itemRotation="0" frame="false" pagex="72.2655">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerLabel valign="32" labelText="Градостроительный план земельного участка" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,14,-1,5,75,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="10.6747" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="154.191" y="10.6747" visibility="1" zValue="23" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="130.672" outlineWidth="0.3" excludeFromExports="0" uuid="{ac0e2efb-7156-4283-8a44-aea7101b6bf0}" height="10.0794" itemRotation="0" frame="false" pagex="154.191">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerLabel valign="32" labelText="Условные обозначения" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="193.281" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="49.4007" y="193.281" visibility="1" zValue="23" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="50.53" outlineWidth="0.3" excludeFromExports="0" uuid="{1c1cea0e-8b2d-4492-964f-c6a9fdbada66}" height="13.8498" itemRotation="0" frame="false" pagex="49.4007">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="158.366" file="C:/Users/Рубин/Desktop/кугис/templates/templates/stamp_GPZU.svg" pictureHeight="75.5711" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="223.405" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="253.407" y="223.405" visibility="1" zValue="22" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="158.366" outlineWidth="0.3" excludeFromExports="0" uuid="{e0bbfa06-7a1e-4746-96c8-fdaa88a9ecc4}" height="75.5952" itemRotation="0" frame="false" pagex="253.407">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="28.8035" file="C:/Users/Рубин/Desktop/кугис/templates/templates/NorthArrowType_FourDirection.png" pictureHeight="27.1271" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="8.3705" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="8.36416" y="8.3705" visibility="1" zValue="17" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="28.8035" outlineWidth="0.3" excludeFromExports="0" uuid="{7d537212-3819-4121-954a-045ecfd7e86c}" height="29.8068" itemRotation="0" frame="false" pagex="8.36416">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerShape shapeType="1" cornerRadius="0">
+   <symbol alpha="1" type="fill" name="">
+    <layer pass="0" class="SimpleLine" locked="0">
+     <prop k="capstyle" v="square"/>
+     <prop k="customdash" v="5;2"/>
+     <prop k="customdash_map_unit_scale" v="0,0"/>
+     <prop k="customdash_unit" v="MM"/>
+     <prop k="draw_inside_polygon" v="0"/>
+     <prop k="joinstyle" v="miter"/>
+     <prop k="line_color" v="0,0,0,255"/>
+     <prop k="line_style" v="solid"/>
+     <prop k="line_width" v="0.3"/>
+     <prop k="line_width_unit" v="MM"/>
+     <prop k="offset" v="0"/>
+     <prop k="offset_map_unit_scale" v="0,0"/>
+     <prop k="offset_unit" v="MM"/>
+     <prop k="use_custom_dash" v="0"/>
+     <prop k="width_map_unit_scale" v="0,0"/>
+    </layer>
+   </symbol>
+   <ComposerItem pagey="5.18051" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="4.61486" y="5.18051" visibility="1" zValue="16" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="406.426" outlineWidth="0.3" excludeFromExports="0" uuid="{5d3e7d30-555d-4982-aa57-3906042c409b}" height="284.367" itemRotation="0" frame="false" pagex="4.61486">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerShape>
+  <ComposerLabel valign="32" labelText="Масштаб 1:2000" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,12,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="23.2739" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="39.0568" y="23.2739" visibility="1" zValue="15" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="43.2104" outlineWidth="0.3" excludeFromExports="0" uuid="{830cad11-7ec5-4c20-bbe5-78c5077a418e}" height="10.1699" itemRotation="0" frame="false" pagex="39.0568">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+ </Composition>
+</Composer>

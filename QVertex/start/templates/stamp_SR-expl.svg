@@ -13,7 +13,7 @@
    version="1.2"
    id="svg2"
    inkscape:version="0.91pre2 r13516"
-   sodipodi:docname="stamp_SR.svg">
+   sodipodi:docname="stamp_SR-expl.svg">
   <metadata
      id="metadata1248">
     <rdf:RDF>
@@ -43,9 +43,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="1.1916366"
-     inkscape:cx="364.64977"
-     inkscape:cy="192.69028"
+     inkscape:zoom="1.6852287"
+     inkscape:cx="203.0347"
+     inkscape:cy="112.14991"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -103,22 +103,16 @@
      transform="matrix(0.998963,0,0,0.998817,-267.30996,-193.48257)" />
   <polyline
      vector-effect="non-scaling-stroke"
-     points="268.931,346.182 268.931,365.046 834.878,365.046 834.878,346.182 268.931,346.182 "
-     id="polyline36"
-     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.37727857;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="matrix(0.998963,0,0,0.998817,-267.30996,-174.28251)" />
-  <polyline
-     vector-effect="non-scaling-stroke"
      points="597.18,346.182 597.18,478.236 "
      id="polyline50"
-     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.08091331;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="matrix(1.2728591,0,0,1.272673,-430.87521,-288.10231)" />
+     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.13219774;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(1.2152031,0,0,1.2150255,-396.44422,-267.86027)" />
   <polyline
      vector-effect="non-scaling-stroke"
      points="702.824,346.182 702.824,478.236 "
      id="polyline52"
-     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.08331192;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="matrix(1.2700407,0,0,1.2698552,-457.82991,-287.12778)" />
+     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.1322279;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(1.2151707,0,0,1.2149932,-419.26598,-268.16488)" />
   <polyline
      vector-effect="non-scaling-stroke"
      points="597.18,497.101 597.18,553.695 "
@@ -1302,7 +1296,7 @@
        font-size="1479.11"
        y="0"
        x="14221"
-       xml:space="preserve">:  для строительства</text>
+       xml:space="preserve">: для эксплуатации</text>
   </g>
   <g
      style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
@@ -1486,374 +1480,6 @@
      font-size="11"
      transform="matrix(0.998963,0,0,0.998817,-267.30996,-193.48257)" />
   <g
-     style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
-     id="g480"
-     font-style="normal"
-     font-weight="400"
-     font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,5.7850812,184.85743)">
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text482"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="0"
-       xml:space="preserve">П</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text484"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="1065.98"
-       xml:space="preserve">р</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text486"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="1803.98"
-       xml:space="preserve">е</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text488"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="2458.98"
-       xml:space="preserve">д</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text490"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="3209.98"
-       xml:space="preserve">с</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text492"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="3864.98"
-       xml:space="preserve">е</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text494"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="4519.98"
-       xml:space="preserve">д</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text496"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="5270.98"
-       xml:space="preserve">а</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text498"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="5925.98"
-       xml:space="preserve">т</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text500"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="6570.98"
-       xml:space="preserve">е</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text502"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="7225.98"
-       xml:space="preserve">л</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text504"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="7962.98"
-       xml:space="preserve">ь</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text506"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="8635.9805"
-       xml:space="preserve" />
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text508"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="9004.9805"
-       xml:space="preserve">к</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text510"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="9721.9805"
-       xml:space="preserve">о</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text512"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="10460"
-       xml:space="preserve">м</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text514"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="11394"
-       xml:space="preserve">и</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text516"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="12184"
-       xml:space="preserve">т</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text518"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="12829"
-       xml:space="preserve">е</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text520"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="13484"
-       xml:space="preserve">т</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text522"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="14129"
-       xml:space="preserve">а</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text524"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="14784"
-       xml:space="preserve" />
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text526"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="15153"
-       xml:space="preserve">г</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text528"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="15758"
-       xml:space="preserve">р</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text530"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="16496"
-       xml:space="preserve">а</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text532"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="17151"
-       xml:space="preserve">д</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text534"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="17902"
-       xml:space="preserve">о</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text536"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="18640"
-       xml:space="preserve">с</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text538"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="19295"
-       xml:space="preserve">т</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text540"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="19940"
-       xml:space="preserve">р</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text542"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="20678"
-       xml:space="preserve">о</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text544"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="21416"
-       xml:space="preserve">и</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text546"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="22206"
-       xml:space="preserve">т</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text548"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="22851"
-       xml:space="preserve">е</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text550"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="23506"
-       xml:space="preserve">л</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text552"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="24243"
-       xml:space="preserve">ь</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text554"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="24916"
-       xml:space="preserve">с</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text556"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="25571"
-       xml:space="preserve">т</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text558"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="26216"
-       xml:space="preserve">в</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text560"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="26913"
-       xml:space="preserve">а</text>
-  </g>
-  <g
      style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
      id="g562"
      font-style="normal"
@@ -1866,7 +1492,7 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,5.3320812,203.86943)">
+     transform="matrix(0.0113185,0,0,0.0113169,5.3320812,186.80271)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text580"
@@ -2124,7 +1750,7 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,5.9270327,243.68235)">
+     transform="matrix(0.0113185,0,0,0.0113169,5.9270327,224.05548)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text644"
@@ -2221,7 +1847,7 @@
        font-style="normal"
        font-weight="400"
        font-size="1476.4"
-       y="-55.92976"
+       y="132.57912"
        x="72.279449"
        xml:space="preserve">И.О. нач. отдела формирования земельных </text>
     <text
@@ -2463,7 +2089,7 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,-38.784486,259.49061)">
+     transform="matrix(0.0113185,0,0,0.0113169,-38.784486,242.10351)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text720"
@@ -2811,7 +2437,7 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,2.6112752,293.29639)">
+     transform="matrix(0.0113185,0,0,0.0113169,2.8457568,275.54458)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text798"
@@ -3193,7 +2819,7 @@
      font-style="normal"
      font-weight="700"
      font-size="1479.11"
-     transform="matrix(0.0113185,0,0,0.0113169,218.96446,337.21841)">
+     transform="matrix(0.0113185,0,0,0.0113169,218.96446,332.95173)">
     <text
        style="font-style:normal;font-weight:700;font-size:1479.10998535px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text952"
@@ -3817,7 +3443,7 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,439.07342,166.37243)">
+     transform="matrix(0.0113185,0,0,0.0113169,439.07342,168.50577)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text1094"
@@ -3962,140 +3588,6 @@
      font-size="11"
      transform="matrix(0.998963,0,0,0.998817,-267.30996,-193.48257)" />
   <g
-     style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
-     id="g1126"
-     font-style="normal"
-     font-weight="400"
-     font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,439.34142,184.97743)">
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1128"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="0"
-       xml:space="preserve">А</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1130"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="1065.98"
-       xml:space="preserve">.</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1132"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="1434.98"
-       xml:space="preserve">С</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1134"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="2418.98"
-       xml:space="preserve">.</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1136"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="2787.98"
-       xml:space="preserve" />
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1138"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="3156.98"
-       xml:space="preserve">К</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1140"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="4140.98"
-       xml:space="preserve">а</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1142"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="4795.98"
-       xml:space="preserve">р</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1144"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="5533.98"
-       xml:space="preserve">а</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1146"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="6188.98"
-       xml:space="preserve">в</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1148"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="6885.98"
-       xml:space="preserve">а</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1150"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="7540.98"
-       xml:space="preserve">е</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1152"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="8195.9805"
-       xml:space="preserve">в</text>
-    <text
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
-       id="text1154"
-       font-style="normal"
-       font-weight="400"
-       font-size="1476.4"
-       y="0"
-       x="8892.9805"
-       xml:space="preserve">а</text>
-  </g>
-  <g
      style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:bevel;stroke-opacity:1"
      id="g1156"
      font-style="normal"
@@ -4108,7 +3600,7 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,438.92642,206.09977)">
+     transform="matrix(0.0113185,0,0,0.0113169,438.92642,189.03305)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text1160"
@@ -4222,7 +3714,7 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,439.84682,244.22924)">
+     transform="matrix(0.0113185,0,0,0.0113169,439.84682,227.16253)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text1186"
@@ -4354,16 +3846,16 @@
      font-style="normal"
      font-weight="400"
      font-size="1476.4"
-     transform="matrix(0.0113185,0,0,0.0113169,444.45194,297.77298)">
+     transform="matrix(0.0113185,0,0,0.0113169,444.45194,299.90632)">
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text1216"
        font-style="normal"
        font-weight="400"
        font-size="1476.4"
-       y="0"
-       x="0"
-       xml:space="preserve">Н.В. Королева</text>
+       y="-1696.58"
+       x="-565.44666"
+       xml:space="preserve">Е.А. Мартыненко</text>
     <text
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
        id="text1218"
@@ -4726,8 +4218,8 @@
        style="font-style:normal;font-weight:700;font-size:1479.10998535px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none">:</text>
   </g>
   <polyline
-     transform="matrix(0.998963,0,0,1.4346861,-266.67701,-350.23292)"
-     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.14917529;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(0.998963,0,0,1.4027108,-266.67701,-354.45048)"
+     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.16219938;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="polyline4009"
      points="268.931,402.776 268.931,440.506 834.878,440.506 834.878,402.776 268.931,402.776 "
      vector-effect="non-scaling-stroke" />
@@ -4839,26 +4331,35 @@
        style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none" />
     <text
        xml:space="preserve"
-       x="-37914.098"
-       y="-727.08691"
+       x="-37970.02"
+       y="-2645.7031"
        font-size="1476.4"
        font-weight="400"
        font-style="normal"
        id="text4111"
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none">участков для целей строительства</text>
+       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none">земельных участков для целей, не связанных</text>
     <text
        xml:space="preserve"
-       x="-37874.234"
-       y="-2307.6108"
+       x="-38062.715"
+       y="-4004.1904"
        font-size="1476.4"
        font-weight="400"
        font-style="normal"
        id="text4113"
-       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none">И.О. нач. отдела формирования земельных</text>
+       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none">Начальник отдела по формированию</text>
+    <text
+       style="font-style:normal;font-weight:400;font-size:1476.40002441px;font-family:'Times New Roman';fill:#000000;fill-opacity:1;stroke:none"
+       id="text4127"
+       font-style="normal"
+       font-weight="400"
+       font-size="1476.4"
+       y="-1318.9216"
+       x="-37909.441"
+       xml:space="preserve">со строительством</text>
   </g>
   <polyline
-     transform="matrix(0.998963,0,0,0.998817,-266.27854,-24.484481)"
-     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.37727857;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(0.99728948,0,0,0.99714373,-265.82963,-31.184166)"
+     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.37958968;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="polyline4115"
      points="268.931,346.182 834.878,346.182 "
      vector-effect="non-scaling-stroke" />
@@ -4866,11 +4367,11 @@
      vector-effect="non-scaling-stroke"
      points="268.931,346.182 834.878,346.182 "
      id="polyline4117"
-     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.37727857;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="matrix(0.998963,0,0,0.998817,-266.27854,-3.151124)" />
+     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.38113487;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(0.9961738,0,0,0.99602821,-265.53036,-2.1856956)" />
   <polyline
-     transform="matrix(0.998963,0,0,0.998817,-266.27854,16.048902)"
-     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.37727857;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(0.9968711,0,0,0.99672541,-265.7174,16.772973)"
+     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.38016868;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="polyline4119"
      points="268.931,346.182 834.878,346.182 "
      vector-effect="non-scaling-stroke" />
@@ -4878,6 +4379,12 @@
      vector-effect="non-scaling-stroke"
      points="268.931,346.182 834.878,346.182 "
      id="polyline4121"
+     style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.37901115;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="matrix(0.99770786,0,0,0.99756205,-265.94186,35.683371)" />
+  <polyline
+     vector-effect="non-scaling-stroke"
+     points="268.931,346.182 834.878,346.182 "
+     id="polyline4123"
      style="font-style:normal;font-weight:400;font-size:11px;font-family:'MS Shell Dlg 2';fill:none;stroke:#000000;stroke-width:1.37727857;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="matrix(0.998963,0,0,0.998817,-266.27854,35.248928)" />
+     transform="matrix(0.998963,0,0,0.998817,-266.67701,-172.45717)" />
 </svg>

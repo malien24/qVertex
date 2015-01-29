@@ -1,0 +1,107 @@
+<Composer title="20" visible="1">
+ <Composition gridVisible="0" printResolution="300" paperWidth="420" snapGridOffsetX="0" guidesVisible="1" snapGridResolution="10" snapGridOffsetY="0" alignmentSnap="1" snapping="0" snapTolerancePixels="5" numPages="1" paperHeight="297" smartGuides="1" printAsRaster="0" generateWorldFile="0">
+  <symbol alpha="1" type="fill" name="">
+   <layer pass="0" class="SimpleFill" locked="0">
+    <prop k="border_width_map_unit_scale" v="0,0"/>
+    <prop k="color" v="255,255,255,255"/>
+    <prop k="joinstyle" v="miter"/>
+    <prop k="offset" v="0,0"/>
+    <prop k="offset_map_unit_scale" v="0,0"/>
+    <prop k="offset_unit" v="MM"/>
+    <prop k="outline_color" v="0,0,0,255"/>
+    <prop k="outline_style" v="no"/>
+    <prop k="outline_width" v="0.26"/>
+    <prop k="outline_width_unit" v="MM"/>
+    <prop k="style" v="solid"/>
+   </layer>
+  </symbol>
+  <ComposerLabel valign="32" labelText="Описание смежеств подготовлены на основании сведений предоставленных филиалом федерального государственного бюджетного учреждения &quot;Федеральная кадастровая палата Федеральной службы государственной регистрации, кадастра и картографии&quot; по Томской области.&#xa;В качестве кадастровой основы использован кадастровый план территории от       №                и сведения о границах смежных землепользователей, имеющихся в ДАиГ администрации г. Томска" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,10,-1,5,75,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="111.121" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="273.406" y="111.121" visibility="1" zValue="55" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="132.07" outlineWidth="0.3" excludeFromExports="0" uuid="{ae5e2000-deb0-4064-9234-3f8c3326ada3}" height="39.6376" itemRotation="0" frame="false" pagex="273.406">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerLabel valign="32" labelText="Описание смежеств:&#xa;по границе от т.1 до т.2 - земли общего пользования&#xa;по границе от т.2 до т.3 -  земли общего пользования&#xa;по границе от т.2 до т.4 - земельный участок с кадастровым номером" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="81.6514" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="273.406" y="81.6514" visibility="1" zValue="33" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="132.07" outlineWidth="0.3" excludeFromExports="0" uuid="{6e85a701-9f57-46a5-adf2-e474e9e48dd6}" height="27.3583" itemRotation="0" frame="false" pagex="273.406">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerLabel valign="32" labelText="Утверждена постановлением&#xa;администрации Города Томска&#xa;от____________№__________" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="13.4991" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="354.995" y="13.4991" visibility="1" zValue="27" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="54.0765" outlineWidth="0.3" excludeFromExports="0" uuid="{7c2c80d9-f15c-4195-8d4c-a9101b4f45ec}" height="19.7988" itemRotation="0" frame="false" pagex="354.995">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerLabel valign="32" labelText="Лист 2" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,10,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="9.5394" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="11.1196" y="9.5394" visibility="1" zValue="26" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="19.3584" outlineWidth="0.3" excludeFromExports="0" uuid="{31c0ef24-bc0a-49a8-b71c-1a5333fd1fd5}" height="6.21967" itemRotation="0" frame="false" pagex="11.1196">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerLabel valign="32" labelText="Схема расположения земельного участка на кадастровом плане территории 70:21:" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,12,-1,5,75,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="9.5394" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="35.1245" y="9.5394" visibility="1" zValue="25" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="196.893" outlineWidth="0.3" excludeFromExports="0" uuid="{f62ac647-1980-4893-9d94-598337099e07}" height="9.03466" itemRotation="0" frame="false" pagex="35.1245">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="140.149" file="../../templates/templates/stamp_SR-expl.svg" pictureHeight="102.891" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="188.181" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="272.175" y="188.181" visibility="1" zValue="24" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="140.149" outlineWidth="0.3" excludeFromExports="0" uuid="{75207171-2bc6-4109-8ce2-cde71b6ed6c5}" height="103.755" itemRotation="0" frame="false" pagex="272.175">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerLabel valign="32" labelText="Геоданные, описание смежеств" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,16,-1,5,75,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="23.3985" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="35.1245" y="23.3985" visibility="1" zValue="23" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="123.128" outlineWidth="0.3" excludeFromExports="0" uuid="{5f95dd8c-45f8-4fed-9d61-fe172f4ba2d3}" height="12.9592" itemRotation="0" frame="false" pagex="35.1245">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerShape shapeType="1" cornerRadius="0">
+   <symbol alpha="1" type="fill" name="">
+    <layer pass="0" class="SimpleLine" locked="0">
+     <prop k="capstyle" v="square"/>
+     <prop k="customdash" v="5;2"/>
+     <prop k="customdash_map_unit_scale" v="0,0"/>
+     <prop k="customdash_unit" v="MM"/>
+     <prop k="draw_inside_polygon" v="0"/>
+     <prop k="joinstyle" v="miter"/>
+     <prop k="line_color" v="0,0,0,255"/>
+     <prop k="line_style" v="solid"/>
+     <prop k="line_width" v="0.3"/>
+     <prop k="line_width_unit" v="MM"/>
+     <prop k="offset" v="0"/>
+     <prop k="offset_map_unit_scale" v="0,0"/>
+     <prop k="offset_unit" v="MM"/>
+     <prop k="use_custom_dash" v="0"/>
+     <prop k="width_map_unit_scale" v="0,0"/>
+    </layer>
+   </symbol>
+   <ComposerItem pagey="6.21465" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="6.82623" y="6.21465" visibility="1" zValue="13" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="405.886" outlineWidth="0.3" excludeFromExports="0" uuid="{2be6e292-3b76-428b-af71-683b8a39c8a9}" height="284.571" itemRotation="0" frame="false" pagex="6.82623">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerShape>
+  <ComposerHtml maxBreakDistance="10" contentMode="0" resizeMode="0" url="file:///C:/Users/Рубин/Desktop/кугис/templates/templates/01.html" useSmartBreaks="true" evaluateExpressions="true" html="" stylesheetEnabled="false" stylesheet="">
+   <ComposerFrame sectionWidth="133.32" sectionHeight="89.3297" hideBackgroundIfEmpty="0" hidePageIfEmpty="0" sectionX="0" sectionY="0">
+    <ComposerItem pagey="52.8961" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="30.2264" y="52.8961" visibility="1" zValue="9" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="133.32" outlineWidth="0.3" excludeFromExports="0" uuid="{32c237ca-2796-450d-90de-8b4c8b8af6fb}" height="89.3297" itemRotation="0" frame="false" pagex="30.2264">
+     <FrameColor alpha="255" red="0" blue="0" green="0"/>
+     <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    </ComposerItem>
+   </ComposerFrame>
+  </ComposerHtml>
+ </Composition>
+</Composer>

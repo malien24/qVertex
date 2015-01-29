@@ -1,0 +1,66 @@
+<Composer title="90" visible="1">
+ <Composition gridVisible="0" printResolution="300" paperWidth="420" snapGridOffsetX="0" guidesVisible="1" snapGridResolution="10" snapGridOffsetY="0" alignmentSnap="1" snapping="0" snapTolerancePixels="5" numPages="1" paperHeight="297" smartGuides="1" printAsRaster="0" generateWorldFile="0">
+  <symbol alpha="1" type="fill" name="">
+   <layer pass="0" class="SimpleFill" locked="0">
+    <prop k="border_width_map_unit_scale" v="0,0"/>
+    <prop k="color" v="255,255,255,255"/>
+    <prop k="joinstyle" v="miter"/>
+    <prop k="offset" v="0,0"/>
+    <prop k="offset_map_unit_scale" v="0,0"/>
+    <prop k="offset_unit" v="MM"/>
+    <prop k="outline_color" v="0,0,0,255"/>
+    <prop k="outline_style" v="no"/>
+    <prop k="outline_width" v="0.26"/>
+    <prop k="outline_width_unit" v="MM"/>
+    <prop k="style" v="solid"/>
+   </layer>
+  </symbol>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="28.8035" file="C:/Users/Рубин/Desktop/кугис/templates/templates/NorthArrowType_FourDirection.png" pictureHeight="27.1271" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="10.2157" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="10.2533" y="10.2157" visibility="1" zValue="19" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="28.8035" outlineWidth="0.3" excludeFromExports="0" uuid="{45d0ea68-9688-4a69-8522-44b191352bf0}" height="29.8068" itemRotation="0" frame="false" pagex="10.2533">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerLabel valign="32" labelText="Масштаб 1:2000" htmlState="0" halign="1" margin="1">
+   <LabelFont description="MS Shell Dlg 2,14,-1,5,50,0,0,0,0,0"/>
+   <FontColor red="0" blue="0" green="0"/>
+   <ComposerItem pagey="23.2739" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="39.0568" y="23.2739" visibility="1" zValue="18" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="43.2104" outlineWidth="0.3" excludeFromExports="0" uuid="{4340194d-74d0-42a2-8ddd-079ca37c8961}" height="10.1699" itemRotation="0" frame="false" pagex="39.0568">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerLabel>
+  <ComposerPicture resizeMode="0" pictureRotation="0" pictureWidth="176.363" file="C:/Users/Рубин/Desktop/кугис/templates/templates/stamp_PM.svg" pictureHeight="50.4982" mapId="-1" anchorPoint="0">
+   <ComposerItem pagey="239.764" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="237.046" y="239.764" visibility="1" zValue="17" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="176.363" outlineWidth="0.3" excludeFromExports="0" uuid="{f4994c92-576e-4df0-8bea-f7543eb75f2a}" height="50.5526" itemRotation="0" frame="false" pagex="237.046">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+    <dataDefinedSource expr="" field="" active="false" useExpr="true"/>
+   </ComposerItem>
+  </ComposerPicture>
+  <ComposerShape shapeType="1" cornerRadius="0">
+   <symbol alpha="1" type="fill" name="">
+    <layer pass="0" class="SimpleLine" locked="0">
+     <prop k="capstyle" v="square"/>
+     <prop k="customdash" v="5;2"/>
+     <prop k="customdash_map_unit_scale" v="0,0"/>
+     <prop k="customdash_unit" v="MM"/>
+     <prop k="draw_inside_polygon" v="0"/>
+     <prop k="joinstyle" v="miter"/>
+     <prop k="line_color" v="0,0,0,255"/>
+     <prop k="line_style" v="solid"/>
+     <prop k="line_width" v="0.3"/>
+     <prop k="line_width_unit" v="MM"/>
+     <prop k="offset" v="0"/>
+     <prop k="offset_map_unit_scale" v="0,0"/>
+     <prop k="offset_unit" v="MM"/>
+     <prop k="use_custom_dash" v="0"/>
+     <prop k="width_map_unit_scale" v="0,0"/>
+    </layer>
+   </symbol>
+   <ComposerItem pagey="7.27384" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="7.20323" y="7.27384" visibility="1" zValue="15" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="406.056" outlineWidth="0.3" excludeFromExports="0" uuid="{dca6cfa2-e320-4dac-87f1-853c85727fcf}" height="282.893" itemRotation="0" frame="false" pagex="7.20323">
+    <FrameColor alpha="255" red="0" blue="0" green="0"/>
+    <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+   </ComposerItem>
+  </ComposerShape>
+ </Composition>
+</Composer>
