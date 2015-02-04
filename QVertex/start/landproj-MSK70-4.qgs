@@ -29,10 +29,10 @@
     <mapcanvas>
         <units>meters</units>
         <extent>
-            <xmin>4265319.423360301181674</xmin>
-            <ymin>337328.18083303887397051</ymin>
-            <xmax>4439677.40908696781843901</xmax>
-            <ymax>416484.97361434064805508</ymax>
+            <xmin>4264642.9331997549161315</xmin>
+            <ymin>298316.06813771469751373</ymin>
+            <xmax>4439000.91892642434686422</xmax>
+            <ymax>457850.09556373610394076</ymax>
         </extent>
         <projections>1</projections>
         <destinationsrs>
@@ -1820,10 +1820,10 @@
                 <multilineenabled fieldname="" on=""/>
                 <selectedonly on=""/>
             </labelattributes>
-            <editform></editform>
+            <editform>.</editform>
             <editforminit></editforminit>
             <featformsuppress>0</featformsuppress>
-            <annotationform></annotationform>
+            <annotationform>.</annotationform>
             <editorlayout>generatedlayout</editorlayout>
             <excludeAttributesWMS/>
             <excludeAttributesWFS/>
@@ -2750,8 +2750,8 @@
             <DegreeFormat type="QString">D</DegreeFormat>
         </PositionPrecision>
         <WCSUrl type="QString"></WCSUrl>
-        <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
         <WMSContactPhone type="QString"></WMSContactPhone>
+        <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
         <WMSServiceAbstract type="QString"></WMSServiceAbstract>
         <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
         <Measure>
