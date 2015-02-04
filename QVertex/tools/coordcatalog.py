@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import sys
-
 __name__ = 'coordcatalog'
 __version__ = '0.1'
 __author__ = 'Filippov Vladislav'
@@ -44,7 +42,7 @@ class Measure():
         a = math.pow(self.ddx, 2)
         b = math.pow(self.ddy, 2)
         self.len = math.sqrt(a + b)
-        self.lenght = round(self.len, 2)
+        self.lenght = u'{0:.2f}'.format(round(self.len, 2))
 
     def calcangle(self):
         if self.ddx == 0:
@@ -188,6 +186,7 @@ class CatalogData():
             list_ponts = []
             for node in ring:
                 # Тут происходит переход к геодезической СК
+                # Нужны числа для дальнейшего расчёта ОГЗ
                 x = round(node.y(), 2)
                 y = round(node.x(), 2)
                 name = u""
@@ -235,9 +234,9 @@ class CatalogData():
                                        ring[iter_node + 1][1])
                         measure = Measure(point1, point2, self.is_rumb)
                         catalog_data += self.decorate_value_html(
-                            [point_num, unicode(ring[iter_node][0]),
-                             unicode(ring[iter_node][1]), measure.angle,
-                             unicode(measure.lenght)])
+                            [point_num, ring[iter_node][0],
+                             ring[iter_node][1], measure.angle,
+                             measure.lenght])
                         self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.angle)
                         self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.lenght)
 
@@ -248,7 +247,7 @@ class CatalogData():
                         self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.angle)
                         self.zu_multi[iter_contour][iter_ring][iter_node].append(measure.lenght)
                         catalog_data += self.decorate_value_html(
-                            [unicode(ring[0][2]), unicode(ring[0][0]), unicode(ring[0][1]), u'', u''], True)
+                            [unicode(ring[0][2]), ring[0][0], ring[0][1], u'', u''], True)
                     iter_node += 1
                 iter_ring += 1
                 # Отделение 'дырки'
@@ -258,13 +257,14 @@ class CatalogData():
                                         empty.format(u'--')+empty.format(u'--')+empty.format('--')
             catalog_all_data += catalog_data
             self.catalog += contour_table.format(catalog_data)
-            self.catalog += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(int(self.area[iter_contour]), self.perimeter[
+            self.catalog += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(self.area[iter_contour], self.perimeter[
                 iter_contour])
             iter_contour += 1
             iter_ring = 0
         if self.multi:
-            self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(self.area[iter_contour], 0)),
-                                                                                                 str(sum(self.perimeter[iter_contour],2)))
+            print [iter_contour]
+            self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area)),
+                                                                                                 str(sum(self.perimeter)))
         self.geodata = u'Нажмитие Сохранить SVG для сохранения геоданных в файл.'
 
     def decorate_value_html(self, value, last=False):
@@ -272,9 +272,12 @@ class CatalogData():
         row2 = u'<TR>{0}</TR>'
         empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: ' \
                 u'1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
+        # https://mkaz.com/2012/10/10/python-string-format/
         num = empty.format(value[0])
-        x = empty.format(value[1])
-        y = empty.format(value[2])
+        sx = '{:.2f}'.format(value[1])
+        x = empty.format(sx)
+        sy = '{:.2f}'.format(value[2])
+        y = empty.format(sy)
         a = empty.format(value[3])
         l = empty.format(value[4])
         data1 = num + x + y + empty.format('</BR>') + empty.format('</BR>')
@@ -285,9 +288,10 @@ class CatalogData():
             return row1.format(data1)
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
-        self.geodataSVG = drawing.Drawing(path + '/geodata.svg', profile='tiny')
+        self.geodataSVG = drawing.Drawing(path, profile='tiny')
         self.createTableSvg(self.geodataSVG)
-        self.geodataSVG.save()
+        #self.geodataSVG.save()
+        #print path
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
     def createTableSvg(self, canvas):
@@ -305,7 +309,7 @@ class CatalogData():
                 # наименование контура
 
                 cntName = u'Контур ' + unicode(iter_contour)
-                canvas.add(canvas.text(cntName, insert=(5 * mm, (5 + place) * mm), fill='black',
+                canvas.add(canvas.text(cntName, insert=(5 * mm, (8 + place) * mm), fill='black',
                                        font_family='Arial', font_size='11'))
                 place += step
             # заголовок таблицы ЗУ

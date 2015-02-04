@@ -10,7 +10,7 @@ import os.path
 from PyQt4.QtGui import QDialog, QFileDialog
 from QVertex.tools.coordcatalog import CatalogData
 from QVertex.tools.createCoordCatalog_ui import Ui_CoordCatalog
-
+from common import *
 
 # Ведомость создаётся на один ЗУ с любым количеством контуров
 class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
@@ -19,7 +19,7 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
         QDialog.__init__(self, iface.mainWindow())
         self.iface = iface
         self.setupUi(self)
-        self.curr_path = u''
+        self.curr_path = QgsProject.instance().fileName()[:-4]#get_defailt_path()
         self.connect(self.btnCreateCoord, QtCore.SIGNAL("clicked()"), self.calculate)
         self.connect(self.btnSave, QtCore.SIGNAL("clicked()"), self.save_catalog)
 
@@ -37,14 +37,13 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
             #                    QtGui.QMessageBox.Ok)
 
     def save_catalog(self):
-        if self.curr_path == u'':
-            self.curr_path = os.getcwd()
         file_name = QFileDialog.getSaveFileName(self, u'Сохраните данные', self.curr_path, u'HTML файлы(*.html *.HTML)')
         if not file_name is None or not file_name == u'':
-            current_path = os.path.dirname(unicode(file_name))
-            self.curr_path = current_path
-            filepath = os.path.join(current_path, '.html')
-            ccf = open(filepath, 'w')
+            print file_name + ' ved path'
+            #current_path = os.path.dirname(unicode(file_name))
+            #self.curr_path = current_path
+            #filepath = os.path.join(current_path, '.html')
+            ccf = open(file_name, 'w')
             ccf.write(self.html_cataloga_data.encode('utf8'))
             ccf.close()
-            self.textEdit.setHtml(u'Сохранение завершено')
+            self.btnSave.setEnabled(False)

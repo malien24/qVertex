@@ -33,7 +33,7 @@ import os.path, sys
 import os
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
-import qgis.utils
+#import qgis.utils
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools/svgwrite'))
 from tools.createpoints import CreatePoints
@@ -55,7 +55,8 @@ class QVertex:
         self.iface = iface
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
-        #self.project_dir = iface.
+        # /home/filippov/work/test.qgs -> /home/filippov/work/test
+
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
@@ -78,8 +79,8 @@ class QVertex:
         self.actions = []
         #self.menu = self.tr(u'&qVertex')
         # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar(u'QVertex')
-        self.toolbar.setObjectName(u'QVertex')
+        #self.toolbar = self.iface.addToolBar(u'QVertex')
+        #self.toolbar.setObjectName(u'QVertex')
 
         # Настройки http://gis-lab.info/docs/qgis/cookbook/settings.html
         self.settings = QSettings(self.plugin_dir, 'config.ini')
