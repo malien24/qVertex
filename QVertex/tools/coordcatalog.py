@@ -78,7 +78,7 @@ class Measure():
                 self.angle = u'В:0°0.0\''
         else:
             alfa = math.fabs(math.atan(self.ddy / self.ddx) * (180 / math.pi))
-            print(alfa)
+            #print(alfa)
             if (self.ddx > 0) and (self.ddy > 0):
                 self.ang = alfa
                 self.rumb = u'СВ:'
@@ -262,7 +262,7 @@ class CatalogData():
             iter_contour += 1
             iter_ring = 0
         if self.multi:
-            print [iter_contour]
+            #print [iter_contour]
             self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area)),
                                                                                                  str(sum(self.perimeter)))
         self.geodata = u'Нажмитие Сохранить SVG для сохранения геоданных в файл.'

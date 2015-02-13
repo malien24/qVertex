@@ -22,7 +22,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
         self.iface = iface
         self.setupUi(self)
         self.curr_path = QgsProject.instance().fileName()[:-4]#get_defailt_path()
-        print self.curr_path
+        #print self.curr_path
         self.svg = None
         self.connect(self.btnGeodata, QtCore.SIGNAL("clicked()"), self.calculate)
         self.connect(self.btnSave, QtCore.SIGNAL("clicked()"), self.save_catalog)

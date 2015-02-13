@@ -36,7 +36,7 @@ class CreatePoints():
             count = 0
             geom = every.geometry()
             if geom.isMultipart():
-                print 'Multipart geometry'
+                #print 'Multipart geometry'
                 polygons = geom.asMultiPolygon()
                 for polygone in polygons:
                     for ring in polygone:
