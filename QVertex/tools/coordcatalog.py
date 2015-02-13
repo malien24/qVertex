@@ -257,13 +257,13 @@ class CatalogData():
                                         empty.format(u'--')+empty.format(u'--')+empty.format('--')
             catalog_all_data += catalog_data
             self.catalog += contour_table.format(catalog_data)
-            self.catalog += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(self.area[iter_contour], self.perimeter[
+            self.catalog += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(int(self.area[iter_contour]), self.perimeter[
                 iter_contour])
             iter_contour += 1
             iter_ring = 0
         if self.multi:
             #print [iter_contour]
-            self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(sum(self.area)),
+            self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
                                                                                                  str(sum(self.perimeter)))
         self.geodata = u'Нажмитие Сохранить SVG для сохранения геоданных в файл.'
 
