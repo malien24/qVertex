@@ -274,18 +274,26 @@ class QVertex:
                 pointLayer = None
         if self.isObjectsSelected() and pointLayer is not None:
             pointLayer.startEditing()
-            print 'edit'
+            #print 'edit'
             try:
                 for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
                     geom = feat.geometry()
-                    for ring in geom.asPolygon():
-                        for point in ring:
-                            # pt = QgsGeometry.fromPoint(point)
-                            # print point
-                            succ = pointLayer.addTopologicalPoints(point)
-                            print str(succ)
+                    if geom.isMultipart():
+                        polygons = geom.asMultiPolygon()
+                        for polygone in polygons:
+                            print 'parse multipolygon part'
+                            for ring in polygone:
+                                print 'parse multipolygon part ring'
+                                for point in ring:
+                                    succ = pointLayer.addTopologicalPoints(point)
+                                    print 'inserted result ', str(succ)
+                    else:
+                        for ring in geom.asPolygon():
+                            for point in ring:
+                                succ = pointLayer.addTopologicalPoints(point)
+                                print 'inserted result ', str(succ)
             except:
-                pass
+                print 'error in doCreatePublicVertexes'
             finally:
                 print 'commit'
                 pointLayer.commitChanges()
