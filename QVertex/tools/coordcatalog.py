@@ -442,17 +442,6 @@ class CatalogData():
                     canvas.add(row_n)
                     canvas.add(row_x)
                     canvas.add(row_y)
-                    
-                    # всё в одну строку
-#                     canvas.add(
-#                         canvas.text('-', insert=(5.3 * mm, (7.5 + place) * mm),
-#                                     fill='black', font_family='Arial', font_size='9'))
-#                     canvas.add(
-#                         canvas.text('-', insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
-#                                     font_size='9'))
-#                     canvas.add(
-#                         canvas.text('-', insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
-#                                     font_size='9'))
                     place += step
 
                 iter_point = 0
@@ -473,10 +462,10 @@ class CatalogData():
                         canvas.text(point[2], insert=(5.3 * mm, (7.5 + place) * mm),
                                     fill='black', font_family='Arial', font_size='9'))
                     canvas.add(
-                        canvas.text(point[0], insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text('{:.2f}'.format(point[0]), insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
                     canvas.add(
-                        canvas.text(point[1], insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text('{:.2f}'.format(point[1]), insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
                     place += step
                     iter_point += 1
