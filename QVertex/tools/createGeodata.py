@@ -24,6 +24,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
         self.curr_path = QgsProject.instance().fileName()[:-4]#get_defailt_path()
         #print self.curr_path
         self.svg = None
+        self.newSvg = None
         self.connect(self.btnGeodata, QtCore.SIGNAL("clicked()"), self.calculate)
         self.connect(self.btnSave, QtCore.SIGNAL("clicked()"), self.save_catalog)
 
@@ -35,6 +36,8 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
             data = ved.geodata
             ved.createSvgGeodata(self.curr_path)
             self.svg = ved.geodataSVG
+            self.newSvg = ved.geodataNewSVG
+            print self.newSvg
             self.textEdit.setHtml(data)
             self.btnSave.setEnabled(True)
 
@@ -53,5 +56,8 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
             #print current_path
             self.curr_path = current_path
             self.svg.saveas(current_path + '.svg')
+            self.newSvg.saveas(current_path + '-new.svg')
             self.textEdit.setHtml(u'Сохранение завершено')
             self.btnSave.setEnabled(False)
+            self.svg = None
+            self.newSvg = None

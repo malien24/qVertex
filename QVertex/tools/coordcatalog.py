@@ -136,6 +136,7 @@ class CatalogData():
                        u'content=\"text/html;charset=UTF-8\"><style>table { font-size: '+self\
             .fontsize+u'; font-family: Arial;} p { font-size: '+self.fontsize+u'; font-family: Arial;}</style><HEAD/>'
         self.geodataSVG = None
+        self.geodataNewSVG = None
         self.geodata_w = 420
         self.geodata_h = 297
 
@@ -289,11 +290,14 @@ class CatalogData():
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         self.geodataSVG = drawing.Drawing(path, profile='tiny')
+        self.geodataNewSVG = drawing.Drawing(path + 'new', profile='tiny')
         self.createTableSvg(self.geodataSVG)
+        self.createNewTableSvg(self.geodataNewSVG)
         #self.geodataSVG.save()
         #print path
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
+    
     def createTableSvg(self, canvas):
         step = 3.5
         place = step
@@ -387,3 +391,97 @@ class CatalogData():
                                    fill='black', font_family='Arial', font_size='9'))
             place += step
             iter_contour +=1
+            
+    # Для новой схемы расположения ЗУ       
+    def createNewTableSvg(self, canvas):
+        step = 3.5
+        place = step
+        limit = 200
+        iter_point = 0
+        iter_contour = 1
+
+        name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
+        canvas.add(canvas.text(name, insert=(5 * mm, 5 * mm), fill='black',
+                               font_family='Arial', font_size='11'))
+        for zu in self.zu_multi:
+            if len(self.zu_multi) > 1:
+                # наименование контура
+
+                cntName = u'Контур ' + unicode(iter_contour)
+                canvas.add(canvas.text(cntName, insert=(5 * mm, (8 + place) * mm), fill='black',
+                                       font_family='Arial', font_size='11'))
+                place += step
+            # заголовок таблицы ЗУ
+            canvas.add(canvas.rect(size=(15 * mm, 3.5 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
+                                fill='none', stroke_width=0.35 * mm))
+            canvas.add(canvas.rect(size=(15 * mm, 3.5 * mm), insert=(20 * mm, (5 + place) * mm), stroke='black',
+                                fill='none', stroke_width=0.35 * mm))
+            canvas.add(canvas.rect(size=(15 * mm, 3.5 * mm), insert=(35 * mm, (5 + place) * mm), stroke='black',
+                                fill='none', stroke_width=0.35 * mm))
+            canvas.add(
+                canvas.text(u'№ точки', insert=(5.3 * mm, (7.5 + place) * mm),
+                            fill='black', font_family='Arial', font_size='9'))
+            
+            canvas.add(
+                canvas.text(u'X', insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                            font_size='9'))
+            canvas.add(
+                canvas.text(u'Y', insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                            font_size='9'))
+            place += step
+            iter_ring = 0
+            for ring in zu:
+                if len(zu) > 1 and iter_ring > 0:
+                    # строка-разделитель контуров
+                    row_n = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_x = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(20 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_y = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(35 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    canvas.add(row_n)
+                    canvas.add(row_x)
+                    canvas.add(row_y)
+                    
+                    # всё в одну строку
+#                     canvas.add(
+#                         canvas.text('-', insert=(5.3 * mm, (7.5 + place) * mm),
+#                                     fill='black', font_family='Arial', font_size='9'))
+#                     canvas.add(
+#                         canvas.text('-', insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+#                                     font_size='9'))
+#                     canvas.add(
+#                         canvas.text('-', insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+#                                     font_size='9'))
+                    place += step
+
+                iter_point = 0
+                for point in ring:
+                    if iter_point == len(ring) - 1:
+                        continue
+                    # строки с данными
+                    row_n = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_x = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(20 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    row_y = canvas.rect(size=(15 * mm, 3.5 * mm), insert=(35 * mm, (5 + place) * mm), stroke='black',
+                                        fill='none', stroke_width=0.35 * mm)
+                    canvas.add(row_n)
+                    canvas.add(row_x)
+                    canvas.add(row_y)
+                    canvas.add(
+                        canvas.text(point[2], insert=(5.3 * mm, (7.5 + place) * mm),
+                                    fill='black', font_family='Arial', font_size='9'))
+                    canvas.add(
+                        canvas.text(point[0], insert=(20.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                                    font_size='9'))
+                    canvas.add(
+                        canvas.text(point[1], insert=(35.3 * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                                    font_size='9'))
+                    place += step
+                    iter_point += 1
+                iter_ring += 1
+            canvas.add(canvas.text(u'Площадь: '+str(int(self.area[iter_contour-1]))+u'кв.м', insert=(5.3 * mm, (7.5 + place) * mm),
+                                   fill='black', font_family='Arial', font_size='9'))
+            place += step
+            iter_contour +=1            
