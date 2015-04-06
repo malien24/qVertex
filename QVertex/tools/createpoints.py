@@ -44,8 +44,8 @@ class CreatePoints():
                         for i in ring:
                             if count < len(ring) - 1:
                                 count += 1
-                                numPoint += 1
                                 if not self.checkExistPoint(i):
+                                    numPoint += 1
                                     self.createPointOnLayer(i, numPoint)
 
             else:
@@ -55,8 +55,8 @@ class CreatePoints():
                     for i in ring:
                         if count < len(ring) - 1:
                             count += 1
-                            numPoint += 1
                             if not self.checkExistPoint(i):
+                                numPoint += 1
                                 self.createPointOnLayer(i, numPoint)
 
         self.targetLayer.commitChanges()
@@ -98,5 +98,5 @@ class CreatePoints():
                 maxValue = val
                 if maxValue == 0:
                     maxValue = 1
-                #print 'max'+str(maxValue)
+        print 'get max'+str(maxValue)
         return maxValue
