@@ -33,12 +33,12 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
             and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
             #for feature in self.iface.mapCanvas().currentLayer().selectedFeatures():
             ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), 1)
-            data = ved.geodata
+            #data = ved.geodata
             ved.createSvgGeodata(self.curr_path)
             self.svg = ved.geodataSVG
             self.newSvg = ved.geodataNewSVG
-            print self.newSvg
-            self.textEdit.setHtml(data)
+            #print self.newSvg
+            #self.textEdit.setHtml(ved.pointDef)
             self.btnSave.setEnabled(True)
 
         #QMessageBox.warning(self.iface.mainWindow(), 'end', \

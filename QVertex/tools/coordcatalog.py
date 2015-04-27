@@ -137,6 +137,10 @@ class CatalogData():
             .fontsize+u'; font-family: Arial;} p { font-size: '+self.fontsize+u'; font-family: Arial;}</style><HEAD/>'
         self.geodataSVG = None
         self.geodataNewSVG = None
+        self.pointDef = u'<!DOCTYPE HTML><HTML><HEAD><meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\"> \
+                     <HEAD/><BODY><p>Нажмите \'Сохранить SVG\' для сохранения геоданных в файл.</p></br><p>Граница земельного участка проходит по поворотным точкам: '
+        self.pointDefHole = u'</br>Внутренний обход {0}: '
+        self.pointDefOuterRing = u'Контур {0}: '
         self.geodata_w = 420
         self.geodata_h = 297
 
@@ -266,7 +270,6 @@ class CatalogData():
             #print [iter_contour]
             self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
                                                                                                  str(sum(self.perimeter)))
-        self.geodata = u'Нажмитие Сохранить SVG для сохранения геоданных в файл.'
 
     def decorate_value_html(self, value, last=False):
         row1 = u'<TR>{0}</TR>'
@@ -408,7 +411,10 @@ class CatalogData():
         for zu in self.zu_multi:
             if len(self.zu_multi) > 1:
                 # наименование контура
-
+                
+                # Описание границ
+                self.pointDef += ('</br>' + self.pointDefOuterRing.format(iter_contour))
+                
                 cntName = u'Контур ' + unicode(iter_contour)
                 canvas.add(canvas.text(cntName, insert=(5 * mm, (8 + place) * mm), fill='black',
                                        font_family='Arial', font_size='11'))
@@ -438,6 +444,9 @@ class CatalogData():
                     place_v += step_v
                 
                 if len(zu) > 1 and iter_ring > 0:
+                    # Описание границ
+                    self.pointDef += self.pointDefHole.format(iter_ring)
+                    
                     # строка-разделитель контуров
                     row_n = canvas.rect(size=(15 * mm, 3.5 * mm), insert=((5 + place_v) * mm, (5 + place) * mm), stroke='black',
                                         fill='none', stroke_width=0.35 * mm)
@@ -452,8 +461,13 @@ class CatalogData():
 
                 iter_point = 0
                 for point in ring:
+                    
                     if iter_point == len(ring) - 1:
+                        # Описание границ
+                        self.pointDef += point[2]
                         continue
+                    else:
+                        self.pointDef += point[2] + u', '
                     # строки с данными
                     if(place >= limit):
                         place = step
@@ -476,10 +490,12 @@ class CatalogData():
                     canvas.add(
                         canvas.text('{:.2f}'.format(point[1]), insert=((35.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
+                    
                     place += step
                     iter_point += 1
                 iter_ring += 1
             canvas.add(canvas.text(u'Площадь: '+str(int(self.area[iter_contour-1]))+u'кв.м', insert=((5.3 + place_v) * mm, (7.5 + place) * mm),
                                    fill='black', font_family='Arial', font_size='9'))
             place += step
-            iter_contour +=1            
+            iter_contour +=1
+        self.pointDef += '</p></BODY></HTML>'               

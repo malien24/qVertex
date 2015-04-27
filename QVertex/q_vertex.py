@@ -88,7 +88,8 @@ class QVertex:
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
         else:
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
-
+         
+        print self.lastDir    
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
     #     """Get the translation for a string using Qt translation API.
@@ -112,7 +113,7 @@ class QVertex:
         callback,
         enabled_flag=True,
         add_to_menu=True,
-        add_to_toolbar=True,
+        #add_to_toolbar=True,
         status_tip=None,
         whats_this=None,
         parent=None):
@@ -212,7 +213,7 @@ class QVertex:
         self.qvertex_createCtalog.setEnabled(True)
         # self.qvertex_createCtalog.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 
-        self.qvertex_createGeodata = QAction(u"Создать выноску геоданных", self.iface.mainWindow())
+        self.qvertex_createGeodata = QAction(u"Создать выноску геоданных и описание границ", self.iface.mainWindow())
         self.qvertex_createGeodata.setEnabled(True)
         # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
@@ -338,3 +339,4 @@ class QVertex:
             self.dlg_geodata = CreateGeodata(self.iface)
             self.dlg_geodata.setWindowModality(Qt.NonModal)
         self.dlg_geodata.show()
+  
