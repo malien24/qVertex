@@ -339,4 +339,32 @@ class QVertex:
             self.dlg_geodata = CreateGeodata(self.iface)
             self.dlg_geodata.setWindowModality(Qt.NonModal)
         self.dlg_geodata.show()
-  
+        
+    def doChangePointPos(self):
+        try:
+            for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
+                findPointIdx = 0
+                geom = feat.geometry()
+                if geom.isMultipart():
+                    polygons = geom.asMultiPolygon()
+                    for polygone in polygons:
+                        print 'parse multipolygon part'
+                        for ring in polygone:
+                            findPointIdx = findNorthWestPoint(ring)
+                else:
+                    for ring in geom.asPolygon():
+                        findPointIdx = findNorthWestPoint(ring)
+        except:
+            print 'error in doChangePointPos'
+        finally:
+            print 'commit'
+        pass    
+    
+    def findNorthWestPoint(self, ring):
+        minY = 0.0
+        maxX = 10000000.0
+        iter = 0
+        for point in ring:
+            x = round(point.x(), 2)
+            y = round(point.y(), 2)
+            pass
