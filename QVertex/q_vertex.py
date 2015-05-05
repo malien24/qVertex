@@ -40,6 +40,7 @@ from tools.createpoints import CreatePoints
 from tools.createCoordCatalog import CreateCoordCatalog
 from tools.createGeodata import CreateGeodata
 import shutil
+import math
 
 class QVertex:
     """QGIS Plugin Implementation."""
@@ -354,6 +355,7 @@ class QVertex:
                 else:
                     for ring in geom.asPolygon():
                         findPointIdx = findNorthWestPoint(ring)
+                        print findPointIdx
         except:
             print 'error in doChangePointPos'
         finally:
@@ -361,10 +363,15 @@ class QVertex:
         pass    
     
     def findNorthWestPoint(self, ring):
-        minY = 0.0
-        maxX = 10000000.0
+        maxYX = 10000000
         iter = 0
+        idx = 0
         for point in ring:
-            x = round(point.x(), 2)
-            y = round(point.y(), 2)
-            pass
+            if iter < len(ring)-1:
+                x = point.x()
+                y = point.y()
+                if (x - y) < maxYX:
+                    maxYX = (x - y)
+                    idx = iter
+                iter += 1    
+        return iter
