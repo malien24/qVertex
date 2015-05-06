@@ -106,7 +106,6 @@ class QVertex:
     #     # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
     #     return QCoreApplication.translate('QVertex', message)
 
-
     def add_action(
         self,
         icon_path,
@@ -193,7 +192,7 @@ class QVertex:
         self.pointMenu = QMenu()
         self.pointMenu.setTitle(u"Точки")
 
-        self.qvertex_createVertex = QAction(u"Создать общие вершины для ЗУ и чЗУ", self.iface.mainWindow())
+        self.qvertex_createVertex = QAction(u"Создать примыкающие вершины", self.iface.mainWindow())
         self.qvertex_createVertex.setEnabled(True)
         # self.qvertex_createVertex.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 
@@ -340,11 +339,15 @@ class QVertex:
             self.dlg_geodata = CreateGeodata(self.iface)
             self.dlg_geodata.setWindowModality(Qt.NonModal)
         self.dlg_geodata.show()
-        
+    
+    # Упорядочить точки (первая на северо-западе)    
+    
     def doChangePointPos(self):
         try:
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
                 findPointIdx = 0
+                #newgeomarr = []
+                #newgeom = null
                 geom = feat.geometry()
                 if geom.isMultipart():
                     polygons = geom.asMultiPolygon()
@@ -352,14 +355,16 @@ class QVertex:
                         print 'parse multipolygon part'
                         for ring in polygone:
                             findPointIdx = findNorthWestPoint(ring)
+                            changeGeometryPointOrder(ring, findPointIdx)
                 else:
                     for ring in geom.asPolygon():
                         findPointIdx = findNorthWestPoint(ring)
-                        print findPointIdx
+                        changeGeometryPointOrder(ring, findPointIdx)
         except:
             print 'error in doChangePointPos'
         finally:
-            print 'commit'
+            feat.setGeometry(newgeom)
+            print 'change geometry'
         pass    
     
     def findNorthWestPoint(self, ring):
@@ -375,3 +380,15 @@ class QVertex:
                     idx = iter
                 iter += 1    
         return iter
+    
+    def changeGeometryPointOrder(self, ring, newPointIdx):
+        if newPointIdx == 0:
+            return ring
+
+        after = ring[newPointIdx:]
+        del after[-1]
+        firstPoint = after[0]
+        before = ring[:newPointIdx]
+        after.extend(before)
+        after.append(firstPoint)
+        ring = after
