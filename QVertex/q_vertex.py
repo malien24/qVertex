@@ -33,7 +33,7 @@ import os.path, sys
 import os
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
-#import qgis.utils
+from qgis.gui import QgsMessageBar
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools/svgwrite'))
 from tools.createpoints import CreatePoints
@@ -287,14 +287,19 @@ class QVertex:
                                 print 'parse multipolygon part ring'
                                 for point in ring:
                                     succ = pointLayer.addTopologicalPoints(point)
-                                    print 'inserted result ', str(succ)
+                                    self.iface.messageBar().pushMessage(u'Добавлены ' + str(succ).encode('UTF-8') + u' примыкающие вершины',
+                                                                   QgsMessageBar.INFO, 5)
+                                    #print 'inserted result ', str(succ)
                     else:
                         for ring in geom.asPolygon():
                             for point in ring:
                                 succ = pointLayer.addTopologicalPoints(point)
-                                print 'inserted result ', str(succ)
-            except:
-                print 'error in doCreatePublicVertexes'
+                                self.iface.messageBar().pushMessage(u'Добавлены ' + str(succ).encode('UTF-8') + u' примыкающие вершины',
+                                                                   QgsMessageBar.INFO, 5)
+            except Exception as err:
+                self.iface.messageBar().pushMessage(u'Ошибка при добавлении примыкающих вершин! ' + err.encode('UTF-8'),
+                                                                   QgsMessageBar.ERROR, 5)
+                print 'error in doCreatePublicVertexes!', err 
             finally:
                 print 'commit'
                 pointLayer.commitChanges()
