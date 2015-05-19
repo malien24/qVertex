@@ -209,11 +209,11 @@ class QVertex:
         self.reportMenu = QMenu()
         self.reportMenu.setTitle(u"Отчёты")
 
-        self.qvertex_createCtalog = QAction(u"Создать ведомость координат", self.iface.mainWindow())
+        self.qvertex_createCtalog = QAction(u"HTML-ведомость координат", self.iface.mainWindow())
         self.qvertex_createCtalog.setEnabled(True)
         # self.qvertex_createCtalog.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 
-        self.qvertex_createGeodata = QAction(u"Создать выноску геоданных и описание границ", self.iface.mainWindow())
+        self.qvertex_createGeodata = QAction(u"SVG-ведомость и описание границ", self.iface.mainWindow())
         self.qvertex_createGeodata.setEnabled(True)
         # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
@@ -323,7 +323,7 @@ class QVertex:
                 proj = QgsProject.instance()
                 proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'landproj-tomsk.qgs'))
             except shutil.Error as ex:
-                print ex.message
+                self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 5)
             finally:
                 pass
 

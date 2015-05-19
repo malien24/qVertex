@@ -41,10 +41,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>4320846.07354613021016121</xmin>
-      <ymin>336620.03016821993514895</ymin>
-      <xmax>4364435.56997779756784439</xmax>
-      <ymax>376503.53702472522854805</ymax>
+      <xmin>4318493.17426714207977057</xmin>
+      <ymin>350635.58253785915439948</ymin>
+      <xmax>4329390.54837505798786879</xmax>
+      <ymax>360606.45925198536133394</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -72,8 +72,8 @@
       <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="USER:100032" srcDatumTransform="-1" destDatumTransform="-1" layerid="part20141118221454648"/>
       <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="USER:100025" srcDatumTransform="-1" destDatumTransform="-1" layerid="zone70_420150130172145986"/>
       <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="dlines20150430145659395"/>
-      <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="USER:100032" srcDatumTransform="-1" destDatumTransform="-1" layerid="dimline20140722104902639"/>
       <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="dpoints20150430145659404"/>
+      <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="USER:100032" srcDatumTransform="-1" destDatumTransform="-1" layerid="dimline20140722104902639"/>
       <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="USER:100032" srcDatumTransform="-1" destDatumTransform="-1" layerid="extline20140722103106946"/>
       <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="USER:100025" srcDatumTransform="-1" destDatumTransform="-1" layerid="points70_420150130172855955"/>
       <layer_coordinate_transform destAuthId="USER:100025" srcAuthId="USER:100025" srcDatumTransform="-1" destDatumTransform="-1" layerid="part70_420150130172010702"/>
@@ -914,10 +914,10 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
