@@ -307,10 +307,10 @@ class CatalogData():
         limit = 200
         iter_point = 0
         iter_contour = 1
-
-        name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
-        canvas.add(canvas.text(name, insert=(5 * mm, 5 * mm), fill='black',
-                               font_family='Arial', font_size='11'))
+        if self.features[0].attributes()[self.features[0].fieldNameIndex('name')] <> None:
+            name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
+            canvas.add(canvas.text(name, insert=(5 * mm, 5 * mm), fill='black',
+                                   font_family='Arial', font_size='11'))
         for zu in self.zu_multi:
             if len(self.zu_multi) > 1:
                 # наименование контура
@@ -404,10 +404,11 @@ class CatalogData():
         limit = 260 # максимальный размер высоты страницы для геоданных
         iter_point = 0
         iter_contour = 1
-
-        name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
-        canvas.add(canvas.text(name, insert=(5 * mm, 7.5 * mm), fill='black',
-                               font_family='Arial', font_size='11'))
+        # print self.features[0].attributes()[self.features[0].fieldNameIndex('name')] == None
+        if self.features[0].attributes()[self.features[0].fieldNameIndex('name')] <> None:
+            name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
+            canvas.add(canvas.text(name, insert=(5 * mm, 7.5 * mm), fill='black',
+                                   font_family='Arial', font_size='11'))
         for zu in self.zu_multi:
             if len(self.zu_multi) > 1:
                 # наименование контура

@@ -23,6 +23,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
         self.setupUi(self)
         self.curr_path = QgsProject.instance().fileName()[:-4]#get_defailt_path()
         #print self.curr_path
+        self.btnSave.setEnabled(False)
         self.svg = None
         self.newSvg = None
         self.connect(self.btnGeodata, QtCore.SIGNAL("clicked()"), self.calculate)
@@ -38,7 +39,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
             self.svg = ved.geodataSVG
             self.newSvg = ved.geodataNewSVG
             #print self.newSvg
-            #self.textEdit.setHtml(ved.pointDef)
+            self.textEdit.setHtml(ved.pointDef)
             self.btnSave.setEnabled(True)
 
         #QMessageBox.warning(self.iface.mainWindow(), 'end', \
@@ -46,7 +47,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
         #                    QtGui.QMessageBox.Ok)
 
     def save_catalog(self):
-        file_name = QFileDialog.getSaveFileName(self, u'Сохраните Геоданные в SVG', self.curr_path, u'SVG файлы(*.svg *.SVG)')
+        file_name = QFileDialog.getSaveFileName(self, u'Сохраните Ведомость и Геоданные в SVG', self.curr_path, u'SVG файлы(*.svg *.SVG)')
         #abs_dir_name = QFileDialog.getExistingDirectory(self, u'Выберите папку', self.curr_path)
         if not file_name is None or not file_name == u'':
             if sys.platform.startswith('win'):
@@ -55,8 +56,8 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
                 current_path = file_name
             #print current_path
             self.curr_path = current_path
-            self.svg.saveas(current_path + '.svg')
-            self.newSvg.saveas(current_path + '-new.svg')
+            self.svg.saveas(current_path + '-geodata.svg')
+            self.newSvg.saveas(current_path + '-vedomost.svg')
             self.textEdit.setHtml(u'Сохранение завершено')
             self.btnSave.setEnabled(False)
             self.svg = None

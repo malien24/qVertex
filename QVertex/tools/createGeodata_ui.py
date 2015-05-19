@@ -72,9 +72,9 @@ class Ui_CoordGeodata(object):
         QtCore.QMetaObject.connectSlotsByName(CoordGeodata)
 
     def retranslateUi(self, CoordGeodata):
-        CoordGeodata.setWindowTitle(_translate("CoordGeodata", "Геоданные", None))
-        self.radioBtnRumb.setText(_translate("CoordGeodata", "Румбы", None))
-        self.btnGeodata.setText(_translate("CoordGeodata", "Создать геоданные", None))
-        self.btnSave.setText(_translate("CoordGeodata", "Сохранить SVG", None))
+        CoordGeodata.setWindowTitle(_translate("CoordGeodata", "Ведомость, геоданные и описание границ", None))
+        self.radioBtnRumb.setText(_translate("CoordGeodata", "Румбы (для геоданных)", None))
+        self.btnGeodata.setText(_translate("CoordGeodata", "Создать ведомость, геоданные и описание границ", None))
+        self.btnSave.setText(_translate("CoordGeodata", "Сохранить ведомость и геоданные в SVG", None))
 
 from PyQt4 import QtWebKit
