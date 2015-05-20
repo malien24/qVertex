@@ -90,7 +90,7 @@ class QVertex:
         else:
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
          
-        print self.lastDir    
+        #print self.lastDir    
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
     #     """Get the translation for a string using Qt translation API.

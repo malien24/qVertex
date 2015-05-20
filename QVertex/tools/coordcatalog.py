@@ -281,21 +281,21 @@ class CatalogData():
         
         if self.features[0].attributes()[self.features[0].fieldNameIndex('name')] <> None:
             name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
-            catalog_all_data += (u'<h2>' + name + u'<h2>')
+            self.catalog += (u'<h3>' + name + u'</h3>')
             
         if self.multi:
             #print [iter_contour]
-            self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
+            self.catalog += u'<strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
                                                                                                  str(sum(self.perimeter)))    
         for zu in self.zu_multi:
             contour_table = u''  # ведомость одного контура
             catalog_data = u''
             catalog_header = u''
             if self.multi and len(self.zu_multi) > 1:
-                contour_header = u'<h3>Контур ' + unicode(iter_contour + 1) + u'</h3>'
+                contour_header = u'<h4>Контур ' + unicode(iter_contour + 1) + u'</h4>'
                 contour_table += contour_header
-                contour_table += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(int(self.area[iter_contour]), self.perimeter[
-                iter_contour])
+            contour_table += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(int(self.area[iter_contour]), self.perimeter[
+            iter_contour])
             contour_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" WIDTH=\"120\"></COLGROUP>{0}</TABLE>'
             empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; ' \
                     u'border-left: 1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
@@ -317,8 +317,9 @@ class CatalogData():
                     iter_node += 1
                 iter_ring += 1
                 # Отделение 'дырки'
-                if len(self.zu) > 1:
-                    if iter_ring != len(self.zu):
+                if len(zu) > 1:
+                    if iter_ring <> len(zu):
+                        print 'catch!'
                         catalog_data += empty.format(u'--')+empty.format(u'--')+empty.format(u'--')
             catalog_all_data += catalog_data
             self.catalog += contour_table.format(catalog_data)
@@ -326,7 +327,6 @@ class CatalogData():
             iter_contour += 1
             iter_ring = 0
         
-    
     def decorate_value_html(self, value, last=False, onlyXY=False):
         row1 = u'<TR>{0}</TR>'
         row2 = u'<TR>{0}</TR>'
@@ -355,9 +355,9 @@ class CatalogData():
                 return row1.format(data1)    
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
-        self.geodataSVG = drawing.Drawing(path, profile='tiny')
+        #self.geodataSVG = drawing.Drawing(path, profile='tiny')
         self.geodataNewSVG = drawing.Drawing(path + 'new', profile='tiny')
-        self.createTableSvg(self.geodataSVG)
+        #self.createTableSvg(self.geodataSVG)
         self.createNewTableSvg(self.geodataNewSVG)
         #self.geodataSVG.save()
         #print path

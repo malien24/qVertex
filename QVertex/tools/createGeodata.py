@@ -36,7 +36,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
             ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), True, 1)
             #data = ved.geodata
             ved.createSvgGeodata(self.curr_path)
-            self.svg = ved.geodataSVG
+            #self.svg = ved.geodataSVG
             self.newSvg = ved.geodataNewSVG
             #print self.newSvg
             self.textEdit.setHtml(ved.pointDef)
@@ -56,7 +56,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
                 current_path = file_name
             #print current_path
             self.curr_path = current_path
-            self.svg.saveas(current_path + '-geodata.svg')
+            #self.svg.saveas(current_path + '-geodata.svg')
             self.newSvg.saveas(current_path + '-vedomost.svg')
             self.textEdit.setHtml(u'Сохранение завершено')
             self.btnSave.setEnabled(False)
