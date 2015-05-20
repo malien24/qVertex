@@ -113,7 +113,7 @@ class Measure():
 
 class CatalogData():
 
-    def __init__(self, iface, is_rumb, font_size):
+    def __init__(self, iface, is_rumb, is_onlyXY, font_size):
         self.features = iface.mapCanvas().currentLayer().selectedFeatures()
         for clayer in iface.mapCanvas().layers():
             if clayer.name() == u'Точки':
@@ -143,7 +143,7 @@ class CatalogData():
         self.pointDefOuterRing = u'Контур {0}: '
         self.geodata_w = 420
         self.geodata_h = 297
-
+        self.iface = iface
         self.multi = False
         self.area = []
         self.perimeter = []
@@ -151,7 +151,10 @@ class CatalogData():
         self.is_rumb = is_rumb
         self.prepare_data()
         #print self.list_contours[0]
-        self.calculate()
+        if is_onlyXY:
+            self.calculateOnlyXY()
+        else:
+            self.calculate()
 
     def prepare_data(self):
         # Создаётся на один объект
@@ -270,8 +273,61 @@ class CatalogData():
             #print [iter_contour]
             self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
                                                                                                  str(sum(self.perimeter)))
+    
+    def calculateOnlyXY(self):
+        iter_contour = 0
+        iter_ring = 0
+        catalog_all_data = u''  # вся ведомость со всеми контурами
+        
+        if self.features[0].attributes()[self.features[0].fieldNameIndex('name')] <> None:
+            name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
+            catalog_all_data += (u'<h2>' + name + u'<h2>')
+            
+        if self.multi:
+            #print [iter_contour]
+            self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
+                                                                                                 str(sum(self.perimeter)))    
+        for zu in self.zu_multi:
+            contour_table = u''  # ведомость одного контура
+            catalog_data = u''
+            catalog_header = u''
+            if self.multi and len(self.zu_multi) > 1:
+                contour_header = u'<h3>Контур ' + unicode(iter_contour + 1) + u'</h3>'
+                contour_table += contour_header
+                contour_table += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(int(self.area[iter_contour]), self.perimeter[
+                iter_contour])
+            contour_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" WIDTH=\"120\"></COLGROUP>{0}</TABLE>'
+            empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; ' \
+                    u'border-left: 1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
+            catalog_header += empty.format(u'Обозначение характерных точек границ')
+            catalog_header += empty.format(u'X, м')
+            catalog_header += empty.format(u'Y, м')
 
-    def decorate_value_html(self, value, last=False):
+            catalog_data += u'<TR>{0}</TR>'.format(catalog_header)
+
+            for ring in zu:
+                iter_node = 0
+                for point in ring:
+                    point_num = point[2]
+                    #print point
+                    if (iter_node >= 0) and (iter_node < len(ring) - 1):
+                        catalog_data += self.decorate_value_html([point_num, ring[iter_node][0], ring[iter_node][1]], False, True)
+                    elif iter_node == len(ring) - 1:
+                        catalog_data += self.decorate_value_html([unicode(ring[0][2]), ring[0][0], ring[0][1]], True, True)
+                    iter_node += 1
+                iter_ring += 1
+                # Отделение 'дырки'
+                if len(self.zu) > 1:
+                    if iter_ring != len(self.zu):
+                        catalog_data += empty.format(u'--')+empty.format(u'--')+empty.format(u'--')
+            catalog_all_data += catalog_data
+            self.catalog += contour_table.format(catalog_data)
+            
+            iter_contour += 1
+            iter_ring = 0
+        
+    
+    def decorate_value_html(self, value, last=False, onlyXY=False):
         row1 = u'<TR>{0}</TR>'
         row2 = u'<TR>{0}</TR>'
         empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: ' \
@@ -282,14 +338,21 @@ class CatalogData():
         x = empty.format(sx)
         sy = '{:.2f}'.format(value[2])
         y = empty.format(sy)
-        a = empty.format(value[3])
-        l = empty.format(value[4])
-        data1 = num + x + y + empty.format('</BR>') + empty.format('</BR>')
-        data2 = empty.format('</BR>') + empty.format('</BR>') + empty.format('</BR>') + a + l
-        if not last:
-            return row1.format(data1) + row2.format(data2)
+        if onlyXY:
+            pass
         else:
+            a = empty.format(value[3])
+            l = empty.format(value[4])
+        if onlyXY:
+            data1 = num + x + y
             return row1.format(data1)
+        else:
+            data1 = num + x + y + empty.format('</BR>') + empty.format('</BR>')
+            data2 = empty.format('</BR>') + empty.format('</BR>') + empty.format('</BR>') + a + l
+            if not last:
+                return row1.format(data1) + row2.format(data2)
+            else:
+                return row1.format(data1)    
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         self.geodataSVG = drawing.Drawing(path, profile='tiny')

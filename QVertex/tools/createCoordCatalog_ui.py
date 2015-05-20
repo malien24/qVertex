@@ -34,7 +34,7 @@ class Ui_CoordCatalog(object):
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.verticalLayout.addWidget(self.textEdit)
         self.radioBtnRumb = QtGui.QCheckBox(CoordCatalog)
-        self.radioBtnRumb.setEnabled(True)
+        self.radioBtnRumb.setEnabled(False)
         self.radioBtnRumb.setChecked(False)
         self.radioBtnRumb.setObjectName(_fromUtf8("radioBtnRumb"))
         self.verticalLayout.addWidget(self.radioBtnRumb)
@@ -83,10 +83,10 @@ class Ui_CoordCatalog(object):
         QtCore.QMetaObject.connectSlotsByName(CoordCatalog)
 
     def retranslateUi(self, CoordCatalog):
-        CoordCatalog.setWindowTitle(_translate("CoordCatalog", "Ведомость координат", None))
+        CoordCatalog.setWindowTitle(_translate("CoordCatalog", "Ведомость координат HTML", None))
         self.radioBtnRumb.setText(_translate("CoordCatalog", "Румбы", None))
         self.label.setText(_translate("CoordCatalog", "Размер шрифта", None))
         self.btnCreateCoord.setText(_translate("CoordCatalog", "Создать ведомость", None))
-        self.btnSave.setText(_translate("CoordCatalog", "Сохранить HTML", None))
+        self.btnSave.setText(_translate("CoordCatalog", "Сохранить HTML-файл", None))
 
 from PyQt4 import QtWebKit

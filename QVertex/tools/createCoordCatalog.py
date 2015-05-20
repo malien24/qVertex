@@ -27,7 +27,7 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
         if (self.iface.mapCanvas().currentLayer() is not None) \
             and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
 
-            ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), self.spinBoxFontSize.value())
+            ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), True, self.spinBoxFontSize.value())
             data = ved.catalog
             self.textEdit.setHtml(data)
             self.btnSave.setEnabled(True)
@@ -39,7 +39,7 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
     def save_catalog(self):
         file_name = QFileDialog.getSaveFileName(self, u'Сохраните данные', self.curr_path, u'HTML файлы(*.html *.HTML)')
         if not file_name is None or not file_name == u'':
-            print file_name + ' ved path'
+            #print file_name + ' ved path'
             #current_path = os.path.dirname(unicode(file_name))
             #self.curr_path = current_path
             #filepath = os.path.join(current_path, '.html')

@@ -10,7 +10,7 @@
 name=qVertex
 qgisMinimumVersion=2.0
 description=автоматизация землеустройства
-version=0.1
+version=0.2
 author=Филиппов Владислав
 email=filippov70@gmail.com
 
