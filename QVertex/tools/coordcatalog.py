@@ -133,8 +133,8 @@ class CatalogData():
         self.zu_multi = []  # 1 (если полигон) или N конутуров мультполигона
         self.zu = []  # контуры текущего полигона
         self.catalog = u'<HEAD><meta http-equiv=\"Content-type\" ' \
-                       u'content=\"text/html;charset=UTF-8\"><style>table { font-size: '+self\
-            .fontsize+u'; font-family: Arial;} p { font-size: '+self.fontsize+u'; font-family: Arial;}</style><HEAD/>'
+                       u'content=\"text/html;charset=UTF-8\"><style>body table { font-size: '+self\
+            .fontsize+u'; font-family: Arial;} </style><HEAD/>'
         self.geodataSVG = None
         self.geodataNewSVG = None
         self.pointDef = u'<!DOCTYPE HTML><HTML><HEAD><meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\"> \
@@ -281,21 +281,23 @@ class CatalogData():
         
         if self.features[0].attributes()[self.features[0].fieldNameIndex('name')] <> None:
             name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
-            self.catalog += (u'<h3>' + name + u'</h3>')
+            self.catalog += (u'<h4>Условный номер земельного участка ' + name + u'</h4>')
+        #else:
+            #self.catalog += (u'<h4> Условный номер земельного участка </h4>')    
             
         if self.multi:
             #print [iter_contour]
-            self.catalog += u'<strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
-                                                                                                 str(sum(self.perimeter)))    
+            self.catalog += u'<strong>Площадь земельного участка: {0} кв.м</strong>'.format(str(int(sum(self.area))))    
         for zu in self.zu_multi:
             contour_table = u''  # ведомость одного контура
             catalog_data = u''
             catalog_header = u''
             if self.multi and len(self.zu_multi) > 1:
-                contour_header = u'<h4>Контур ' + unicode(iter_contour + 1) + u'</h4>'
+                contour_header = u'<p>Контур ' + unicode(iter_contour + 1) + u'</p>'
                 contour_table += contour_header
-            contour_table += u'<p>Площадь: {0} кв.м Периметр: {1} м</p>'.format(int(self.area[iter_contour]), self.perimeter[
-            iter_contour])
+                contour_table += u'<p>Площадь контура {0} кв.м</p>'.format(int(self.area[iter_contour]))
+            else:
+                contour_table += u'<p>Площадь земельного участка {0} кв.м</p>'.format(int(self.area[iter_contour]))    
             contour_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" WIDTH=\"120\"></COLGROUP>{0}</TABLE>'
             empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; ' \
                     u'border-left: 1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
@@ -320,7 +322,7 @@ class CatalogData():
                 if len(zu) > 1:
                     if iter_ring <> len(zu):
                         print 'catch!'
-                        catalog_data += empty.format(u'--')+empty.format(u'--')+empty.format(u'--')
+                        catalog_data += empty.format(u'внутренний обход')+empty.format(u'')+empty.format(u'')
             catalog_all_data += catalog_data
             self.catalog += contour_table.format(catalog_data)
             
@@ -334,10 +336,10 @@ class CatalogData():
                 u'1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
         # https://mkaz.com/2012/10/10/python-string-format/
         num = empty.format(value[0])
-        sx = '{:.2f}'.format(value[1])
-        x = empty.format(sx)
-        sy = '{:.2f}'.format(value[2])
-        y = empty.format(sy)
+        #sx = '{:.2f}'.format(value[1])
+        x = empty.format(str(int(value[1])))
+        #sy = '{:.2f}'.format(value[2])
+        y = empty.format(str(int(value[2])))
         if onlyXY:
             pass
         else:
@@ -453,7 +455,7 @@ class CatalogData():
                     place += step
                     iter_point += 1
                 iter_ring += 1
-            canvas.add(canvas.text(u'Площадь: '+str(int(self.area[iter_contour-1]))+u'кв.м', insert=(5.3 * mm, (7.5 + place) * mm),
+            canvas.add(canvas.text(u'Площадь земельного участка: '+str(int(self.area[iter_contour-1]))+u'кв.м', insert=(5.3 * mm, (7.5 + place) * mm),
                                    fill='black', font_family='Arial', font_size='9'))
             place += step
             iter_contour +=1
@@ -470,8 +472,12 @@ class CatalogData():
         # print self.features[0].attributes()[self.features[0].fieldNameIndex('name')] == None
         if self.features[0].attributes()[self.features[0].fieldNameIndex('name')] <> None:
             name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
-            canvas.add(canvas.text(name, insert=(5 * mm, 7.5 * mm), fill='black',
+            canvas.add(canvas.text(u'Условный номер земельного участка ' + name, insert=(5 * mm, 7.5 * mm), fill='black',
                                    font_family='Arial', font_size='11'))
+            place += step
+        canvas.add(canvas.text(u'Площадь земельного участка  ' + str(int(sum(self.area))).encode('utf-8') + u' кв.м', insert=(5 * mm, (place + 7.5) * mm), fill='black',
+                                   font_family='Arial', font_size='11'))
+        place += step
         for zu in self.zu_multi:
             if len(self.zu_multi) > 1:
                 # наименование контура
@@ -483,13 +489,13 @@ class CatalogData():
                 canvas.add(canvas.text(cntName, insert=(5 * mm, (8 + place) * mm), fill='black',
                                        font_family='Arial', font_size='11'))
                 place += step
-                canvas.add(canvas.text(u'Площадь: '+str(int(self.area[iter_contour-1]))+u' кв.м', insert=((5.3 + place_v) * mm, (7.5 + place) * mm),
+                canvas.add(canvas.text(u'Площадь контура '+str(int(self.area[iter_contour-1]))+u' кв.м', insert=((5.3 + place_v) * mm, (7.5 + place) * mm),
                                    fill='black', font_family='Arial', font_size='9'))
                 place += step
-            else:
-                canvas.add(canvas.text(u'Площадь: '+str(int(self.area[0])) + u' кв.м', insert=((5.3 + place_v) * mm, (7.5 + place) * mm),
-                                   fill='black', font_family='Arial', font_size='9'))
-                place += step
+            #else:
+                #canvas.add(canvas.text(u'Площадь земельного участка '+str(int(self.area[0])) + u' кв.м', insert=((5.3 + place_v) * mm, (7.5 + place) * mm),
+                #                   fill='black', font_family='Arial', font_size='9'))
+                #place += step
                    
             # заголовок таблицы ЗУ
             canvas.add(canvas.rect(size=(25 * mm, 7 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
@@ -533,6 +539,8 @@ class CatalogData():
                     canvas.add(row_n)
                     canvas.add(row_x)
                     canvas.add(row_y)
+                    canvas.add(canvas.text(u'внутренний обход', insert=((place_v + 6) * mm, (7.5 + place) * mm),
+                                    fill='black', font_family='Arial', font_size='9'))
                     place += step
 
                 iter_point = 0
@@ -561,10 +569,16 @@ class CatalogData():
                         canvas.text(point[2], insert=((place_v + 6) * mm, (7.5 + place) * mm),
                                     fill='black', font_family='Arial', font_size='9'))
                     canvas.add(
-                        canvas.text('{:.2f}'.format(point[0]), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text(str(int(point[0])), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
+#                     canvas.add(
+#                         canvas.text('{:.2f}'.format(point[0]), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+#                                     font_size='9'))
+#                     canvas.add(
+#                         canvas.text('{:.2f}'.format(point[1]), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+#                                     font_size='9'))
                     canvas.add(
-                        canvas.text('{:.2f}'.format(point[1]), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text(str(int(point[1])), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
                     
                     place += step
