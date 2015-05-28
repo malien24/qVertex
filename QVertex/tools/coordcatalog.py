@@ -301,11 +301,17 @@ class CatalogData():
             contour_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" WIDTH=\"120\"></COLGROUP>{0}</TABLE>'
             empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; ' \
                     u'border-left: 1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
-            catalog_header += empty.format(u'Обозначение характерных точек границ')
-            catalog_header += empty.format(u'X, м')
-            catalog_header += empty.format(u'Y, м')
+            
+            # http://htmlbook.ru/samhtml/tablitsy/obedinenie-yacheek
+            
+            catalog_header += u'<tr><td rowspan=\"2\" style=\"border: 1px solid \">Обозначение характерных точек границ</td><td colspan=\"2\" align=center style=\"border: 1px solid; \">координаты, м</td></tr> \
+            <tr><td align=center style=\"border: 1px solid \">X</td><td align=center style=\"border: 1px solid\">Y</td></tr>'
 
-            catalog_data += u'<TR>{0}</TR>'.format(catalog_header)
+#             catalog_header += empty.format(u'Обозначение характерных точек границ')
+#             catalog_header += empty.format(u'X, м')
+#             catalog_header += empty.format(u'Y, м')
+
+            catalog_data += (catalog_header)
 
             for ring in zu:
                 iter_node = 0
@@ -500,9 +506,11 @@ class CatalogData():
             # заголовок таблицы ЗУ
             canvas.add(canvas.rect(size=(25 * mm, 7 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
                                 fill='none', stroke_width=0.35 * mm))
-            canvas.add(canvas.rect(size=(25 * mm, 7 * mm), insert=(30 * mm, (5 + place) * mm), stroke='black',
+            canvas.add(canvas.rect(size=(50 * mm, 3.5 * mm), insert=(30 * mm, (5 + place) * mm), stroke='black',
                                 fill='none', stroke_width=0.35 * mm))
-            canvas.add(canvas.rect(size=(25 * mm, 7 * mm), insert=(55 * mm, (5 + place) * mm), stroke='black',
+            canvas.add(canvas.rect(size=(25 * mm, 3.5 * mm), insert=(30 * mm, (8.5 + place) * mm), stroke='black',
+                                fill='none', stroke_width=0.35 * mm))
+            canvas.add(canvas.rect(size=(25 * mm, 3.5 * mm), insert=(55 * mm, (8.5 + place) * mm), stroke='black',
                                 fill='none', stroke_width=0.35 * mm))
             canvas.add(
                 canvas.text(u'Обозначение харак-', insert=(5.3 * mm, (7.5 + place) * mm),
@@ -512,10 +520,14 @@ class CatalogData():
                             fill='black', font_family='Arial', font_size='9'))
             
             canvas.add(
-                canvas.text(u'X, м', insert=(40 * mm, (8 + place) * mm), fill='black', font_family='Arial',
+                canvas.text(u'координаты, м', insert=(45 * mm, (7 + place) * mm),
+                            fill='black', font_family='Arial', font_size='9'))
+            
+            canvas.add(
+                canvas.text(u'X', insert=(40 * mm, (11 + place) * mm), fill='black', font_family='Arial',
                             font_size='9'))
             canvas.add(
-                canvas.text(u'Y, м', insert=(65.3 * mm, (8 + place) * mm), fill='black', font_family='Arial',
+                canvas.text(u'Y', insert=(65.3 * mm, (11 + place) * mm), fill='black', font_family='Arial',
                             font_size='9'))
             place += step
             place += step
