@@ -205,7 +205,13 @@ class QVertex:
         #self.qvertex_createNewPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.pointMenu.addActions([self.qvertex_createVertex, self.qvertex_createPoint, self.qvertex_createNewPoint])
         self.menu.addMenu(self.pointMenu)
+        
+        self.qvertex_createBoundPart = QAction(u"Создать части границ", self.iface.mainWindow())
+        self.qvertex_createBoundPart.setEnabled(True)
+        # self.qvertex_createProject.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.menu.addAction(self.qvertex_createBoundPart)
 
+        
         self.reportMenu = QMenu()
         self.reportMenu.setTitle(u"Отчёты")
 
@@ -239,6 +245,7 @@ class QVertex:
         QObject.connect(self.qvertex_createNewPoint, SIGNAL("triggered()"), self.doCreateNewpoint)
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
         QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
+        QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -385,6 +392,56 @@ class QVertex:
                     idx = iter
                 iter += 1    
         return iter
+    
+    def createPart(self, layer, ring):
+        c = len(ring)
+        curr = 1
+        for point in ring:
+            if curr < c:
+                point1 = point
+                point2 = ring[curr]
+            else:
+                point2 = ring[0]
+            curr += 1
+            print point1, point2
+            line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()), 
+                                                   QgsPoint(point2.x(), point2.y())])
+            feat = QgsFeature()
+            feat.setGeometry(line_geometry) 
+            layer.dataProvider().addFeatures([ feat ])               
+    
+    def createBoundPart(self):
+        for clayer in self.iface.mapCanvas().layers():
+            if clayer.name() == u'Размерные линии':
+                partLayer = clayer
+                break
+            else:
+                partLayer = None
+        if self.isObjectsSelected() and partLayer is not None:
+            partLayer.startEditing()
+            print 'edit'
+            try:
+                for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
+                    geom = feat.geometry()
+                    if geom.isMultipart():
+                        polygons = geom.asMultiPolygon()
+                        for polygone in polygons:
+                            print 'parse multipolygon part'
+                            for ring in polygone:
+                                print 'parse multipolygon part ring'
+                                self.createPart(partLayer, ring)
+                                    
+                    else:
+                        for ring in geom.asPolygon():
+                            self.createPart(partLayer, ring)
+                                
+            except Exception as err:
+#                 self.iface.messageBar().pushMessage(u'Ошибка при добавлении примыкающих вершин! ' + err.encode('UTF-8'),
+#                                                                    QgsMessageBar.ERROR, 5)
+                print 'error in createBoundPart!', err 
+            finally:
+                print 'commit'
+                partLayer.commitChanges()
     
     def changeGeometryPointOrder(self, ring, newPointIdx):
         if newPointIdx == 0:
