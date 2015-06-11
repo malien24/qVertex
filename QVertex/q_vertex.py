@@ -268,8 +268,11 @@ class QVertex:
             pass
 
     def isObjectsSelected(self):
-        if self.iface.mapCanvas().currentLayer().selectedFeatures() is not None:
-            return True
+        if self.iface.mapCanvas().layers() > 0 and self.iface.mapCanvas().currentLayer() is not None: 
+            if self.iface.mapCanvas().currentLayer().selectedFeatures() is not None:
+                return True
+            else:
+                return False
         else:
             return False
 
@@ -400,19 +403,21 @@ class QVertex:
             if curr < c:
                 point1 = point
                 point2 = ring[curr]
-            else:
-                point2 = ring[0]
-            curr += 1
-            print point1, point2
-            line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()), 
-                                                   QgsPoint(point2.x(), point2.y())])
-            feat = QgsFeature()
-            feat.setGeometry(line_geometry) 
-            layer.dataProvider().addFeatures([ feat ])               
+
+                curr += 1
+                print point1, point2
+                line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()), 
+                                                       QgsPoint(point2.x(), point2.y())])
+                feat = QgsFeature()
+                feat.setGeometry(line_geometry) 
+                layer.dataProvider().addFeatures([feat])
+        
+        # attr
+        #feat.addAttribute(0,"hello")       
     
     def createBoundPart(self):
         for clayer in self.iface.mapCanvas().layers():
-            if clayer.name() == u'Размерные линии':
+            if clayer.name() == u'Размерные линии': # TODO 
                 partLayer = clayer
                 break
             else:
