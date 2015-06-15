@@ -6,16 +6,16 @@
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="extline70_420150130173249262" name="Выносные линии">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="dimline70_420150130173153664" name="Размерные линии">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="dimline70_420150130173153664" name="Размерные линии">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="points70_420150130172855955" name="Точки">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="points70_420150130172855955" name="Точки">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="oks70_420150130172648423" name="ОКС">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="land70_420150130172516171" name="ЗУ">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="land70_420150130172516171" name="ЗУ">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="part70_420150130172010702" name="чЗУ">
@@ -32,10 +32,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>4327415.04918581340461969</xmin>
-      <ymin>351040.06729787157382816</ymin>
-      <xmax>4338312.42329371068626642</xmax>
-      <ymax>361010.94401199684944004</ymax>
+      <xmin>4331536.08827147632837296</xmin>
+      <ymin>351780.93984459794592112</ymin>
+      <xmax>4342433.46237937361001968</xmax>
+      <ymax>361751.816558723221533</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -88,14 +88,14 @@
         <legendlayerfile isInOverview="0" layerid="extline70_420150130173249262" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Размерные линии" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Размерные линии" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="dimline70_420150130173153664" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="dimline70_420150130173153664" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Точки" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Точки" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="points70_420150130172855955" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="points70_420150130172855955" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="ОКС" showFeatureCount="0">
@@ -103,9 +103,9 @@
         <legendlayerfile isInOverview="0" layerid="oks70_420150130172648423" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="ЗУ" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="ЗУ" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="land70_420150130172516171" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="land70_420150130172516171" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="чЗУ" showFeatureCount="0">
@@ -3055,7 +3055,9 @@
       <CanvasColorBluePart type="int">255</CanvasColorBluePart>
     </Gui>
     <Digitizing>
+      <DefaultSnapToleranceUnit type="int">1</DefaultSnapToleranceUnit>
       <LayerSnappingList type="QStringList">
+        <value>1_50020150213144157794</value>
         <value>dimline70_420150130173153664</value>
         <value>extline70_420150130173249262</value>
         <value>land70_420150130172516171</value>
@@ -3063,7 +3065,6 @@
         <value>part70_420150130172010702</value>
         <value>points70_420150130172855955</value>
         <value>zone70_420150130172145986</value>
-        <value>1_50020150213144157794</value>
       </LayerSnappingList>
       <LayerSnappingEnabledList type="QStringList">
         <value>enabled</value>
@@ -3075,6 +3076,7 @@
         <value>enabled</value>
         <value>enabled</value>
       </LayerSnappingEnabledList>
+      <SnappingMode type="QString">current_layer</SnappingMode>
       <AvoidIntersectionsList type="QStringList"/>
       <IntersectionSnapping type="bool">true</IntersectionSnapping>
       <LayerSnappingToleranceUnitList type="QStringList">
@@ -3097,6 +3099,8 @@
         <value>to_segment</value>
         <value>to_segment</value>
       </LayerSnapToList>
+      <DefaultSnapType type="QString">to vertex</DefaultSnapType>
+      <DefaultSnapTolerance type="double">5</DefaultSnapTolerance>
       <TopologicalEditing type="bool">true</TopologicalEditing>
       <LayerSnappingToleranceList type="QStringList">
         <value>5.000000</value>

@@ -403,14 +403,24 @@ class QVertex:
             if curr < c:
                 point1 = point
                 point2 = ring[curr]
-
+                isEqual = False
                 curr += 1
                 print point1, point2
                 line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()), 
                                                        QgsPoint(point2.x(), point2.y())])
-                feat = QgsFeature()
-                feat.setGeometry(line_geometry) 
-                layer.dataProvider().addFeatures([feat])
+                # check for identity
+                features = layer.getFeatures()
+                for f in features:
+                    if line_geometry.equals(f.geometry()):
+                        print 'geometry is equal, skiped'
+                        isEqual = True
+                        break
+                            
+                if not isEqual:
+                    feat = QgsFeature()
+                    feat.setGeometry(line_geometry)
+                     
+                    layer.dataProvider().addFeatures([feat])
         
         # attr
         #feat.addAttribute(0,"hello")       
