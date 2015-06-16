@@ -412,7 +412,8 @@ class QVertex:
                 features = layer.getFeatures()
                 for f in features:
                     if line_geometry.equals(f.geometry()):
-                        print 'geometry is equal, skiped'
+                        self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена', 
+                                                            level=QgsMessageBar.INFO)
                         isEqual = True
                         break
                             
@@ -427,7 +428,7 @@ class QVertex:
     
     def createBoundPart(self):
         for clayer in self.iface.mapCanvas().layers():
-            if clayer.name() == u'Размерные линии': # TODO 
+            if clayer.name() == u'Части границ': # TODO 
                 partLayer = clayer
                 break
             else:
