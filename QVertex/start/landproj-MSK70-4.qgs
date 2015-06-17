@@ -18,7 +18,7 @@
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="oks70_420150130172648423" name="ОКС">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="land70_420150130172516171" name="ЗУ">
+    <layer-tree-layer expanded="0" checked="Qt::Checked" id="land70_420150130172516171" name="ЗУ">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="part70_420150130172010702" name="чЗУ">
@@ -113,9 +113,9 @@
         <legendlayerfile isInOverview="0" layerid="oks70_420150130172648423" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="ЗУ" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="land70_420150130172516171" visible="0"/>
+    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="ЗУ" showFeatureCount="0">
+      <filegroup open="false" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="land70_420150130172516171" visible="1"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="чЗУ" showFeatureCount="0">
@@ -350,8 +350,8 @@
           <proj4>+proj=tmerc +lat_0=0 +lon_0=85.0001 +k=1.00002 +x_0=8751.184300000001 +y_0=-6252800.0948 +ellps=krass +towgs84=23.92,-141.27,-80.9,-0,0.35,0.82,-0.12 +units=m +no_defs</proj4>
           <srsid>100042</srsid>
           <srid>0</srid>
-          <authid>USER:100042</authid>
-          <description> * Создана система координат (+proj=tmerc +lat_0=0 +lon_0=85.0001 +k=1.00002 +x_0=8751.184300000001 +y_0=-6252800.0948 +ellps=krass +towgs84=23.92,-141.27,-80.9,-0,0.35,0.82,-0.12 +units=m +no_defs)</description>
+          <authid></authid>
+          <description></description>
           <projectionacronym>tmerc</projectionacronym>
           <ellipsoidacronym>krass</ellipsoidacronym>
           <geographicflag>false</geographicflag>
@@ -3048,11 +3048,7 @@
       <map-layer-style-manager current="">
         <map-layer-style name=""/>
       </map-layer-style-manager>
-      <edittypes>
-        <edittype widgetv2type="TextEdit" name="type">
-          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
-        </edittype>
-      </edittypes>
+      <edittypes/>
       <renderer-v2 symbollevels="0" type="singleSymbol">
         <symbols>
           <symbol alpha="1" type="line" name="0">
@@ -3246,19 +3242,15 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
       <attributeactions/>
-      <edittypes>
-        <edittype widgetv2type="TextEdit" name="type">
-          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
-        </edittype>
-      </edittypes>
+      <edittypes/>
     </maplayer>
   </projectlayers>
   <properties>

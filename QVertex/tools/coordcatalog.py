@@ -364,7 +364,7 @@ class CatalogData():
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         #self.geodataSVG = drawing.Drawing(path, profile='tiny')
-        self.geodataNewSVG = drawing.Drawing(path + 'new', profile='tiny')
+        self.geodataNewSVG = drawing.Drawing(path + 'new', size=('210mm','297mm'), profile='full')
         #self.createTableSvg(self.geodataSVG)
         self.createNewTableSvg(self.geodataNewSVG)
         #self.geodataSVG.save()
