@@ -29,12 +29,12 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="textArea">
+  <widget class="QListWidget" name="listCrs">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>10</y>
-     <width>371</width>
+     <width>361</width>
      <height>192</height>
     </rect>
    </property>

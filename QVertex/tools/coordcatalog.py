@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from compiler.ast import Node
 __name__ = 'coordcatalog'
 __version__ = '0.1'
 __author__ = 'Filippov Vladislav'
@@ -113,7 +114,7 @@ class Measure():
 
 class CatalogData():
 
-    def __init__(self, iface, is_rumb, is_onlyXY, font_size):
+    def __init__(self, iface, is_rumb, is_onlyXY, font_size, crs):
         self.features = iface.mapCanvas().currentLayer().selectedFeatures()
         for clayer in iface.mapCanvas().layers():
             if clayer.name() == u'Точки':
@@ -122,6 +123,7 @@ class CatalogData():
             else:
                 self.pointLayer = None
 
+        self.crs = crs
         self.fontsize = u'xx-small'
         if font_size == 2:
             self.fontsize = u'small'
@@ -155,7 +157,15 @@ class CatalogData():
             self.calculateOnlyXY()
         else:
             self.calculate()
-
+      
+    def convertCoordinate(self, point):
+        crsSrc = QgsCoordinateReferenceSystem(4326)
+        crsDest = QgsCoordinateReferenceSystem()
+        crsDest.createFromProj4(self.crs)
+        transform = QgsCoordinateTransform(crsSrc, crsDest)
+        trpoint = transform.transform(point)
+        return trpoint
+    
     def prepare_data(self):
         # Создаётся на один объект
         nameidx = self.pointLayer.fieldNameIndex('name')
@@ -194,9 +204,9 @@ class CatalogData():
             list_ponts = []
             for node in ring:
                 # Тут происходит переход к геодезической СК
-                # Нужны числа для дальнейшего расчёта ОГЗ
-                x = round(node.y(), 2)
-                y = round(node.x(), 2)
+                point = self.convertCoordinate(node)
+                x = round(point.y(), 2)
+                y = round(point.x(), 2)
                 name = u""
                 for pointfeature in self.pointLayer.getFeatures():
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(node.x(), node.y()))):

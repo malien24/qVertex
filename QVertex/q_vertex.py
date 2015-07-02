@@ -84,13 +84,17 @@ class QVertex:
         #self.toolbar.setObjectName(u'QVertex')
 
         # Настройки http://gis-lab.info/docs/qgis/cookbook/settings.html
-        self.settings = QSettings(self.plugin_dir, 'config.ini')
-        if sys.platform.startswith('win'):
-            self.lastDir = self.settings.value('last_dir', self.plugin_dir)
-        else:
-            self.lastDir = self.settings.value('last_dir', self.plugin_dir)
-         
-        #print self.lastDir    
+        #print self.plugin_dir
+        self.settings = QSettings(self.plugin_dir + os.sep + 'config.ini', QSettings.IniFormat)
+        
+#         if sys.platform.startswith('win'):
+#             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
+#         else:
+#             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
+        crs_code = self.settings.value('current_crs')
+        self.current_crs = self.settings.value(crs_code, '+proj=longlat +datum=WGS84 +no_defs')[0]
+        print self.current_crs
+        
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
     #     """Get the translation for a string using Qt translation API.
@@ -205,13 +209,13 @@ class QVertex:
         #self.qvertex_createNewPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.pointMenu.addActions([self.qvertex_createVertex, self.qvertex_createPoint, self.qvertex_createNewPoint])
         self.menu.addMenu(self.pointMenu)
-        
+
         self.qvertex_createBoundPart = QAction(u"Создать части границ", self.iface.mainWindow())
         self.qvertex_createBoundPart.setEnabled(True)
         # self.qvertex_createProject.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.menu.addAction(self.qvertex_createBoundPart)
 
-        
+
         self.reportMenu = QMenu()
         self.reportMenu.setTitle(u"Отчёты")
 
@@ -267,8 +271,9 @@ class QVertex:
             # substitute with your code.
             pass
 
+    
     def isObjectsSelected(self):
-        if self.iface.mapCanvas().layers() > 0 and self.iface.mapCanvas().currentLayer() is not None: 
+        if self.iface.mapCanvas().layers() > 0 and self.iface.mapCanvas().currentLayer() is not None:
             if self.iface.mapCanvas().currentLayer().selectedFeatures() is not None:
                 return True
             else:
@@ -309,7 +314,7 @@ class QVertex:
             except Exception as err:
                 self.iface.messageBar().pushMessage(u'Ошибка при добавлении примыкающих вершин! ' + err.encode('UTF-8'),
                                                                    QgsMessageBar.ERROR, 5)
-                print 'error in doCreatePublicVertexes!', err 
+                print 'error in doCreatePublicVertexes!', err
             finally:
                 print 'commit'
                 pointLayer.commitChanges()
@@ -345,18 +350,18 @@ class QVertex:
 
     def doCreateCoordcatalog(self):
         if self.dlg_coordcatalog is None:
-            self.dlg_coordcatalog = CreateCoordCatalog(self.iface)
+            self.dlg_coordcatalog = CreateCoordCatalog(self.iface, self.current_crs)
             self.dlg_coordcatalog.setWindowModality(Qt.NonModal)
         self.dlg_coordcatalog.show()
 
     def doCreateGeodata(self):
         if self.dlg_geodata is None:
-            self.dlg_geodata = CreateGeodata(self.iface)
+            self.dlg_geodata = CreateGeodata(self.iface, self.current_crs)
             self.dlg_geodata.setWindowModality(Qt.NonModal)
         self.dlg_geodata.show()
-    
-    # Упорядочить точки (первая на северо-западе)    
-    
+
+    # Упорядочить точки (первая на северо-западе)
+
     def doChangePointPos(self):
         try:
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
@@ -380,8 +385,8 @@ class QVertex:
         finally:
             feat.setGeometry(newgeom)
             print 'change geometry'
-        pass    
-    
+        pass
+
     def findNorthWestPoint(self, ring):
         maxYX = 10000000
         iter = 0
@@ -393,9 +398,9 @@ class QVertex:
                 if (x - y) < maxYX:
                     maxYX = (x - y)
                     idx = iter
-                iter += 1    
+                iter += 1
         return iter
-    
+
     def createPart(self, layer, ring):
         c = len(ring)
         curr = 1
@@ -406,29 +411,29 @@ class QVertex:
                 isEqual = False
                 curr += 1
                 print point1, point2
-                line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()), 
+                line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()),
                                                        QgsPoint(point2.x(), point2.y())])
                 # check for identity
                 features = layer.getFeatures()
                 for f in features:
                     if line_geometry.equals(f.geometry()):
-                        self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена', 
+                        self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена',
                                                             level=QgsMessageBar.INFO)
                         isEqual = True
                         break
-                            
+
                 if not isEqual:
                     feat = QgsFeature()
                     feat.setGeometry(line_geometry)
-                     
+                    
                     layer.dataProvider().addFeatures([feat])
-        
+
         # attr
-        #feat.addAttribute(0,"hello")       
-    
+        #feat.addAttribute(0,"hello")
+
     def createBoundPart(self):
         for clayer in self.iface.mapCanvas().layers():
-            if clayer.name() == u'Части границ': # TODO 
+            if clayer.name() == u'Части границ': # TODO
                 partLayer = clayer
                 break
             else:
@@ -446,19 +451,19 @@ class QVertex:
                             for ring in polygone:
                                 print 'parse multipolygon part ring'
                                 self.createPart(partLayer, ring)
-                                    
+
                     else:
                         for ring in geom.asPolygon():
                             self.createPart(partLayer, ring)
-                                
+
             except Exception as err:
 #                 self.iface.messageBar().pushMessage(u'Ошибка при добавлении примыкающих вершин! ' + err.encode('UTF-8'),
 #                                                                    QgsMessageBar.ERROR, 5)
-                print 'error in createBoundPart!', err 
+                print 'error in createBoundPart!', err
             finally:
                 print 'commit'
                 partLayer.commitChanges()
-    
+
     def changeGeometryPointOrder(self, ring, newPointIdx):
         if newPointIdx == 0:
             return ring
