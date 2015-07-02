@@ -124,6 +124,10 @@ class CatalogData():
                 self.pointLayer = None
 
         self.crs = crs
+        crsSrc = QgsCoordinateReferenceSystem(4326)
+        crsDest = QgsCoordinateReferenceSystem()
+        crsDest.createFromProj4(self.crs)
+        self.transform = QgsCoordinateTransform(crsSrc, crsDest)
         self.fontsize = u'xx-small'
         if font_size == 2:
             self.fontsize = u'small'
@@ -157,13 +161,12 @@ class CatalogData():
             self.calculateOnlyXY()
         else:
             self.calculate()
+    
+    def convertGeom(self, g):
+        pass
       
     def convertCoordinate(self, point):
-        crsSrc = QgsCoordinateReferenceSystem(4326)
-        crsDest = QgsCoordinateReferenceSystem()
-        crsDest.createFromProj4(self.crs)
-        transform = QgsCoordinateTransform(crsSrc, crsDest)
-        trpoint = transform.transform(point)
+        trpoint = self.transform.transform(point)
         return trpoint
     
     def prepare_data(self):
@@ -173,9 +176,11 @@ class CatalogData():
             self.multi = True
             for feat in self.features:
                 geom = feat.geometry()
+                gt = QgsGeometry(geom)
+                gt.transform(self.transform)
                 self.names.append(self.feat.attributes()[nameidx])
-                self.area.append(round(geom.area(), 0))
-                self.perimeter.append(round(geom.length(), 2))
+                self.area.append(round(gt.area(), 0))
+                self.perimeter.append(round(gt.length(), 2))
                 self.zu = []
                 self.parse_polygon(geom.asPolygon())
         else:
@@ -187,15 +192,20 @@ class CatalogData():
                 multiGeom = geom.asMultiPolygon()
                 for i in multiGeom:
                     poly = QgsGeometry().fromPolygon(i)
+                    gt = QgsGeometry(poly)
+                    gt.transform(self.transform)
                     #print str(poly.area())
-                    self.area.append(round(poly.area(), 0))
-                    self.perimeter.append(round(poly.length(), 2))
+                    self.area.append(round(gt.area(), 0))
+                    self.perimeter.append(round(gt.length(), 2))
                     self.zu = []
                     #print poly
                     self.parse_polygon(poly.asPolygon())
             else:
-                self.area.append(round(geom.area(), 0))
-                self.perimeter.append(round(geom.length(), 2))
+                gt = QgsGeometry(geom)
+                gt.transform(self.transform)
+                self.area.append(round(gt.area(), 0))
+                print gt.area()
+                self.perimeter.append(round(gt.length(), 2))
                 self.parse_polygon(geom.asPolygon())
 
     # полигон может содержать один внешний и от нуля до N внутренних контуров (дырок)
