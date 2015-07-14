@@ -27,7 +27,7 @@ from _codecs import encode
 from qgis._core import QgsGeometry
 import resources_rc
 # Import the code for the dialog
-from q_vertex_dialog import QVertexDialog
+from q_vertex_dialog_base import QVertexDialogBase
 from qgis.core import *
 import os.path, sys
 import os
@@ -73,7 +73,7 @@ class QVertex:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dlg = QVertexDialog()
+        
         self.dlg_coordcatalog = None
         self.dlg_geodata = None
         # Declare instance attributes
@@ -87,13 +87,11 @@ class QVertex:
         #print self.plugin_dir
         self.settings = QSettings(self.plugin_dir + os.sep + 'config.ini', QSettings.IniFormat)
         
-#         if sys.platform.startswith('win'):
-#             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
-#         else:
-#             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
-        crs_code = self.settings.value('current_crs')
-        self.current_crs = self.settings.value(crs_code, '+proj=longlat +datum=WGS84 +no_defs')[0]
-        print self.current_crs
+        if sys.platform.startswith('win'):
+            self.lastDir = self.settings.value('last_dir', self.plugin_dir)
+        else:
+            self.lastDir = self.settings.value('last_dir', self.plugin_dir)
+        
         
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
@@ -336,12 +334,25 @@ class QVertex:
                 #print 'shutil.copytree'
                 self.settings.setValue('last_dir', current_path + os.sep + 'qvertex')
                 proj = QgsProject.instance()
-                proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'landproj-tomsk.qgs'))
+                proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'landplan.qgs'))
             except shutil.Error as ex:
                 self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 5)
             finally:
                 pass
-
+        msk_names = self.settings.value('msk_names')
+        print msk_names
+        
+        dlg = QVertexDialogBase(self.iface, msk_names)
+        #dlg.setModal(True)
+        dlg.exec_()
+        
+        msk = dlg.listCrs.currentItem().text()
+        print msk
+        del(dlg)
+        crs_code = self.settings.value('current_crs')
+        self.current_crs = self.settings.value(crs_code, '+proj=longlat +datum=WGS84 +no_defs')[0]
+        print self.current_crs
+        
     def doCreatepoint(self):
         CreatePoints(self.iface, False)
 
@@ -410,7 +421,7 @@ class QVertex:
                 point2 = ring[curr]
                 isEqual = False
                 curr += 1
-                print point1, point2
+                #print point1, point2
                 line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()),
                                                        QgsPoint(point2.x(), point2.y())])
                 # check for identity
