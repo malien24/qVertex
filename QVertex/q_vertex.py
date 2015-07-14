@@ -425,7 +425,10 @@ class QVertex:
                 if not isEqual:
                     feat = QgsFeature()
                     feat.setGeometry(line_geometry)
-                    
+                    typeidx = layer.fieldNameIndex('type')
+                    feat.initAttributes(1)
+                    print typeidx
+                    feat.setAttribute(typeidx, 1)
                     layer.dataProvider().addFeatures([feat])
 
         # attr
