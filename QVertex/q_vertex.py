@@ -415,15 +415,36 @@ class QVertex:
     def createPart(self, layer, ring):
         c = len(ring)
         curr = 1
+        for clayer in self.iface.mapCanvas().layers():
+            if clayer.name() == u'Точки':
+                pointLayer = clayer
+                idx = pointLayer.fieldNameIndex('name')
+                break
+            else:
+                pointLayer = None
+                idx = -1
+        
         for point in ring:
             if curr < c:
                 point1 = point
                 point2 = ring[curr]
                 isEqual = False
+                pt1stst = False
+                pt2stst = False
                 curr += 1
                 #print point1, point2
                 line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()),
                                                        QgsPoint(point2.x(), point2.y())])
+                # find point
+                for pointfeature in pointLayer.getFeatures():
+                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point1.x(), point1.y()))):
+                        name = unicode(pointfeature.attribute(u'name'))
+                        if name[:1] == u'н':
+                            pt1stst = True
+                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point2.x(), point2.y()))):
+                        name = unicode(pointfeature.attribute(u'name'))
+                        if name[:1] == u'н':
+                            pt2stst = True        
                 # check for identity
                 features = layer.getFeatures()
                 for f in features:
@@ -438,12 +459,11 @@ class QVertex:
                     feat.setGeometry(line_geometry)
                     typeidx = layer.fieldNameIndex('type')
                     feat.initAttributes(1)
-                    print typeidx
-                    feat.setAttribute(typeidx, 1)
+                    if pt1stst or pt2stst:
+                        feat.setAttribute(typeidx, 2)
+                    else:    
+                        feat.setAttribute(typeidx, 0)
                     layer.dataProvider().addFeatures([feat])
-
-        # attr
-        #feat.addAttribute(0,"hello")
 
     def createBoundPart(self):
         for clayer in self.iface.mapCanvas().layers():
