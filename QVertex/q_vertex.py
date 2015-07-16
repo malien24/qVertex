@@ -82,7 +82,7 @@ class QVertex:
         # TODO: We are going to let the user set this up in a future iteration
         #self.toolbar = self.iface.addToolBar(u'QVertex')
         #self.toolbar.setObjectName(u'QVertex')
-
+        
         # Настройки http://gis-lab.info/docs/qgis/cookbook/settings.html
         #print self.plugin_dir
         self.settings = QSettings(self.plugin_dir + os.sep + 'config.ini', QSettings.IniFormat)
@@ -92,7 +92,9 @@ class QVertex:
         else:
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
         
-        
+        msk_names = self.settings.value('msk_names')
+        print msk_names
+        self.dlg = QVertexDialogBase(self.iface, msk_names)
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
     #     """Get the translation for a string using Qt translation API.
@@ -190,6 +192,12 @@ class QVertex:
         self.qvertex_createProject.setEnabled(True)
         # self.qvertex_createProject.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.menu.addAction(self.qvertex_createProject)
+        
+        self.qvertex_showSettings = QAction(u"Настройка МСК", self.iface.mainWindow())
+        self.qvertex_showSettings.setEnabled(True)
+        # self.qvertex_showSettings.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.menu.addAction(self.qvertex_showSettings)
+
 
         self.pointMenu = QMenu()
         self.pointMenu.setTitle(u"Точки")
@@ -248,6 +256,8 @@ class QVertex:
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
         QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
         QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
+        QObject.connect(self.qvertex_showSettings, SIGNAL("triggered()"), self.showSettings)
+        
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -339,18 +349,16 @@ class QVertex:
                 self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 5)
             finally:
                 pass
-        msk_names = self.settings.value('msk_names')
-        print msk_names
-        
-        dlg = QVertexDialogBase(self.iface, msk_names)
-        #dlg.setModal(True)
-        dlg.exec_()
-        
-        msk = dlg.listCrs.currentItem().text()
+      
+        self.showSettings()
+    
+    def showSettings(self):
+        self.dlg.exec_()
+        msk = self.dlg.listCrs.currentItem().text()
         print msk
-        del(dlg)
-        crs_code = self.settings.value('current_crs')
-        self.current_crs = self.settings.value(crs_code, '+proj=longlat +datum=WGS84 +no_defs')[0]
+        self.settings.setValue('current_crs', msk)
+        self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
+        self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 5)
         print self.current_crs
         
     def doCreatepoint(self):
@@ -372,7 +380,6 @@ class QVertex:
         self.dlg_geodata.show()
 
     # Упорядочить точки (первая на северо-западе)
-
     def doChangePointPos(self):
         try:
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
