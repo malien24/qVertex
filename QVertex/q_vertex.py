@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QObject, SIGNAL
-from PyQt4.QtGui import QAction, QIcon, QMenu
+from PyQt4.QtGui import QAction, QIcon, QMenu, QFileDialog
 # Initialize Qt resources from file resources.py
 from _codecs import encode
 from qgis._core import QgsGeometry
@@ -469,12 +469,41 @@ class QVertex:
                 partLayer.commitChanges()
     
     def exportTechno(self):
-        file_name = QFileDialog.getSaveFileName(self, u'Сохраните данные для Технокада', self.lastDir, u'CSV файлы(*.csv *.CSV)')
+        pointLayer = None
+        for clayer in self.iface.mapCanvas().layers():
+            if clayer.name() == u'Точки': # TODO
+                pointLayer = clayer
+                break
+            else:
+                return
+        
+        file_name = QFileDialog.getSaveFileName(None, u'Сохраните данные для Технокада', self.lastDir, u'CSV файлы(*.csv *.CSV)')
         if not file_name is None or not file_name == u'':
             csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
             delimLine = u';;;;;;;;;;;\n'
-            delim = u';'
             
+            crsSrc = QgsCoordinateReferenceSystem(4326)
+            crsDest = QgsCoordinateReferenceSystem()
+            crsDest.createFromProj4(self.current_crs)
+            transform = QgsCoordinateTransform(crsSrc, crsDest)
+            
+            contour = 1
+
+            if self.isObjectsSelected():
+                geom = self.iface.mapCanvas().currentLayer().selectedFeatures()[0].geometry()
+                if geom.isMultipart():
+                    multiGeom = geom.asMultiPolygon()
+                    for i in multiGeom:
+                        poly = QgsGeometry().fromPolygon(i)
+                        gt = QgsGeometry(poly)
+                        gt.transform(transform)
+                        self.prepareExportPoint(pointLayer, poly.asPolygon(), csvdata, contour, transform)
+                        contour += 1
+                        
+                else:
+                    gt = QgsGeometry(geom)
+                    gt.transform(transform)
+                    self.prepareExportPoint(pointLayer, geom.asPolygon(), csvdata, 1, transform)
             try:
                 ccf = open(file_name + u'.csv', 'w')
                 ccf.write(csvdata.encode('cp1251'))
@@ -483,6 +512,28 @@ class QVertex:
             finally:    
                 ccf.close()
     
+    def prepareExportPoint(self, pointLayer, polygon, csv, contour, transform):
+        ring = 1
+        for ring in polygon:
+            for pt in ring:
+                for pointfeature in pointLayer.getFeatures():
+                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(pt.x(), pt.y()))):
+                        name = unicode(pointfeature.attribute(u'name'))
+                        trpoint = transform.transform(pointfeature.geometry().asPoint())
+                        x = round(trpoint.y(), 2)
+                        sx = unicode('{:.2f}'.format(x))
+                        y = round(trpoint.x(), 2)
+                        sy = unicode('{:.2f}'.format(y))
+                        pref = unicode(pointfeature.attribute(u'prec'))
+                        hold = unicode(pointfeature.attribute(u'hold'))
+                        if ring > 1:
+                            cnt = u'['+unicode(str(contour))+u'.'+unicode(str(ring))+u']'
+                        else:
+                            cnt = u'['+unicode(str(contour))+u']'     
+                        csv +=cnt+u';;'+name+sx+sy+u';;;;'+pref+hold+u'\n'
+            ring += 1
+            csv +=u';;;;;;;;;;;\n'
+                        
     # Упорядочить точки (первая на северо-западе)
     def doChangePointPos(self):
         try:
