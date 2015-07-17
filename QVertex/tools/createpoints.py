@@ -71,6 +71,10 @@ class CreatePoints():
         else:
             numvalue = str(name)
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'name'), numvalue)
+        feature.setAttribute(self.targetLayer.fieldNameIndex(u'prec'), u'0.10')
+        feature.setAttribute(self.targetLayer.fieldNameIndex(u'isdel'), 0)
+        feature.setAttribute(self.targetLayer.fieldNameIndex(u'type'), 0)
+        feature.setAttribute(self.targetLayer.fieldNameIndex(u'hold'), u'Закрепление отсутствует')
         self.targetLayer.dataProvider().addFeatures([feature])
         del feature
         return True

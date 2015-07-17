@@ -234,6 +234,11 @@ class QVertex:
         # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
         self.menu.addMenu(self.reportMenu)
+        
+        self.qvertex_exportTechno = QAction(u"Экспорт в Технокад", self.iface.mainWindow())
+        self.qvertex_exportTechno.setEnabled(True)
+        # self.qvertex_exportTechno.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.menu.addAction(self.qvertex_exportTechno)
 
         #self.menu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
 
@@ -257,8 +262,8 @@ class QVertex:
         QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
         QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
         QObject.connect(self.qvertex_showSettings, SIGNAL("triggered()"), self.showSettings)
+        QObject.connect(self.qvertex_exportTechno, SIGNAL("triggered()"), self.exportTechno)
         
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -279,7 +284,6 @@ class QVertex:
             # substitute with your code.
             pass
 
-    
     def isObjectsSelected(self):
         if self.iface.mapCanvas().layers() > 0 and self.iface.mapCanvas().currentLayer() is not None:
             if self.iface.mapCanvas().currentLayer().selectedFeatures() is not None:
@@ -349,7 +353,6 @@ class QVertex:
                 self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 5)
             finally:
                 pass
-      
         self.showSettings()
     
     def showSettings(self):
@@ -378,46 +381,6 @@ class QVertex:
             self.dlg_geodata = CreateGeodata(self.iface, self.current_crs)
             self.dlg_geodata.setWindowModality(Qt.NonModal)
         self.dlg_geodata.show()
-
-    # Упорядочить точки (первая на северо-западе)
-    def doChangePointPos(self):
-        try:
-            for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
-                findPointIdx = 0
-                #newgeomarr = []
-                #newgeom = null
-                geom = feat.geometry()
-                if geom.isMultipart():
-                    polygons = geom.asMultiPolygon()
-                    for polygone in polygons:
-                        print 'parse multipolygon part'
-                        for ring in polygone:
-                            findPointIdx = findNorthWestPoint(ring)
-                            changeGeometryPointOrder(ring, findPointIdx)
-                else:
-                    for ring in geom.asPolygon():
-                        findPointIdx = findNorthWestPoint(ring)
-                        changeGeometryPointOrder(ring, findPointIdx)
-        except:
-            print 'error in doChangePointPos'
-        finally:
-            feat.setGeometry(newgeom)
-            print 'change geometry'
-        pass
-
-    def findNorthWestPoint(self, ring):
-        maxYX = 10000000
-        iter = 0
-        idx = 0
-        for point in ring:
-            if iter < len(ring)-1:
-                x = point.x()
-                y = point.y()
-                if (x - y) < maxYX:
-                    maxYX = (x - y)
-                    idx = iter
-                iter += 1
-        return iter
 
     def createPart(self, layer, ring):
         c = len(ring)
@@ -504,7 +467,62 @@ class QVertex:
             finally:
                 print 'commit'
                 partLayer.commitChanges()
+    
+    def exportTechno(self):
+        file_name = QFileDialog.getSaveFileName(self, u'Сохраните данные для Технокада', self.lastDir, u'CSV файлы(*.csv *.CSV)')
+        if not file_name is None or not file_name == u'':
+            csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
+            delimLine = u';;;;;;;;;;;\n'
+            delim = u';'
+            
+            try:
+                ccf = open(file_name + u'.csv', 'w')
+                ccf.write(csvdata.encode('cp1251'))
+            except Exeption as err:
+                pass
+            finally:    
+                ccf.close()
+    
+    # Упорядочить точки (первая на северо-западе)
+    def doChangePointPos(self):
+        try:
+            for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
+                findPointIdx = 0
+                #newgeomarr = []
+                #newgeom = null
+                geom = feat.geometry()
+                if geom.isMultipart():
+                    polygons = geom.asMultiPolygon()
+                    for polygone in polygons:
+                        print 'parse multipolygon part'
+                        for ring in polygone:
+                            findPointIdx = findNorthWestPoint(ring)
+                            changeGeometryPointOrder(ring, findPointIdx)
+                else:
+                    for ring in geom.asPolygon():
+                        findPointIdx = findNorthWestPoint(ring)
+                        changeGeometryPointOrder(ring, findPointIdx)
+        except:
+            print 'error in doChangePointPos'
+        finally:
+            feat.setGeometry(newgeom)
+            print 'change geometry'
+        pass
 
+    def findNorthWestPoint(self, ring):
+        maxYX = 10000000
+        iter = 0
+        idx = 0
+        for point in ring:
+            if iter < len(ring)-1:
+                x = point.x()
+                y = point.y()
+                if (x - y) < maxYX:
+                    maxYX = (x - y)
+                    idx = iter
+                iter += 1
+        return iter
+    
     def changeGeometryPointOrder(self, ring, newPointIdx):
         if newPointIdx == 0:
             return ring

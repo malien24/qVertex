@@ -1242,12 +1242,6 @@
         <map-layer-style name=""/>
       </map-layer-style-manager>
       <edittypes>
-        <edittype widgetv2type="TextEdit" name="xpos">
-          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ypos">
-          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
-        </edittype>
         <edittype widgetv2type="TextEdit" name="name">
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
@@ -1255,6 +1249,29 @@
           <widgetv2config fieldEditable="1" labelOnTop="1">
             <value key="ликвидированная" value="1"/>
             <value key="существующая" value="0"/>
+          </widgetv2config>
+        </edittype>
+        <edittype widgetv2type="ValueMap" name="hold">
+          <widgetv2config fieldEditable="1" labelOnTop="1">
+            <value key="" value=""/>
+            <value key="Временный межевой знак" value="Временный межевой знак"/>
+            <value key="Долговременный межевой знак" value="Долговременный межевой знак"/>
+            <value key="Закрепление отсутствует" value="Закрепление отсутствует"/>
+          </widgetv2config>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="prec">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="xpos">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="ypos">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="ValueMap" name="type">
+          <widgetv2config fieldEditable="1" labelOnTop="0">
+            <value key="Белая" value="1"/>
+            <value key="Чёрная" value="0"/>
           </widgetv2config>
         </edittype>
       </edittypes>
@@ -1461,23 +1478,29 @@
       <editforminit/>
       <featformsuppress>0</featformsuppress>
       <annotationform>.</annotationform>
-      <editorlayout>generatedlayout</editorlayout>
+      <editorlayout>tablayout</editorlayout>
       <aliases>
-        <alias field="isdel" index="3" name="Ликвидируется?"/>
-        <alias field="name" index="2" name="Имя"/>
-        <alias field="xpos" index="0" name="положение по X"/>
-        <alias field="ypos" index="1" name="положение по Y"/>
+        <alias field="hold" index="2" name="Закрепление"/>
+        <alias field="isdel" index="1" name="Ликвидируется?"/>
+        <alias field="name" index="0" name="Имя"/>
+        <alias field="prec" index="3" name="Точность"/>
+        <alias field="type" index="6" name="Тип"/>
+        <alias field="xpos" index="4" name="положение по X"/>
+        <alias field="ypos" index="5" name="положение по Y"/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
+      <attributeEditorForm>
+        <attributeEditorContainer name="def">
+          <attributeEditorField index="0" name="name"/>
+          <attributeEditorField index="3" name="prec"/>
+          <attributeEditorField index="6" name="type"/>
+          <attributeEditorField index="1" name="isdel"/>
+          <attributeEditorField index="2" name="hold"/>
+        </attributeEditorContainer>
+      </attributeEditorForm>
       <attributeactions/>
       <edittypes>
-        <edittype widgetv2type="TextEdit" name="xpos">
-          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="ypos">
-          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
-        </edittype>
         <edittype widgetv2type="TextEdit" name="name">
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
@@ -1485,6 +1508,29 @@
           <widgetv2config fieldEditable="1" labelOnTop="1">
             <value key="ликвидированная" value="1"/>
             <value key="существующая" value="0"/>
+          </widgetv2config>
+        </edittype>
+        <edittype widgetv2type="ValueMap" name="hold">
+          <widgetv2config fieldEditable="1" labelOnTop="1">
+            <value key="" value=""/>
+            <value key="Временный межевой знак" value="Временный межевой знак"/>
+            <value key="Долговременный межевой знак" value="Долговременный межевой знак"/>
+            <value key="Закрепление отсутствует" value="Закрепление отсутствует"/>
+          </widgetv2config>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="prec">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="xpos">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="ypos">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="ValueMap" name="type">
+          <widgetv2config fieldEditable="1" labelOnTop="0">
+            <value key="Белая" value="1"/>
+            <value key="Чёрная" value="0"/>
           </widgetv2config>
         </edittype>
       </edittypes>
@@ -2170,7 +2216,6 @@
         </edittype>
         <edittype widgetv2type="ValueMap" name="utiliz">
           <widgetv2config fieldEditable="1" labelOnTop="0">
-            <value key="" value=""/>
             <value key="1. Образуемый ЗУ" value="1. Образуемый ЗУ"/>
             <value key="2. Застроенные ЗУ" value="2. Застроенные ЗУ"/>
             <value key="3. ЗУ на которых расположены линейные объекты" value="3. ЗУ на которых расположены линейные объекты"/>
@@ -2178,6 +2223,7 @@
             <value key="5. ЗУ для размещения объектов капитального строительства федерального, регионального и местного назначения" value="5. ЗУ для размещения объектов капитального строительства федерального, регионального и местного назначения"/>
             <value key="6. ЗУ для ГПЗУ" value="6. ЗУ для ГПЗУ"/>
             <value key="7. Минимальные отступы от границ ЗУ в целях определения мест допустимого размещения зданий, строений, сооружений" value="7. Минимальные отступы от границ ЗУ в целях определения мест допустимого размещения зданий, строений, сооружений"/>
+            <value key="Кадастр" value="Кадастр"/>
           </widgetv2config>
         </edittype>
         <edittype widgetv2type="TextEdit" name="x">
@@ -2196,6 +2242,7 @@
           <category render="true" symbol="4" value="5. ЗУ для размещения объектов капитального строительства федерального, регионального и местного назначения" label="5. ЗУ для размещения объектов капитального строительства федерального, регионального и местного назначения"/>
           <category render="true" symbol="5" value="6. ЗУ для ГПЗУ" label="6. ЗУ для ГПЗУ"/>
           <category render="true" symbol="6" value="7. Минимальные отступы от границ ЗУ в целях определения мест допустимого размещения зданий, строений, сооружений" label="7. Минимальные отступы от границ ЗУ в целях определения мест допустимого размещения зданий, строений, сооружений"/>
+          <category render="true" symbol="7" value="Кадастр" label="Кадастр"/>
         </categories>
         <symbols>
           <symbol alpha="1" type="fill" name="0">
@@ -2313,6 +2360,21 @@
               <prop k="offset_unit" v="MM"/>
               <prop k="use_custom_dash" v="0"/>
               <prop k="width_map_unit_scale" v="0,0"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" type="fill" name="7">
+            <layer pass="0" class="SimpleFill" locked="0">
+              <prop k="border_width_map_unit_scale" v="0,0"/>
+              <prop k="color" v="0,0,0,0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="207,207,207,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0.26"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="style" v="solid"/>
             </layer>
           </symbol>
         </symbols>
@@ -2541,7 +2603,6 @@
         </edittype>
         <edittype widgetv2type="ValueMap" name="utiliz">
           <widgetv2config fieldEditable="1" labelOnTop="0">
-            <value key="" value=""/>
             <value key="1. Образуемый ЗУ" value="1. Образуемый ЗУ"/>
             <value key="2. Застроенные ЗУ" value="2. Застроенные ЗУ"/>
             <value key="3. ЗУ на которых расположены линейные объекты" value="3. ЗУ на которых расположены линейные объекты"/>
@@ -2549,6 +2610,7 @@
             <value key="5. ЗУ для размещения объектов капитального строительства федерального, регионального и местного назначения" value="5. ЗУ для размещения объектов капитального строительства федерального, регионального и местного назначения"/>
             <value key="6. ЗУ для ГПЗУ" value="6. ЗУ для ГПЗУ"/>
             <value key="7. Минимальные отступы от границ ЗУ в целях определения мест допустимого размещения зданий, строений, сооружений" value="7. Минимальные отступы от границ ЗУ в целях определения мест допустимого размещения зданий, строений, сооружений"/>
+            <value key="Кадастр" value="Кадастр"/>
           </widgetv2config>
         </edittype>
         <edittype widgetv2type="TextEdit" name="x">
