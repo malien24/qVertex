@@ -6,7 +6,7 @@
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="points20150702142625161" name="Точки">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="borderparts20150714120721227" name="Части границ">
+    <layer-tree-layer expanded="0" checked="Qt::Checked" id="borderparts20150714120721227" name="Части границ">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="oks20150702142315298" name="ОКС">
@@ -29,10 +29,10 @@
   <mapcanvas>
     <units>degrees</units>
     <extent>
-      <xmin>85.10064416095386264</xmin>
-      <ymin>56.51988989241076666</ymin>
-      <xmax>85.10905333114888549</xmax>
-      <ymax>56.52354404309293301</ymax>
+      <xmin>85.10347469863388881</xmin>
+      <ymin>56.5208790026892558</ymin>
+      <xmax>85.10767928373140023</xmax>
+      <ymax>56.52270607803033897</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -75,8 +75,8 @@
         <legendlayerfile isInOverview="0" layerid="points20150702142625161" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Части границ" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
+    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="Части границ" showFeatureCount="0">
+      <filegroup open="false" hidden="false">
         <legendlayerfile isInOverview="0" layerid="borderparts20150714120721227" visible="1"/>
       </filegroup>
     </legendlayer>
@@ -2636,17 +2636,17 @@
     </Paths>
     <WMSServiceTitle type="QString"></WMSServiceTitle>
     <WFSLayers type="QStringList"/>
-    <WMSRestrictedLayers type="QStringList"/>
     <WMSContactMail type="QString"></WMSContactMail>
     <WMSRestrictedComposers type="QStringList"/>
+    <WMSRestrictedLayers type="QStringList"/>
     <PositionPrecision>
       <DecimalPlaces type="int">2</DecimalPlaces>
       <Automatic type="bool">true</Automatic>
       <DegreeFormat type="QString">D</DegreeFormat>
     </PositionPrecision>
     <WCSUrl type="QString"></WCSUrl>
-    <WMSContactPhone type="QString"></WMSContactPhone>
     <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
+    <WMSContactPhone type="QString"></WMSContactPhone>
     <WMSServiceAbstract type="QString"></WMSServiceAbstract>
     <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
     <Measure>
@@ -2720,7 +2720,15 @@
       <disabledLayers type="QStringList"/>
     </Identify>
     <Macros>
-      <pythonCode type="QString"></pythonCode>
+      <pythonCode type="QString">def openProject():
+	pass
+
+def saveProject():
+    pass
+
+def closeProject():
+    pass
+</pythonCode>
     </Macros>
     <WMSAccessConstraints type="QString"></WMSAccessConstraints>
     <WCSLayers type="QStringList"/>

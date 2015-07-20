@@ -76,6 +76,7 @@ class QVertex:
         
         self.dlg_coordcatalog = None
         self.dlg_geodata = None
+        
         # Declare instance attributes
         self.actions = []
         #self.menu = self.tr(u'&qVertex')
@@ -92,8 +93,11 @@ class QVertex:
         else:
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
         
+        msk = self.settings.value('current_crs')
+        self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
+        self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 15)
+        
         msk_names = self.settings.value('msk_names')
-        print msk_names
         self.dlg = QVertexDialogBase(self.iface, msk_names)
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
@@ -356,13 +360,18 @@ class QVertex:
         self.showSettings()
     
     def showSettings(self):
+        msk_names = self.settings.value('msk_names')
+        #print msk_names
+        if self.dlg is None:
+            self.dlg = QVertexDialogBase(self.iface, msk_names)
         self.dlg.exec_()
         msk = self.dlg.listCrs.currentItem().text()
-        print msk
+        #print msk
         self.settings.setValue('current_crs', msk)
         self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
         self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 5)
         print self.current_crs
+        #del(dlg)
         
     def doCreatepoint(self):
         CreatePoints(self.iface, False)
@@ -409,11 +418,11 @@ class QVertex:
                 for pointfeature in pointLayer.getFeatures():
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point1.x(), point1.y()))):
                         name = unicode(pointfeature.attribute(u'name'))
-                        if name[:1] == u'н':
+                        if name[0] == u'н':
                             pt1stst = True
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point2.x(), point2.y()))):
                         name = unicode(pointfeature.attribute(u'name'))
-                        if name[:1] == u'н':
+                        if name[0] == u'н':
                             pt2stst = True        
                 # check for identity
                 features = layer.getFeatures()
@@ -461,8 +470,8 @@ class QVertex:
                             self.createPart(partLayer, ring)
 
             except Exception as err:
-#                 self.iface.messageBar().pushMessage(u'Ошибка при добавлении примыкающих вершин! ' + err.encode('UTF-8'),
-#                                                                    QgsMessageBar.ERROR, 5)
+                self.iface.messageBar().pushMessage(u'Ошибка при добавлении примыкающих вершин! ' + err.encode('UTF-8'),
+                                                                   QgsMessageBar.ERROR, 5)
                 print 'error in createBoundPart!', err
             finally:
                 print 'commit'
@@ -478,9 +487,10 @@ class QVertex:
                 return
         
         file_name = QFileDialog.getSaveFileName(None, u'Сохраните данные для Технокада', self.lastDir, u'CSV файлы(*.csv *.CSV)')
-        if not file_name is None or not file_name == u'':
+        print file_name
+        if not file_name == '' or not file_name == u'':
             csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
-            delimLine = u';;;;;;;;;;;\n'
+            #delimLine = u';;;;;;;;;;;\n'
             
             crsSrc = QgsCoordinateReferenceSystem(4326)
             crsDest = QgsCoordinateReferenceSystem()
@@ -497,42 +507,54 @@ class QVertex:
                         poly = QgsGeometry().fromPolygon(i)
                         gt = QgsGeometry(poly)
                         gt.transform(transform)
-                        self.prepareExportPoint(pointLayer, poly.asPolygon(), csvdata, contour, transform)
-                        contour += 1
-                        
+                        csvdata += self.prepareExportPoint(pointLayer, poly.asPolygon(), contour, transform)
+                        if len(multiGeom) > contour:
+                            csvdata += u';;;;;;;;;;;\n'
+                        contour += 1    
                 else:
                     gt = QgsGeometry(geom)
                     gt.transform(transform)
-                    self.prepareExportPoint(pointLayer, geom.asPolygon(), csvdata, 1, transform)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asPolygon(), 1, transform)
             try:
-                ccf = open(file_name + u'.csv', 'w')
+                ccf = open(file_name, 'w') # + u'.csv'
                 ccf.write(csvdata.encode('cp1251'))
-            except Exeption as err:
-                pass
+            except Exception as err:
+                self.iface.messageBar().pushMessage(u'Ошибка при экспорте в Технокад! ' + err.encode('UTF-8'),
+                                                                   QgsMessageBar.ERROR, 5)
             finally:    
                 ccf.close()
     
-    def prepareExportPoint(self, pointLayer, polygon, csv, contour, transform):
-        ring = 1
+    def prepareExportPoint(self, pointLayer, polygon, contour, transform):
+        ringq = 0
+        csvdata = u''
         for ring in polygon:
             for pt in ring:
                 for pointfeature in pointLayer.getFeatures():
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(pt.x(), pt.y()))):
-                        name = unicode(pointfeature.attribute(u'name'))
-                        trpoint = transform.transform(pointfeature.geometry().asPoint())
-                        x = round(trpoint.y(), 2)
-                        sx = unicode('{:.2f}'.format(x))
-                        y = round(trpoint.x(), 2)
-                        sy = unicode('{:.2f}'.format(y))
-                        pref = unicode(pointfeature.attribute(u'prec'))
-                        hold = unicode(pointfeature.attribute(u'hold'))
-                        if ring > 1:
-                            cnt = u'['+unicode(str(contour))+u'.'+unicode(str(ring))+u']'
+                        fullname = unicode(pointfeature.attribute(u'name'))
+                        if fullname[0] == u'н':
+                            name = fullname[1:]+u';'
+                            prefix = u'Н;'
                         else:
-                            cnt = u'['+unicode(str(contour))+u']'     
-                        csv +=cnt+u';;'+name+sx+sy+u';;;;'+pref+hold+u'\n'
-            ring += 1
-            csv +=u';;;;;;;;;;;\n'
+                            name = fullname + u';'
+                            prefix = u';'    
+                        x = round(pointfeature.geometry().asPoint().y(), 2)
+                        sx = unicode('{:.2f}'.format(x))+u';'
+                        y = round(pointfeature.geometry().asPoint().x(), 2)
+                        sy = unicode('{:.2f}'.format(y))+u';'
+                        pref = unicode(pointfeature.attribute(u'prec'))+u';'
+                        hold = unicode(pointfeature.attribute(u'hold'))
+                        if ringq > 0:
+                            cnt = u'['+unicode(str(contour))+u'.'+unicode(str(ringq))+u'];'
+                        else:
+                            cnt = u'['+unicode(str(contour))+u'];'     
+                        csvdata += cnt+prefix+name+u';;'+sx+sy+u';;;'+pref+hold+u'\n'
+                    
+            if len(polygon) >= ringq+2:
+                csvdata +=u';;;;;;;;;;;\n'
+            ringq += 1
+
+        return csvdata    
                         
     # Упорядочить точки (первая на северо-западе)
     def doChangePointPos(self):
