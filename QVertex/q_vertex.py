@@ -538,9 +538,11 @@ class QVertex:
                         else:
                             name = fullname + u';'
                             prefix = u';'    
-                        x = round(pointfeature.geometry().asPoint().y(), 2)
+                        
+                        trans_point = transform.transform(pointfeature.geometry().asPoint())
+                        x = round(QgsGeometry.fromPoint(trans_point).asPoint().y(), 2)
                         sx = unicode('{:.2f}'.format(x))+u';'
-                        y = round(pointfeature.geometry().asPoint().x(), 2)
+                        y = round(QgsGeometry.fromPoint(trans_point).asPoint().x(), 2)
                         sy = unicode('{:.2f}'.format(y))+u';'
                         pref = unicode(pointfeature.attribute(u'prec'))+u';'
                         hold = unicode(pointfeature.attribute(u'hold'))
@@ -557,6 +559,7 @@ class QVertex:
         return csvdata    
                         
     # Упорядочить точки (первая на северо-западе)
+    
     def doChangePointPos(self):
         try:
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
