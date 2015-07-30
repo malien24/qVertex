@@ -363,9 +363,9 @@ class CatalogData():
         # https://mkaz.com/2012/10/10/python-string-format/
         num = empty.format(value[0])
         #sx = '{:.2f}'.format(value[1])
-        x = empty.format(str(int(value[1])))
+        x = empty.format(str(ceil(value[1])))
         #sy = '{:.2f}'.format(value[2])
-        y = empty.format(str(int(value[2])))
+        y = empty.format(str(ceil(value[2])))
         if onlyXY:
             pass
         else:
@@ -601,7 +601,7 @@ class CatalogData():
                         canvas.text(point[2], insert=((place_v + 6) * mm, (7.5 + place) * mm),
                                     fill='black', font_family='Arial', font_size='9'))
                     canvas.add(
-                        canvas.text(str(int(point[0])), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text(str(ceil(point[0])), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
 #                     canvas.add(
 #                         canvas.text('{:.2f}'.format(point[0]), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
@@ -610,7 +610,7 @@ class CatalogData():
 #                         canvas.text('{:.2f}'.format(point[1]), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
 #                                     font_size='9'))
                     canvas.add(
-                        canvas.text(str(int(point[1])), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text(str(ceil(point[1])), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
                     
                     place += step
