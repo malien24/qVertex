@@ -73,30 +73,30 @@ class QVertex:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        
+
         self.dlg_coordcatalog = None
         self.dlg_geodata = None
-        
+
         # Declare instance attributes
         self.actions = []
         #self.menu = self.tr(u'&qVertex')
         # TODO: We are going to let the user set this up in a future iteration
         #self.toolbar = self.iface.addToolBar(u'QVertex')
         #self.toolbar.setObjectName(u'QVertex')
-        
+
         # Настройки http://gis-lab.info/docs/qgis/cookbook/settings.html
         #print self.plugin_dir
         self.settings = QSettings(self.plugin_dir + os.sep + 'config.ini', QSettings.IniFormat)
-        
+
         if sys.platform.startswith('win'):
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
         else:
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
-        
+
         msk = self.settings.value('current_crs')
         self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
         self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 15)
-        
+
         msk_names = self.settings.value('msk_names')
         self.dlg = QVertexDialogBase(self.iface, msk_names)
     # noinspection PyMethodMayBeStatic
@@ -196,7 +196,7 @@ class QVertex:
         self.qvertex_createProject.setEnabled(True)
         # self.qvertex_createProject.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.menu.addAction(self.qvertex_createProject)
-        
+
         self.qvertex_showSettings = QAction(u"Настройка МСК", self.iface.mainWindow())
         self.qvertex_showSettings.setEnabled(True)
         # self.qvertex_showSettings.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
@@ -238,7 +238,7 @@ class QVertex:
         # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
         self.menu.addMenu(self.reportMenu)
-        
+
         self.qvertex_exportTechno = QAction(u"Экспорт в Технокад", self.iface.mainWindow())
         self.qvertex_exportTechno.setEnabled(True)
         # self.qvertex_exportTechno.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
@@ -267,7 +267,7 @@ class QVertex:
         QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
         QObject.connect(self.qvertex_showSettings, SIGNAL("triggered()"), self.showSettings)
         QObject.connect(self.qvertex_exportTechno, SIGNAL("triggered()"), self.exportTechno)
-        
+
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
@@ -358,7 +358,7 @@ class QVertex:
             finally:
                 pass
         self.showSettings()
-    
+
     def showSettings(self):
         msk_names = self.settings.value('msk_names')
         #print msk_names
@@ -372,7 +372,7 @@ class QVertex:
         self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 5)
         print self.current_crs
         #del(dlg)
-        
+
     def doCreatepoint(self):
         CreatePoints(self.iface, False)
 
@@ -402,7 +402,7 @@ class QVertex:
             else:
                 pointLayer = None
                 idx = -1
-        
+
         for point in ring:
             if curr < c:
                 point1 = point
@@ -423,7 +423,7 @@ class QVertex:
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point2.x(), point2.y()))):
                         name = unicode(pointfeature.attribute(u'name'))
                         if name[0] == u'н':
-                            pt2stst = True        
+                            pt2stst = True
                 # check for identity
                 features = layer.getFeatures()
                 for f in features:
@@ -440,7 +440,7 @@ class QVertex:
                     feat.initAttributes(1)
                     if pt1stst or pt2stst:
                         feat.setAttribute(typeidx, 2)
-                    else:    
+                    else:
                         feat.setAttribute(typeidx, 0)
                     layer.dataProvider().addFeatures([feat])
 
@@ -476,7 +476,7 @@ class QVertex:
             finally:
                 print 'commit'
                 partLayer.commitChanges()
-    
+
     def exportTechno(self):
         pointLayer = None
         for clayer in self.iface.mapCanvas().layers():
@@ -485,18 +485,18 @@ class QVertex:
                 break
             else:
                 return
-        
+
         file_name = QFileDialog.getSaveFileName(None, u'Сохраните данные для Технокада', self.lastDir, u'CSV файлы(*.csv *.CSV)')
-        print file_name
+        #print file_name
         if not file_name == '' or not file_name == u'':
             csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
             #delimLine = u';;;;;;;;;;;\n'
-            
+
             crsSrc = QgsCoordinateReferenceSystem(4326)
             crsDest = QgsCoordinateReferenceSystem()
             crsDest.createFromProj4(self.current_crs)
             transform = QgsCoordinateTransform(crsSrc, crsDest)
-            
+
             contour = 1
 
             if self.isObjectsSelected():
@@ -510,7 +510,7 @@ class QVertex:
                         csvdata += self.prepareExportPoint(pointLayer, poly.asPolygon(), contour, transform)
                         if len(multiGeom) > contour:
                             csvdata += u';;;;;;;;;;;\n'
-                        contour += 1    
+                        contour += 1
                 else:
                     gt = QgsGeometry(geom)
                     gt.transform(transform)
@@ -521,9 +521,9 @@ class QVertex:
             except Exception as err:
                 self.iface.messageBar().pushMessage(u'Ошибка при экспорте в Технокад! ' + err.encode('UTF-8'),
                                                                    QgsMessageBar.ERROR, 5)
-            finally:    
+            finally:
                 ccf.close()
-    
+
     def prepareExportPoint(self, pointLayer, polygon, contour, transform):
         ringq = 0
         csvdata = u''
@@ -537,8 +537,8 @@ class QVertex:
                             prefix = u'Н;'
                         else:
                             name = fullname + u';'
-                            prefix = u';'    
-                        
+                            prefix = u';'
+
                         trans_point = transform.transform(pointfeature.geometry().asPoint())
                         x = round(QgsGeometry.fromPoint(trans_point).asPoint().y(), 2)
                         sx = unicode('{:.2f}'.format(x))+u';'
@@ -549,17 +549,17 @@ class QVertex:
                         if ringq > 0:
                             cnt = u'['+unicode(str(contour))+u'.'+unicode(str(ringq))+u'];'
                         else:
-                            cnt = u'['+unicode(str(contour))+u'];'     
+                            cnt = u'['+unicode(str(contour))+u'];'
                         csvdata += cnt+prefix+name+u';;'+sx+sy+u';;;'+pref+hold+u'\n'
-                    
+
             if len(polygon) >= ringq+2:
                 csvdata +=u';;;;;;;;;;;\n'
             ringq += 1
 
-        return csvdata    
-                        
+        return csvdata
+
     # Упорядочить точки (первая на северо-западе)
-    
+
     def doChangePointPos(self):
         try:
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
@@ -598,7 +598,7 @@ class QVertex:
                     idx = iter
                 iter += 1
         return iter
-    
+
     def changeGeometryPointOrder(self, ring, newPointIdx):
         if newPointIdx == 0:
             return ring

@@ -161,14 +161,14 @@ class CatalogData():
             self.calculateOnlyXY()
         else:
             self.calculate()
-    
+
     def convertGeom(self, g):
         pass
-      
+
     def convertCoordinate(self, point):
         trpoint = self.transform.transform(point)
         return trpoint
-    
+
     def prepare_data(self):
         # Создаётся на один объект
         nameidx = self.pointLayer.fieldNameIndex('name')
@@ -222,7 +222,7 @@ class CatalogData():
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(node.x(), node.y()))):
                         name += unicode(pointfeature.attribute(u'name'))
                 list_ponts.append([x, y, name])
-                #print str(name) + str(node.x()) + ";" + str(node.y())
+                #print str(x) + ";" + str(y)
             self.zu.append(list_ponts)
         self.zu_multi.append(self.zu)
 
@@ -293,21 +293,18 @@ class CatalogData():
             #print [iter_contour]
             self.catalog += u'<BR/><strong>Общая площадь: {0} кв.м Общий периметр: {1} м</strong>'.format(str(int(sum(self.area))),
                                                                                                  str(sum(self.perimeter)))
-    
+
     def calculateOnlyXY(self):
         iter_contour = 0
         iter_ring = 0
         catalog_all_data = u''  # вся ведомость со всеми контурами
-        
+
         if self.features[0].attributes()[self.features[0].fieldNameIndex('name')] <> None:
             name = self.features[0].attributes()[self.features[0].fieldNameIndex('name')]
             self.catalog += (u'<h4>Условный номер земельного участка ' + name + u'</h4>')
-        #else:
-            #self.catalog += (u'<h4> Условный номер земельного участка </h4>')    
-            
+
         if self.multi:
-            #print [iter_contour]
-            self.catalog += u'<strong>Площадь земельного участка: {0} кв.м</strong>'.format(str(int(sum(self.area))))    
+            self.catalog += u'<strong>Площадь земельного участка: {0} кв.м</strong>'.format(str(int(sum(self.area))))
         for zu in self.zu_multi:
             contour_table = u''  # ведомость одного контура
             catalog_data = u''
@@ -317,20 +314,14 @@ class CatalogData():
                 contour_table += contour_header
                 contour_table += u'<p>Площадь контура {0} кв.м</p>'.format(int(self.area[iter_contour]))
             else:
-                contour_table += u'<p>Площадь земельного участка {0} кв.м</p>'.format(int(self.area[iter_contour]))    
+                contour_table += u'<p>Площадь земельного участка {0} кв.м</p>'.format(int(self.area[iter_contour]))
             contour_table += u'<TABLE CELLSPACING=\"0\" COLS=\"5\" BORDER=\"0\"><COLGROUP SPAN=\"5\" WIDTH=\"120\"></COLGROUP>{0}</TABLE>'
             empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; ' \
                     u'border-left: 1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
-            
+
             # http://htmlbook.ru/samhtml/tablitsy/obedinenie-yacheek
-            
             catalog_header += u'<tr><td rowspan=\"2\" style=\"border: 1px solid \">Обозначение характерных точек границ</td><td colspan=\"2\" align=center style=\"border: 1px solid; \">координаты, м</td></tr> \
             <tr><td align=center style=\"border: 1px solid \">X</td><td align=center style=\"border: 1px solid\">Y</td></tr>'
-
-#             catalog_header += empty.format(u'Обозначение характерных точек границ')
-#             catalog_header += empty.format(u'X, м')
-#             catalog_header += empty.format(u'Y, м')
-
             catalog_data += (catalog_header)
 
             for ring in zu:
@@ -347,25 +338,27 @@ class CatalogData():
                 # Отделение 'дырки'
                 if len(zu) > 1:
                     if iter_ring <> len(zu):
-                        print 'catch!'
+                        #print 'catch!'
                         catalog_data += empty.format(u'внутренний обход')+empty.format(u'')+empty.format(u'')
             catalog_all_data += catalog_data
             self.catalog += contour_table.format(catalog_data)
-            
+
             iter_contour += 1
             iter_ring = 0
-        
+
     def decorate_value_html(self, value, last=False, onlyXY=False):
         row1 = u'<TR>{0}</TR>'
         row2 = u'<TR>{0}</TR>'
         empty = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: ' \
                 u'1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{0}</TD>'
+        emptyCoord = u'<TD STYLE=\"border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: ' \
+                u'1px solid #000000; border-right: 1px solid #000000\" HEIGHT=\"17\" ALIGN=\"CENTER\">{:d}</TD>'
         # https://mkaz.com/2012/10/10/python-string-format/
         num = empty.format(value[0])
         #sx = '{:.2f}'.format(value[1])
-        x = empty.format(str(ceil(value[1])))
+        x = emptyCoord.format(int(math.ceil(value[1])))
         #sy = '{:.2f}'.format(value[2])
-        y = empty.format(str(ceil(value[2])))
+        y = emptyCoord.format(int(math.ceil(value[2])))
         if onlyXY:
             pass
         else:
@@ -380,7 +373,7 @@ class CatalogData():
             if not last:
                 return row1.format(data1) + row2.format(data2)
             else:
-                return row1.format(data1)    
+                return row1.format(data1)
 
     def createSvgGeodata(self, path = os.path.abspath(os.path.dirname(__file__))):
         #self.geodataSVG = drawing.Drawing(path, profile='tiny')
@@ -391,7 +384,7 @@ class CatalogData():
         #print path
 
     # http://nullege.com/codes/search/svgwrite.Drawing.rect
-    
+
     def createTableSvg(self, canvas):
         step = 3.5
         place = step
@@ -485,8 +478,8 @@ class CatalogData():
                                    fill='black', font_family='Arial', font_size='9'))
             place += step
             iter_contour +=1
-            
-    # Для новой схемы расположения ЗУ       
+
+    # Для новой схемы расположения ЗУ
     def createNewTableSvg(self, canvas):
         step = 3.5 # шаг таблицы геоданных
         step_v = 77 # шаг нового столбца
@@ -506,11 +499,9 @@ class CatalogData():
         place += step
         for zu in self.zu_multi:
             if len(self.zu_multi) > 1:
-                # наименование контура
-                
                 # Описание границ
                 self.pointDef += ('</br>' + self.pointDefOuterRing.format(iter_contour))
-                
+
                 cntName = u'Контур ' + unicode(iter_contour)
                 canvas.add(canvas.text(cntName, insert=(5 * mm, (8 + place) * mm), fill='black',
                                        font_family='Arial', font_size='11'))
@@ -518,11 +509,6 @@ class CatalogData():
                 canvas.add(canvas.text(u'Площадь контура '+str(int(self.area[iter_contour-1]))+u' кв.м', insert=((5.3 + place_v) * mm, (7.5 + place) * mm),
                                    fill='black', font_family='Arial', font_size='9'))
                 place += step
-            #else:
-                #canvas.add(canvas.text(u'Площадь земельного участка '+str(int(self.area[0])) + u' кв.м', insert=((5.3 + place_v) * mm, (7.5 + place) * mm),
-                #                   fill='black', font_family='Arial', font_size='9'))
-                #place += step
-                   
             # заголовок таблицы ЗУ
             canvas.add(canvas.rect(size=(25 * mm, 7 * mm), insert=(5 * mm, (5 + place) * mm), stroke='black',
                                 fill='none', stroke_width=0.35 * mm))
@@ -538,11 +524,11 @@ class CatalogData():
             canvas.add(
                 canvas.text(u'терных точек границ', insert=(5.3 * mm, (10+ place) * mm),
                             fill='black', font_family='Arial', font_size='9'))
-            
+
             canvas.add(
                 canvas.text(u'координаты, м', insert=(45 * mm, (7 + place) * mm),
                             fill='black', font_family='Arial', font_size='9'))
-            
+
             canvas.add(
                 canvas.text(u'X', insert=(40 * mm, (11 + place) * mm), fill='black', font_family='Arial',
                             font_size='9'))
@@ -556,11 +542,11 @@ class CatalogData():
                 if(place >= limit):
                     place = step
                     place_v += step_v
-                
+
                 if len(zu) > 1 and iter_ring > 0:
                     # Описание границ
                     self.pointDef += self.pointDefHole.format(iter_ring)
-                    
+
                     # строка-разделитель контуров
                     row_n = canvas.rect(size=(25 * mm, 3.5 * mm), insert=((5 + place_v) * mm, (5 + place) * mm), stroke='black',
                                         fill='none', stroke_width=0.35 * mm)
@@ -577,7 +563,7 @@ class CatalogData():
 
                 iter_point = 0
                 for point in ring:
-                    
+
                     if iter_point == len(ring) - 1:
                         # Описание границ
                         self.pointDef += point[2]
@@ -601,22 +587,16 @@ class CatalogData():
                         canvas.text(point[2], insert=((place_v + 6) * mm, (7.5 + place) * mm),
                                     fill='black', font_family='Arial', font_size='9'))
                     canvas.add(
-                        canvas.text(str(ceil(point[0])), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text(str(math.ceil(point[0])), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
-#                     canvas.add(
-#                         canvas.text('{:.2f}'.format(point[0]), insert=((30.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
-#                                     font_size='9'))
-#                     canvas.add(
-#                         canvas.text('{:.2f}'.format(point[1]), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
-#                                     font_size='9'))
                     canvas.add(
-                        canvas.text(str(ceil(point[1])), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
+                        canvas.text(str(math.ceil(point[1])), insert=((55.3 + place_v) * mm, (7.5 + place) * mm), fill='black', font_family='Arial',
                                     font_size='9'))
-                    
+
                     place += step
                     iter_point += 1
                 iter_ring += 1
-            
+
             place += step
             iter_contour +=1
-        self.pointDef += '</p></BODY></HTML>'               
+        #self.pointDef += '</p></BODY></HTML>'
