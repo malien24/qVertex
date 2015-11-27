@@ -1,0 +1,208 @@
+{
+    "Base layers": [
+        "Open topo map", 
+        "CartoDB"
+    ], 
+    "Deploy": {
+        "GeoServer password": "geoserver", 
+        "GeoServer url": "http://localhost:8080/geoserver", 
+        "GeoServer username": "admin", 
+        "GeoServer workspace": "mywebapp", 
+        "PostGIS database": "database", 
+        "PostGIS host": "localhost", 
+        "PostGIS password": "postgres", 
+        "PostGIS port": "5432", 
+        "PostGIS schema": "mywebapp", 
+        "PostGIS username": "postgres"
+    }, 
+    "Groups": {}, 
+    "Layers": [
+        {
+            "allowSelection": true, 
+            "clusterColor": "#3399CC", 
+            "clusterDistance": 0, 
+            "layer": "\u0417\u043e\u043d\u044b", 
+            "method": 0, 
+            "popup": "", 
+            "refreshInterval": 0, 
+            "showInControls": true, 
+            "showInOverview": true, 
+            "singleTile": false, 
+            "timeInfo": null, 
+            "visible": true
+        }, 
+        {
+            "allowSelection": true, 
+            "clusterColor": "#3399CC", 
+            "clusterDistance": 0, 
+            "layer": "\u0417\u0423", 
+            "method": 0, 
+            "popup": "", 
+            "refreshInterval": 0, 
+            "showInControls": true, 
+            "showInOverview": true, 
+            "singleTile": false, 
+            "timeInfo": null, 
+            "visible": true
+        }, 
+        {
+            "allowSelection": true, 
+            "clusterColor": "#3399CC", 
+            "clusterDistance": 0, 
+            "layer": "\u041e\u041a\u0421", 
+            "method": 0, 
+            "popup": "", 
+            "refreshInterval": 0, 
+            "showInControls": true, 
+            "showInOverview": true, 
+            "singleTile": false, 
+            "timeInfo": null, 
+            "visible": true
+        }, 
+        {
+            "allowSelection": true, 
+            "clusterColor": "#3399CC", 
+            "clusterDistance": 0, 
+            "layer": "\u0427\u0430\u0441\u0442\u0438 \u0433\u0440\u0430\u043d\u0438\u0446", 
+            "method": 0, 
+            "popup": "", 
+            "refreshInterval": 0, 
+            "showInControls": true, 
+            "showInOverview": true, 
+            "singleTile": false, 
+            "timeInfo": null, 
+            "visible": true
+        }, 
+        {
+            "allowSelection": true, 
+            "clusterColor": "#3399CC", 
+            "clusterDistance": 0, 
+            "layer": "\u0422\u043e\u0447\u043a\u0438", 
+            "method": 0, 
+            "popup": "", 
+            "refreshInterval": 0, 
+            "showInControls": true, 
+            "showInOverview": true, 
+            "singleTile": false, 
+            "timeInfo": null, 
+            "visible": true
+        }
+    ], 
+    "Settings": {
+        "App view CRS": "EPSG:3857", 
+        "Extent": "Canvas extent", 
+        "Group base layers": true, 
+        "Logo": "", 
+        "Max zoom level": "32", 
+        "Min zoom level": "1", 
+        "Minify JavaScript": false, 
+        "Precision for GeoJSON export": "2", 
+        "Restrict to extent": false, 
+        "Show popups on hover": false, 
+        "Theme": {
+            "Css": "/*General*/\n.toggle {\n  width: 100px;\n}\n\nhtml, body {\n    height: 100%;\n    padding: 0;\n    margin: 0;\n    font-family: sans-serif;\n    font-size: small;\n}\n\n\n\n#map {\n    width: 100%;\n    height: 100%;\n}\n\n#content {\n    width: 100%;\n    height:  100%;\n}\n\n/*Slide menu*/\n#slideout{\n    position: fixed;\n    top: 0px;\n    right: 50%;\n    height: 25px;\n    width: 100px;\n    padding: 0;\n    text-align: center;\n    background: white;\n    background-color: white;\n    -webkit-transition-duration: 0.3s;\n    -moz-transition-duration: 0.3s;\n    transition-duration: 0.3s;\n    -o-transition-duration: 0.3s;\n    -webkit-border-radius: 0 0px 5px 5px;\n    -moz-border-radius: 0 0px 5px 5px;\n    border-radius: 0 0px 5px 5px;\n    border-color:black;\n    z-index: 100;\n    color: black;\n    border-style: solid;\n    border-width: 0px 1px 1px 1px;\n    font-weight: bold;\n    padding-top: 3px;\n}\n#slideout_inner{\n    position: fixed;\n    left: 0px;\n    top: -52px;\n    padding: 0px;\n    height: 52px;\n    width: 100%;\n    -webkit-transition-duration: 0.3s;\n    -moz-transition-duration: 0.3s;\n    transition-duration: 0.3s;\n    -o-transition-duration: 0.3s;\n    text-align: left;\n    -webkit-border-radius: 0 0 5px 0;\n    -moz-border-radius: 0 0 5px 0;\n    border-radius: 0 0 5px 0;\n    z-index: 100;\n    color: black;\n    border-color:black;\n    border-style: solid;\n    border-width: 0px 0px 1px 0px;\n    font-weight: normal;\n    background: white;\n    background-color: white;\n}\n\n#slideout:hover {\n    top: 52px;\n    z-index: 100;\n}\n\n#slideout:hover #slideout_inner {\n    top: 0;\n    z-index: 100;\n}\n#slideout:hover {\n    top: 50px;\n    z-index: 100;\n}\n#slideout:hover #slideout_inner {\n    top: 0;\n    z-index: 100;\n}\n\n/*Popup*/\n.ol-popup {\n    display: none;\n    position: absolute;\n    background-color: white;\n    -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);\n    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));\n    padding: 15px;\n    padding-top:35px;\n    border-radius: 10px;\n    border: 1px solid #cccccc;\n    bottom: 12px;\n    left: -50px;\n    height: auto;\n    width: auto;\n    min-width: 250px;\n    max-height: 350px;\n    max-width: 500px;\n}\n\n.popup-content{\n    overflow: auto;\n    height: auto;\n    width: auto;\n    min-width: 250px;\n    max-height: 300px;\n    max-width: 500px;\n}\n\n.closer-icon {\n  font-size: 30px;\n  font-weight: bold;\n  line-height: 18px;\n  color: #000000;\n  text-shadow: 0 1px 0 #ffffff;\n  opacity: 0.8;\n  filter: alpha(opacity=80);\n  text-decoration: none;\n  position: absolute;\n  top: 8px;\n  right: 8px;\n}\n.closer-icon:hover {\n  color: #000000;\n  text-decoration: none;\n  opacity: 1;\n  filter: alpha(opacity=100);\n  cursor: pointer;\n}\n\n.popup-table{\n  width:100%;\n}\n.popup-table tbody tr:nth-child(odd) {\n   background-color: #ccc;\n}\n\n.popup-table th {\n    text-align: center;\n}\n\n.popup-table th, td {\n    padding: 6px;\n}", 
+            "Name": "fullscreen"
+        }, 
+        "Title": "My Web App", 
+        "Use layer scale dependent visibility": true, 
+        "Use view CRS for WFS connections": true, 
+        "Zoom level when zooming to point feature": "16"
+    }, 
+    "Widgets": {
+        "aboutpanel": {
+            "Css": ".about-panel {\n    display: block;\n    position: absolute;\n    background:rgba(255,255,255,0.7);\n    padding: 15px;\n    border-radius: 5px;\n    border: 1px solid #000000;\n    top: 100px;\n    left: 50px;\n    height: 500px;\n    width: 300px;\n    min-width: 300px;\n    z-index: 100\n}", 
+            "Parameters": {
+                "content": "<h1>Panel Title</h1>\n<p>This is the description of my web app</p>", 
+                "isClosable": true, 
+                "showNavBarLink": true
+            }
+        }, 
+        "addlayer": {
+            "Css": "", 
+            "Parameters": {}
+        }, 
+        "attribution": {
+            "Css": ".ol-attribution {\n  text-align: right;\n  bottom: .5em;\n  right: .5em;\n  max-width: calc(100% - 1.3em);\n}\n\n.ol-attribution ul {\n  margin: 0;\n  padding: 0 .5em;\n  font-size: .7rem;\n  line-height: 1.375em;\n  color: #000;\n  text-shadow: 0 0 2px #fff;\n}\n\n.ol-attribution li {\n  display: inline;\n  list-style: none;\n  line-height: inherit;\n}\n\n.ol-attribution li:not(:last-child):after {\n  content: \" \";\n}\n\n.ol-attribution img {\n  max-height: 2em;\n  max-width: inherit;\n}\n\n.ol-attribution button,.ol-attribution ul {\n  display: inline-block;\n}\n\n.ol-attribution.ol-collapsed ul {\n  display: none;\n}\n\n.ol-attribution.ol-logo-only ul {\n  display: block;\n}\n\n.ol-attribution:not(.ol-collapsed) {\n  background: rgba(255,255,255,.8);\n}\n\n.ol-attribution.ol-uncollapsible {\n  bottom: 0;\n  right: 0;\n  border-radius: 4px 0 0;\n  height: 1.1em;\n  line-height: 1em;\n}\n\n.ol-attribution.ol-logo-only {\n  background: 0 0;\n  bottom: .4em;\n  height: 1.1em;\n  line-height: 1em;\n}\n\n.ol-attribution.ol-uncollapsible img {\n  margin-top: -.2em;\n  max-height: 1.6em;\n}\n\n.ol-attribution.ol-logo-only button,.ol-attribution.ol-uncollapsible button {\n  display: none;\n}\n", 
+            "Parameters": {}
+        }, 
+        "fullscreen": {
+            "Css": ".ol-full-screen {\n  right: 10px;\n  top: 10px;\n}\n\nbutton.ol-full-screen-false:after {\n  content: \"\\2194\";\n}\n\nbutton.ol-full-screen-true:after {\n  content: \"\\00d7\";\n}", 
+            "Parameters": {}
+        }, 
+        "geocoding": {
+            "Css": ".geocoding-results {\n    display: none;\n    position: absolute;\n    background:rgba(255,255,255, 1);\n    padding: 15px;\n    border: 1px solid #000000;\n    top: 0px;\n    right: 0px;\n    max-width: 50%;\n    z-index: 1111\n}", 
+            "Parameters": {}
+        }, 
+        "geolocation": {
+            "Css": ".geolocation-control {\n  top: 130px;\n  left: .5em;\n}\n\n.geolocation-control button {\n    float: right;\n    background-image: url('data:image/png;base64,R0lGODlhEAAQALMAAJmZzMzM/2aZzJnM/2bM/8DAwPf3583NzczMzAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAAUALAAAAAAQABAAQARVsMhJqxzCYMPFMB4VCAJyGAdCBtVYnulqScFgs9aIGAApAAYVrqDj+YDCWe02azqJPd9vOOntaoHgj4I5jD6YwCF0EXgFBI1ATJZYDVgtIBc9Up+WCAA7') /*logo.png*/;\n    background-repeat: no-repeat;\n    background-position: 2px;\n    border: none;\n}", 
+            "Parameters": {}
+        }, 
+        "layerslist": {
+            "Css": ".layer-switcher {\n    position: absolute;\n    top: 3.5em;\n    right: 0.5em;\n    text-align: left;\n}\n\n.layer-tree-panel {\n    padding-right: 50px;\n    border: 1px solid #cccccc;\n    background-color: white;\n    overflow: auto;\n    height: auto;\n    max-height:500px;\n}\n\n.layer-switcher .layer-tree-panel {\n    display: none;\n}\n\n.layer-switcher.shown .layer-tree-panel {\n    display: block;\n}\n\n.layer-switcher button {\n    float: right;\n    width: 38px;\n    height: 38px;\n    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAACE1BMVEX///8A//8AgICA//8AVVVAQID///8rVVVJtttgv98nTmJ2xNgkW1ttyNsmWWZmzNZYxM4gWGgeU2JmzNNr0N1Rwc0eU2VXxdEhV2JqytQeVmMhVmNoydUfVGUgVGQfVGQfVmVqy9hqy9dWw9AfVWRpydVry9YhVmMgVGNUw9BrytchVWRexdGw294gVWQgVmUhVWPd4N6HoaZsy9cfVmQgVGRrytZsy9cgVWQgVWMgVWRsy9YfVWNsy9YgVWVty9YgVWVry9UgVWRsy9Zsy9UfVWRsy9YgVWVty9YgVWRty9Vsy9aM09sgVWRTws/AzM0gVWRtzNYgVWRuy9Zsy9cgVWRGcHxty9bb5ORbxdEgVWRty9bn6OZTws9mydRfxtLX3Nva5eRix9NFcXxOd4JPeINQeIMiVmVUws9Vws9Vw9BXw9BYxNBaxNBbxNBcxdJexdElWWgmWmhjyNRlx9IqXGtoipNpytVqytVryNNrytZsjZUuX210k5t1y9R2zNR3y9V4lp57zth9zdaAnKOGoaeK0NiNpquV09mesrag1tuitbmj1tuj19uktrqr2d2svcCu2d2xwMO63N+7x8nA3uDC3uDFz9DK4eHL4eLN4eIyYnDX5OM5Z3Tb397e4uDf4uHf5uXi5ePi5+Xj5+Xk5+Xm5+Xm6OY6aHXQ19fT4+NfhI1Ww89gx9Nhx9Nsy9ZWw9Dpj2abAAAAWnRSTlMAAQICAwQEBgcIDQ0ODhQZGiAiIyYpKywvNTs+QklPUlNUWWJjaGt0dnd+hIWFh4mNjZCSm6CpsbW2t7nDzNDT1dje5efr7PHy9PT29/j4+Pn5+vr8/f39/f6DPtKwAAABTklEQVR4Xr3QVWPbMBSAUTVFZmZmhhSXMjNvkhwqMzMzMzPDeD+xASvObKePPa+ffHVl8PlsnE0+qPpBuQjVJjno6pZpSKXYl7/bZyFaQxhf98hHDKEppwdWIW1frFnrxSOWHFfWesSEWC6R/P4zOFrix3TzDFLlXRTR8c0fEEJ1/itpo7SVO9Jdr1DVxZ0USyjZsEY5vZfiiAC0UoTGOrm9PZLuRl8X+Dq1HQtoFbJZbv61i+Poblh/97TC7n0neCcK0ETNUrz1/xPHf+DNAW9Ac6t8O8WH3Vp98f5lCaYKAOFZMLyHL4Y0fe319idMNgMMp+zWVSybUed/+/h7I4wRAG1W6XDy4XmjR9HnzvDRZXUAYDFOhC1S/Hh+fIXxen+eO+AKqbs+wAo30zDTDvDxKoJN88sjUzDFAvBzEUGFsnADoIvAJzoh2BZ8sner+Ke/vwECuQAAAABJRU5ErkJggg==') /*logo.png*/;\n    background-repeat: no-repeat;\n    background-position: 2px;\n    background-color: white;\n    border: none;\n}\n\n.layer-switcher button:focus, .layer-switcher button:hover {\n    background-color: white;\n}\n\n.layer-tree-panel  li {\n    list-style-type:none;\n    margin:0;\n    padding:10px 5px 10px 5px;\n    position:relative;\n}\n.layer-tree-panel  li::before, .layer-tree-panel  li::after {\n    content:'';\n    left:-20px;\n    position:absolute;\n    right:auto\n}\n.layer-tree-panel  li::before {\n    border-left:1px solid #999;\n    bottom:50px;\n    height:100%;\n    top:0;\n    width:1px\n}\n.layer-tree-panel  li::after {\n    border-top:1px solid #999;\n    height:20px;\n    top:25px;\n    width:25px\n}\n.layer-tree-panel  li span {\n    display:inline-block;\n    padding:3px 8px;\n    text-decoration:none\n}\n.layer-tree-panel  li.parent_li>span {\n    cursor:pointer\n}\n.layer-tree-panel >ul>li::before, .layer-tree-panel >ul>li::after {\n    border:0\n}\n.layer-tree-panel  li:last-child::before {\n    height:30px\n}\n", 
+            "Parameters": {
+                "allowFiltering": true, 
+                "allowReordering": false, 
+                "expandOnHover": true, 
+                "showDownload": false, 
+                "showOpacity": false, 
+                "showZoomTo": false, 
+                "tipLabel": "Layers"
+            }
+        }, 
+        "legend": {
+            "Css": ".legend {\n    position: absolute;\n    top: 7.5em;\n    right: 0.5em;\n    text-align: left;\n}\n\n.legend-panel {\n    padding-right: 50px;\n    border: 1px solid #cccccc;\n    background-color: white;\n    height: auto;\n    max-height:500px;\n    overflow: auto;\n\n}\n\n.legend .legend-panel {\n    display: none;\n}\n\n.legend.shown .legend-panel {\n    display: block;\n}\n\n.legend button {\n    float: right;\n    width: 38px;\n    height: 38px;\n    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABSRJREFUeNq8V11oHFUU/u69sz+hTbJ5aKVIxL6klqJgsUrEmpRUGg2WKtJImvpLEUUwte2DIMWI0IeW2ioWKooVmmr0pfj3oqmJ+KIGpUKhBrTqQkClBtLUZLMz93rOnZ+d2Z3V0tVMmWbu7/nOd8537l0BwNmx98jpsmf6PG2wFI+SAhklPh45NLTNoXYTGx89PIT5y5eWBEDTsmb0P3ukjz8ZQN7ztB34pThN/0sIIVKWGRhDb0Om/dVrb1iDwGaeAYhwU6UcoiYLRzqQFoSwizQZ9rSLsi7TX68x943xnfFbwomjyzl5HPviKCamPicACoyB52vjoatjE57qegYld5H69NUDECZigp8YAEqMjIPxH85gdM9bOFf8mnok+4917bfiwcOPYqhnH7VcAuQzkxaPsCuKookC6DuPhH0kGFBSkecSv88W8en5dy0L7P2K1lUERVmAUDmaqy0LRtfmRJgnUkobQARtDqPr+Wt4fQoA2ptpJ1MzpWkUWgrWqIZn24KAZVUGdw7uBn2iu+deaK2TAGyuGLz0eBc2DuzF5i33+UCtcYP9D91OQHQdBmiSkH7izZk/0NrSbBXBaLnNi9jc+MjBCgMmRmuMAZcSdeLUQZ+BgPqQAfIyMT/BAHvJG5edP9HW1hypgNuMXJN35bJrN6uxXJUH2tO1uWGY33oAmD7617NuC1458RnFvzKkjWv7XRrXoYjElSi+SgCUmdUlJsGAR8uG+vZj37YXKYkq/RRquOR5qTQbbXTVKhT1VMAjmTyK7/Vi9tsx38NwMr2t63twzQMfQBIbaKAOWPAyrQ5wfEhiM5Nj2HTgO6A4xrqwvKC9B+PP3YxV/TkItUBzvagO1NN9oiaEflCYbYXVaQxIBqD870tTwPmjfqFkjwvtjA+ZnIKj8pRInk1WTkbWNUtbKRllfVhx2WA4xvPKrhfkj6ijgjDu5Z9AMqAO5XtLbV7CdWh935NwhEbX5q2U6Z6V1qt7tuKmvl1W97bwBMXHC8ZuvGcXumn+oad7qU7olCQ0YSEKkRQJwHLqJ0RkjNvWI/o8++FxAhMwoH1jLnl29qPXKwyYCuU89j2N8TczYENgD5nUOhCAaaJjeWWLzQt7eGSmbb8XqCHKAVTKgWe89IMvGDMBKBmXV/VZILXAis67MTF8OqlzWrmS+iXR59lSamJHWH3hx8dEoACfgRoA/mqFEtY+8gnUY7WbsfcLC/M2KsY0UAdkXN9VxzHfj544OYFTkz/be1s4jQ+YgVuux7H+2zDvSegG7kXSZnqVCqLtMhInv/oRk8MP45tfZ1mZVkYbrmvBhhfexvHBTjiaRGhqBW+AZJkNDqBaBpIRc6ruq1YJ07MlvH/uov1mY9cWcr5CZBb5pkwlw+yJ6Bviv4rvAKJyLHPWV8sulYF4GHiD3/5ySYXZ4D4kbFsGazq6B8gLSfcBqgPai876E8ODWH3HdtzVe7+9J7DxN57vT96EUs6RWgC04OKiRFtzPiBK2Hb4TI2/E0t7E7FhCMyFL0dj/DMIXXMCSvmPAPyYz1EFLLQsiwDMEW3hjxbNtFZf7qIcMImk0Ma/Y1TfOVIqYYWjnZ0dOPDmCMW8gpQN7uxcE10ua0QfSdsk+mTKsa1CBkxchrGJr+3YaN961wyuZLKBnwUiBBDYtAAcdaVbisoGDT6hTQsg66i57btfXm4vjeZ//oFKnrNxthmW6wK9q+ltw7/e9P6zh72cofeCPebp5ZTPYmmfRXov/y3AALnphTWuCyuxAAAAAElFTkSuQmCC');\n    background-repeat: no-repeat;\n    background-position: 2px;\n    background-color: white;\n    border: none;\n}\n\n.legend button:focus, .legend button:hover {\n    background-color: white;\n}\n\n.expandableList ul {\n  padding: 0 0 0 30px;\n  width: 300px;\n}\n\n.expandableList li\n  {\n    position: relative;\n    list-style: none;\n    margin-left: -15px;\n    margin-top:15px;\n    padding: 0;\n  }\n.expandableList  li input\n  {\n    position: absolute;\n    left: 0;\n    margin-left: 0;\n    opacity: 0;\n    z-index: 2;\n    cursor: pointer;\n    height: 1em;\n    width: 1em;\n    top: 0;\n  }\n.expandableList li input + ul\n    {\n      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAURJREFUeNpi/P//PwMlgImBQkCxASwwRlLLKwYmJqZgRkbGbiBXEYva+0Dvlv7792/tvBoxTAO+fv0MororE6UU9VU5MHRfvP1DsX3+M5DhaxkYxDC98ObNGxBW1FVmY/j16xcYu6SdYvjw4QPDixcvGGSEvoLlQeqweuHdu7dg+vfv32D85ctXsNijR4/B4hwcnHA1WA348uUbmP779y+DUchOuIKQsltgetsUE7garAb8/w9h/vz5h+H0Sk8w2yRsN8OZVa5g9ocPn+BqsBrAzs4PdQEzw48ff+Fi375B2Gxs3HA1WNPB45NlDNzcIvfPXv8LVMwJxmdWOcDZF2//A8uD1GF1wefXZ8Q+Pt42oWN+VBED41d5DKv+/30IlJ8IVCcF5D2DCTPC8gIwAXEDKT4Qk0Di+wzU8xnDgKGbmQACDAAtTZadqmiADQAAAABJRU5ErkJggg==') 40px 0px no-repeat;\n      margin: -22px 0 0 -44px; /* 15px */\n      height: 1em;\n    }\n.expandableList li input + ul > li { display: none; margin-left:-14px !important; padding-left: 1px; }\n.expandableList li label\n  {\n    cursor: pointer;\n    display: block;\n    padding-left: 20px;\n  }\n\n.expandableList li input {\n    display: none;\n}\n\n.expandableList li input:checked + ul\n  {\n    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAASxJREFUeNpi/P//PwMlgImBQkCxASwwRlLLKwYmJqZgRkbGbiBXEYva+0Dvlv7792/tvBoxTAO+fv0MororE6UU9VU5MHRfvP1DsX3+M5DhaxkYsBjw5s0bEKWoq6zA8OvXL7AYKIC/f//O8OPHDwYZIVaQGqjLlDENePfuLZj+/fs3GH/58pXh/fv3YDYIcHBwwtVgDYMvX76B6b9//zIYhezEULhtiglcDVYD/v+HMH/+/MNweqUnhsIPHz7B1WA1gJ2dH+oCZqCf/2IoZGPjhqvBmg4enyxj4OYWuX/2+l+gYk4MfPH2P7A8SB1WF3x+fUbs4+NtEzrmRxUxMH6Vx7Dq/9+HQPmJQHVSQN4zmDAjLC8AExA3kOIDMQkkvs9APZ8xDBi6mQkgwADDMYZH9Ls66AAAAABJRU5ErkJggg==') 40px 0px no-repeat;\n    margin: -22px 0 0 -44px; /* 20px */\n    padding: 1.563em 0 0 80px;\n    height: auto;\n  }\n.expandableList li input:checked + ul > li { display: block; margin: 0 0 0.125em;  /* 2px */}\n.expandableList li input:checked + ul > li:last-child { margin: 0 0 0.063em; /* 1px */ }\n", 
+            "Parameters": {
+                "expandOnHover": true, 
+                "showExpandedOnStartup": false, 
+                "size": 20
+            }
+        }, 
+        "links": {
+            "Css": "", 
+            "Parameters": {
+                "links": {}
+            }
+        }, 
+        "measuretools": {
+            "Css": ".tooltip {\n  position: relative;\n  background: rgba(0, 0, 0, 0.5);\n  border-radius: 4px;\n  color: white;\n  padding: 4px 8px;\n  opacity: 0.7;\n  white-space: nowrap;\n}\n.tooltip-measure {\n  opacity: 1;\n  font-weight: bold;\n}\n.tooltip-static {\n  background-color: #ffcc33;\n  color: black;\n  border: 1px solid white;\n}\n.tooltip-measure:before,\n.tooltip-static:before {\n  border-top: 6px solid rgba(0, 0, 0, 0.5);\n  border-right: 6px solid transparent;\n  border-left: 6px solid transparent;\n  content: \"\";\n  position: absolute;\n  bottom: -6px;\n  margin-left: -7px;\n  left: 50%;\n}\n.tooltip-static:before {\n  border-top-color: #ffcc33;\n}\n\n.form-inline > * {\n   margin:5px 3px;\n}\n", 
+            "Parameters": {}
+        }, 
+        "mouseposition": {
+            "Css": ".ol-mouse-position {\n  top: 10px;\n  right: 70px;\n  position: absolute;\n  color: #fff;\n  background-color: rgba(0,60,136,.5);\n  padding: 2px 10px;\n  border-radius: 5px;\n}", 
+            "Parameters": {
+                "coordinateFormat": "ol.coordinate.createStringXY(4)", 
+                "projection": "EPSG:4326", 
+                "undefinedHTML": "&nbsp;"
+            }
+        }, 
+        "overviewmap": {
+            "Css": ".ol-overviewmap {\n  position: absolute;\n  left: .5em;\n  bottom: .5em;\n}\n\n.ol-overviewmap.ol-uncollapsible {\n  bottom: 0;\n  left: 0;\n  border-radius: 0 4px 0 0;\n}\n\n.ol-overviewmap .ol-overviewmap-map,.ol-overviewmap button {\n  display: inline-block;\n}\n\n.ol-overviewmap .ol-overviewmap-map {\n  border: 1px solid #7b98bc;  heght: 150px;\n  margin: 2px;\n  width: 200px;\n  height: 200px;\n}\n\n.ol-overviewmap:not(.ol-collapsed) button {\n  bottom: 1px;\n  left: 2px;\n  position: absolute;\n}\n\n.ol-overviewmap.ol-collapsed .ol-overviewmap-map,.ol-overviewmap.ol-uncollapsible button {\n  display: none;\n}\n\n.ol-overviewmap:not(.ol-collapsed) {\n  background: rgba(255,255,255,.8);\n}\n\n.ol-overviewmap-box {\n  border: 2px dotted rgba(0,60,136,.7);\n}\n", 
+            "Parameters": {
+                "Base layer": "Use main map base layer", 
+                "Collapsed": true
+            }
+        }, 
+        "scalebar": {
+            "Css": ".ol-scale-line {\n  background: #95b9e6;\n  background: rgba(0,60,136,.3);\n  border-radius: 4px;\n  bottom: 8px;\n  left: 8px;\n  padding: 2px;\n  position: absolute;\n}\n\n.ol-scale-line-inner {\n  border: 1px solid #eee;\n  border-top: none;\n  color: #eee;\n  font-size: 10px;\n  text-align: center;\n  margin: 1px;\n  padding: 0 2px;\n}", 
+            "Parameters": {
+                "minWidth": 64, 
+                "units": "metric"
+            }
+        }, 
+        "selectiontools": {
+            "Css": "", 
+            "Parameters": {}
+        }, 
+        "zoomcontrols": {
+            "Css": ".ol-zoom {\n  top: .5em;\n  left: .5em;\n}\n.ol-zoom .ol-zoom-in {\n  border-radius: 2px 2px 0 0;\n}\n\n.ol-zoom .ol-zoom-out {\n  border-radius: 0 0 2px 2px;\n}", 
+            "Parameters": {
+                "delta": 1.2, 
+                "duration": 250, 
+                "zoomInLabel": "+", 
+                "zoomInTipLabel": "Zoom in", 
+                "zoomOutLabel": "-", 
+                "zoomOutTipLabel": "Zoom out"
+            }
+        }
+    }
+}
