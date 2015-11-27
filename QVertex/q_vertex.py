@@ -36,7 +36,7 @@ from PyQt4.QtGui import *
 from qgis.gui import QgsMessageBar
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools'))
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/tools/svgwrite'))
-from tools.createpoints import CreatePoints
+from createpoints import CreatePoints
 from tools.createCoordCatalog import CreateCoordCatalog
 from tools.createGeodata import CreateGeodata
 import shutil
@@ -214,10 +214,8 @@ class QVertex:
         self.qvertex_createPoint.setEnabled(True)
         #self.qvertex_createPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
 
-        self.qvertex_createNewPoint = QAction(u"Создать новые характерные точки", self.iface.mainWindow())
-        self.qvertex_createNewPoint.setEnabled(True)
         #self.qvertex_createNewPoint.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
-        self.pointMenu.addActions([self.qvertex_createVertex, self.qvertex_createPoint, self.qvertex_createNewPoint])
+        self.pointMenu.addActions([self.qvertex_createVertex, self.qvertex_createPoint])
         self.menu.addMenu(self.pointMenu)
 
         self.qvertex_createBoundPart = QAction(u"Создать части границ", self.iface.mainWindow())
@@ -261,7 +259,6 @@ class QVertex:
         QObject.connect(self.qvertex_createProject, SIGNAL("triggered()"), self.doCreateProject)
         QObject.connect(self.qvertex_createVertex, SIGNAL("triggered()"), self.doCreatePublicVertexes)
         QObject.connect(self.qvertex_createPoint, SIGNAL("triggered()"), self.doCreatepoint)
-        QObject.connect(self.qvertex_createNewPoint, SIGNAL("triggered()"), self.doCreateNewpoint)
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
         QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
         QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
@@ -374,10 +371,10 @@ class QVertex:
         #del(dlg)
 
     def doCreatepoint(self):
-        CreatePoints(self.iface, False)
+        CreatePoints(self.iface)
 
-    def doCreateNewpoint(self):
-        CreatePoints(self.iface, True)
+    # def doCreateNewpoint(self):
+    #     CreatePoints(self.iface, True)
 
     def doCreateCoordcatalog(self):
         if self.dlg_coordcatalog is None:
