@@ -56,7 +56,7 @@ class CreatePoints():
                                 if self.checkExistPoint(i, True):
                                     countExist += 1
                                     self.createPointOnLayer(i, countExist, False)
-                                elif not self.checkExistPoint(i, False):
+                                if not self.checkExistPoint(i, False):
                                     countNew += 1
                                     self.createPointOnLayer(i, countNew, True)
             else:
@@ -70,7 +70,7 @@ class CreatePoints():
                             if self.checkExistPoint(i, True):
                                 countExist += 1
                                 self.createPointOnLayer(i, countExist, False)
-                            elif not self.checkExistPoint(i, False):
+                            if not self.checkExistPoint(i, False):
                                 countNew += 1
                                 self.createPointOnLayer(i, countNew, True)
 
@@ -106,7 +106,7 @@ class CreatePoints():
         for feature in features:
             if feature.geometry().intersects(geom):
                 return True
-
+        return False
 
     def getLastPointIndexes(self):
         maxValue = 0

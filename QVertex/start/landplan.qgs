@@ -26,10 +26,10 @@
   <mapcanvas>
     <units>degrees</units>
     <extent>
-      <xmin>84.8466926351918147</xmin>
-      <ymin>56.41141131319328395</ymin>
-      <xmax>84.84907561233031004</xmax>
-      <ymax>56.41250239267093036</ymax>
+      <xmin>84.84621774597798094</xmin>
+      <ymin>56.411589023331004</ymin>
+      <xmax>84.84740923454700123</xmax>
+      <ymax>56.41213456306778085</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -2122,7 +2122,7 @@
         </edittype>
       </edittypes>
     </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+    <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>Точки20151127170916347</id>
       <datasource>dbname='./data/storage.sqlite' key='ROWID' table="Точки" (Geometry) sql=</datasource>
       <title></title>
@@ -2144,7 +2144,7 @@
         </spatialrefsys>
       </srs>
       <provider encoding="UTF-8">spatialite</provider>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE( "name", '&lt;NULL>' )</previewExpression>
       <vectorjoins/>
       <expressionfields/>
       <map-layer-style-manager current="">
@@ -2248,7 +2248,7 @@
         <property key="labeling/centroidWhole" value="false"/>
         <property key="labeling/decimals" value="3"/>
         <property key="labeling/displayAll" value="false"/>
-        <property key="labeling/dist" value="0"/>
+        <property key="labeling/dist" value="2"/>
         <property key="labeling/distInMapUnits" value="false"/>
         <property key="labeling/distMapUnitMaxScale" value="0"/>
         <property key="labeling/distMapUnitMinScale" value="0"/>
@@ -2788,17 +2788,17 @@
     </Paths>
     <WMSServiceTitle type="QString"></WMSServiceTitle>
     <WFSLayers type="QStringList"/>
+    <WMSRestrictedLayers type="QStringList"/>
     <WMSContactMail type="QString"></WMSContactMail>
     <WMSRestrictedComposers type="QStringList"/>
-    <WMSRestrictedLayers type="QStringList"/>
     <PositionPrecision>
       <DecimalPlaces type="int">2</DecimalPlaces>
       <Automatic type="bool">true</Automatic>
       <DegreeFormat type="QString">D</DegreeFormat>
     </PositionPrecision>
     <WCSUrl type="QString"></WCSUrl>
-    <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
     <WMSContactPhone type="QString"></WMSContactPhone>
+    <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
     <WMSServiceAbstract type="QString"></WMSServiceAbstract>
     <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
     <Measure>
