@@ -36,12 +36,11 @@ class CreatePoints():
 
     def Create(self):
         self.targetLayer.startEditing()
-        self.getLastPointName()
+        self.getLastPointIndexes()
         countExist = self.existPointIndex
         countNew = self.newPointIndex
         #print u'номер последней точки ' + str(numPoint)
         for every in self.selection:
-
             geom = every.geometry()
             if geom.isMultipart():
                 #print 'Multipart geometry'
@@ -52,11 +51,12 @@ class CreatePoints():
                         for i in ring:
                             if count < len(ring) - 1:
                                 count += 1
+                                print 'counter ' + str(count)
                                 # проверка на наличие существующей точки
-                                if self.checkExistPoint(i, True):
+                                if (self.checkExistPoint(i, True)) or (self.checkExistPoint(i, False)):
                                     countExist += 1
                                     self.createPointOnLayer(i, countExist, False)
-                                if not self.checkExistPoint(i, False):
+                                else:
                                     countNew += 1
                                     self.createPointOnLayer(i, countNew, True)
             else:
@@ -66,11 +66,11 @@ class CreatePoints():
                     for i in ring:
                         if count < len(ring) - 1:
                             count += 1
-                            # проверка на наличие существующей точки
-                            if self.checkExistPoint(i, True):
+                            # проверка на наличие существующей точки в кадастре и на слое Точки
+                            if (self.checkExistPoint(i, True)) or (self.checkExistPoint(i, False)):
                                 countExist += 1
                                 self.createPointOnLayer(i, countExist, False)
-                            if not self.checkExistPoint(i, False):
+                            else:
                                 countNew += 1
                                 self.createPointOnLayer(i, countNew, True)
 
@@ -91,13 +91,13 @@ class CreatePoints():
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'type'), 0)
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'hold'), u'Закрепление отсутствует')
         self.targetLayer.dataProvider().addFeatures([feature])
-        del feature
+        del feature 
         return True
 
     # проверка на наличие существующих точек (вершин) на кадастровом слое и
     # на слое с ЗУ
     def checkExistPoint(self, point, cadastre):
-        geom = QgsGeometry.fromPoint(point)
+        geom = QgsGeometry.fromPoint(point).buffer(0.0000000002, 16)
         if cadastre:
             features = self.cadastreLayer.getFeatures()
         else:
@@ -110,6 +110,8 @@ class CreatePoints():
 
     def getLastPointIndexes(self):
         maxValue = 0
+        valExist = 0
+        valNew = 0
         featiter = self.targetLayer.getFeatures()
         for feature in featiter:
             idx = self.targetLayer.fieldNameIndex('name')
@@ -130,6 +132,7 @@ class CreatePoints():
         self.existPointIndex = int(valExist)
         self.newPointIndex = int(valNew)
 
+    # depricated
     def getLastPointName(self):
         maxValue = 0
         featiter = self.targetLayer.getFeatures()
