@@ -371,10 +371,8 @@ class QVertex:
         #del(dlg)
 
     def doCreatepoint(self):
-        CreatePoints(self.iface)
-
-    # def doCreateNewpoint(self):
-    #     CreatePoints(self.iface, True)
+        if self.isObjectsSelected():
+            CreatePoints(self.iface)
 
     def doCreateCoordcatalog(self):
         if self.dlg_coordcatalog is None:
@@ -467,8 +465,7 @@ class QVertex:
                             self.createPart(partLayer, ring)
 
             except Exception as err:
-                self.iface.messageBar().pushMessage(u'Ошибка при добавлении примыкающих вершин! ' + err.encode('UTF-8'),
-                                                                   QgsMessageBar.ERROR, 5)
+                #self.iface.messageBar().pushMessage(err, QgsMessageBar.ERROR, 5)
                 print 'error in createBoundPart!', err
             finally:
                 print 'commit'

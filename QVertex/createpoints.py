@@ -91,13 +91,13 @@ class CreatePoints():
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'type'), 0)
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'hold'), u'Закрепление отсутствует')
         self.targetLayer.dataProvider().addFeatures([feature])
-        del feature 
+        del feature
         return True
 
     # проверка на наличие существующих точек (вершин) на кадастровом слое и
     # на слое с ЗУ
     def checkExistPoint(self, point, cadastre):
-        geom = QgsGeometry.fromPoint(point).buffer(0.0000000002, 16)
+        geom = QgsGeometry.fromPoint(point).buffer(0.00000002, 16)
         if cadastre:
             features = self.cadastreLayer.getFeatures()
         else:

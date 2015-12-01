@@ -26,10 +26,10 @@
   <mapcanvas>
     <units>degrees</units>
     <extent>
-      <xmin>84.84621774597798094</xmin>
-      <ymin>56.411589023331004</ymin>
-      <xmax>84.84740923454700123</xmax>
-      <ymax>56.41213456306778085</ymax>
+      <xmin>84.84635243915357705</xmin>
+      <ymin>56.41081979313827333</ymin>
+      <xmax>84.85111842654981729</xmax>
+      <ymax>56.41300191918350038</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -47,10 +47,13 @@
     </destinationsrs>
     <layer_coordinate_transform_info>
       <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Части_границ20151127171009065"/>
+      <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="11120151201161408162"/>
       <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Зоны20151127171015177"/>
+      <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="1111120151201161512460"/>
       <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="ЗУ20151127171029079"/>
       <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Кадастр20151127170928566"/>
       <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="Точки20151127170916347"/>
+      <layer_coordinate_transform destAuthId="EPSG:4326" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="11120151201161333725"/>
     </layer_coordinate_transform_info>
   </mapcanvas>
   <visibility-presets/>
@@ -2823,11 +2826,11 @@
       <DefaultSnapToleranceUnit type="int">1</DefaultSnapToleranceUnit>
       <LayerSnappingList type="QStringList">
         <value>parts20150702142035753</value>
-        <value>Точки20151127170916347</value>
-        <value>Кадастр20151127170928566</value>
-        <value>Части_границ20151127171009065</value>
-        <value>Зоны20151127171015177</value>
         <value>ЗУ20151127171029079</value>
+        <value>Зоны20151127171015177</value>
+        <value>Кадастр20151127170928566</value>
+        <value>Точки20151127170916347</value>
+        <value>Части_границ20151127171009065</value>
       </LayerSnappingList>
       <LayerSnappingEnabledList type="QStringList">
         <value>enabled</value>
@@ -2840,16 +2843,16 @@
       <SnappingMode type="QString">advanced</SnappingMode>
       <AvoidIntersectionsList type="QStringList">
         <value>parts20150702142035753</value>
-        <value>Кадастр20151127170928566</value>
-        <value>Зоны20151127171015177</value>
         <value>ЗУ20151127171029079</value>
+        <value>Зоны20151127171015177</value>
+        <value>Кадастр20151127170928566</value>
       </AvoidIntersectionsList>
-      <IntersectionSnapping type="bool">true</IntersectionSnapping>
+      <IntersectionSnapping type="bool">false</IntersectionSnapping>
       <LayerSnappingToleranceUnitList type="QStringList">
         <value>1</value>
         <value>1</value>
         <value>1</value>
-        <value>1</value>
+        <value>0</value>
         <value>1</value>
         <value>1</value>
       </LayerSnappingToleranceUnitList>
@@ -2868,7 +2871,7 @@
         <value>5.000000</value>
         <value>5.000000</value>
         <value>5.000000</value>
-        <value>5.000000</value>
+        <value>0.000010</value>
         <value>5.000000</value>
         <value>5.000000</value>
       </LayerSnappingToleranceList>

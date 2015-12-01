@@ -335,3 +335,4 @@ docs/_build/
 /.metadata/version.ini
 /.settings/*.prefs
 /QVertex/.settings/*.prefs
+/cadtools
