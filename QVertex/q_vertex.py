@@ -10,7 +10,7 @@
         copyright            : (C) 2014 by Филиппов Владислав
         email                : filippov70@gmail.com
  ***************************************************************************/
-
+fgfgf
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,6 +19,15 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+Условности и ограничения.
+
+Для большей гибкости для многоконтурных ЗУ могут быть использованы мультиполигоны
+или несколько полигонов с укзанием порядкого номера в специальном атрибуте (order).
+
+Так как в БД SpatiaLite полигон хранящийся в таблице с типом геометрии multipolygon
+определяется как многоконтурная геометрия, то проверка if geom.isMultipart(): всегда
+будет True.
+
 """
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QObject, SIGNAL
 from PyQt4.QtGui import QAction, QIcon, QMenu, QFileDialog
@@ -294,6 +303,12 @@ class QVertex:
         else:
             return False
 
+    def isMultiPart(self, feature):
+        if feature.attribute(u'order') != NULL:
+            return True
+        elif len(feature.geometry().asMultiPolygon()) > 1:
+            return True
+
     def doCreatePublicVertexes(self):
         for clayer in self.iface.mapCanvas().layers():
             if clayer.name() == u'ЗУ':
@@ -399,45 +414,48 @@ class QVertex:
                 idx = -1
 
         for point in ring:
-            if curr < c:
-                point1 = point
-                point2 = ring[curr]
-                isEqual = False
-                pt1stst = False
-                pt2stst = False
-                curr += 1
-                #print point1, point2
-                line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()),
-                                                       QgsPoint(point2.x(), point2.y())])
-                # find point
-                for pointfeature in pointLayer.getFeatures():
-                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point1.x(), point1.y()))):
-                        name = unicode(pointfeature.attribute(u'name'))
-                        if name[0] == u'н':
-                            pt1stst = True
-                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point2.x(), point2.y()))):
-                        name = unicode(pointfeature.attribute(u'name'))
-                        if name[0] == u'н':
-                            pt2stst = True
-                # check for identity
-                features = layer.getFeatures()
-                for f in features:
-                    if line_geometry.equals(f.geometry()):
-                        self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена',
-                                                            level=QgsMessageBar.INFO)
-                        isEqual = True
-                        break
+            try:
+                if curr < c:
+                    point1 = point
+                    point2 = ring[curr]
+                    isEqual = False
+                    pt1stst = False
+                    pt2stst = False
+                    curr += 1
+                    #print point1, point2
+                    line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()),
+                                                           QgsPoint(point2.x(), point2.y())])
+                    # find point
+                    for pointfeature in pointLayer.getFeatures():
+                        if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point1.x(), point1.y()))):
+                            name = unicode(pointfeature.attribute(u'name'))
+                            if name[0] == u'н':
+                                pt1stst = True
+                        if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point2.x(), point2.y()))):
+                            name = unicode(pointfeature.attribute(u'name'))
+                            if name[0] == u'н':
+                                pt2stst = True
+                    # check for identity
+                    features = layer.getFeatures()
+                    for f in features:
+                        if line_geometry.equals(f.geometry()):
+                            # self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена',
+                            #                                     level=QgsMessageBar.INFO)
+                            isEqual = True
+                            break
 
-                if not isEqual:
-                    feat = QgsFeature()
-                    feat.setGeometry(line_geometry)
-                    typeidx = layer.fieldNameIndex('type')
-                    feat.initAttributes(1)
-                    if pt1stst or pt2stst:
-                        feat.setAttribute(typeidx, 2)
-                    else:
-                        feat.setAttribute(typeidx, 0)
-                    layer.dataProvider().addFeatures([feat])
+                    if not isEqual:
+                        feat = QgsFeature()
+                        feat.setGeometry(line_geometry)
+                        typeidx = layer.fieldNameIndex('type')
+                        feat.initAttributes(1)
+                        if pt1stst or pt2stst:
+                            feat.setAttribute(typeidx, 2)
+                        else:
+                            feat.setAttribute(typeidx, 0)
+                        layer.dataProvider().addFeatures([feat])
+            except Exception as err:
+                print err
 
     def createBoundPart(self):
         for clayer in self.iface.mapCanvas().layers():
@@ -466,7 +484,7 @@ class QVertex:
 
             except Exception as err:
                 #self.iface.messageBar().pushMessage(err, QgsMessageBar.ERROR, 5)
-                print 'error in createBoundPart!', err
+                print err
             finally:
                 print 'commit'
                 partLayer.commitChanges()

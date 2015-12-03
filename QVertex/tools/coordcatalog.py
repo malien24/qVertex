@@ -162,6 +162,12 @@ class CatalogData():
         else:
             self.calculate()
 
+    def isMultiPart(self, feature):
+        if feature.attribute(u'order') != NULL:
+            return True
+        elif len(feature.geometry().asMultiPolygon()) > 1:
+            return True
+
     def convertGeom(self, g):
         pass
 
@@ -178,38 +184,40 @@ class CatalogData():
                 geom = feat.geometry()
                 gt = QgsGeometry(geom)
                 gt.transform(self.transform)
-                self.names.append(self.feat.attributes()[nameidx])
+                self.names.append(feat.attributes()[nameidx])
                 self.area.append(round(gt.area(), 0))
                 self.perimeter.append(round(gt.length(), 2))
-                self.zu = []
-                self.parse_polygon(geom.asPolygon())
+                #self.zu = []
+                self.parse_polygon(geom.asMultiPolygon()[0])
         else:
-            #print(len(self.features))
+            # #print(len(self.features))
+            # geom = self.features[0].geometry()
+            # self.names.append(self.features[0].attributes()[nameidx])
+            # if self.isMultiPart(self.features[0]):
+            #     self.multi = True
+            #     multiGeom = geom.asMultiPolygon()
+            #     for i in multiGeom:
+            #         poly = QgsGeometry().fromPolygon(i)
+            #         gt = QgsGeometry(poly)
+            #         gt.transform(self.transform)
+            #         #print str(poly.area())
+            #         self.area.append(round(gt.area(), 0))
+            #         self.perimeter.append(round(gt.length(), 2))
+            #         self.zu = []
+            #         #print poly
+            #         self.parse_polygon(poly.asPolygon())
+            # else:
             geom = self.features[0].geometry()
-            self.names.append(self.features[0].attributes()[nameidx])
-            if geom.isMultipart():
-                self.multi = True
-                multiGeom = geom.asMultiPolygon()
-                for i in multiGeom:
-                    poly = QgsGeometry().fromPolygon(i)
-                    gt = QgsGeometry(poly)
-                    gt.transform(self.transform)
-                    #print str(poly.area())
-                    self.area.append(round(gt.area(), 0))
-                    self.perimeter.append(round(gt.length(), 2))
-                    self.zu = []
-                    #print poly
-                    self.parse_polygon(poly.asPolygon())
-            else:
-                gt = QgsGeometry(geom)
-                gt.transform(self.transform)
-                self.area.append(round(gt.area(), 0))
-                print gt.area()
-                self.perimeter.append(round(gt.length(), 2))
-                self.parse_polygon(geom.asPolygon())
+            gt = QgsGeometry(geom)
+            gt.transform(self.transform)
+            self.area.append(round(gt.area(), 0))
+            self.perimeter.append(round(gt.length(), 2))
+            self.parse_polygon(geom.asMultiPolygon()[0])
 
     # полигон может содержать один внешний и от нуля до N внутренних контуров (дырок)
     def parse_polygon(self, polygon):
+        zu = []
+        print polygon
         for ring in polygon:
             list_ponts = []
             for node in ring:
@@ -222,9 +230,9 @@ class CatalogData():
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(node.x(), node.y()))):
                         name += unicode(pointfeature.attribute(u'name'))
                 list_ponts.append([x, y, name])
-                #print str(x) + ";" + str(y)
-            self.zu.append(list_ponts)
-        self.zu_multi.append(self.zu)
+                print str(x) + ";" + str(y)
+            zu.append(list_ponts)
+        self.zu_multi.append(zu)
 
     def calculate(self):
         iter_contour = 0

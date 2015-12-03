@@ -6,7 +6,7 @@
     <layer-tree-layer expanded="0" checked="Qt::Checked" id="Точки20151127170916347" name="Точки">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="0" checked="Qt::Checked" id="Части_границ20151127171009065" name="Части границ">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Части_границ20151127171009065" name="Части границ">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="parts20150702142035753" name="чЗУ">
@@ -26,10 +26,10 @@
   <mapcanvas>
     <units>degrees</units>
     <extent>
-      <xmin>84.84635243915357705</xmin>
-      <ymin>56.41081979313827333</ymin>
-      <xmax>84.85111842654981729</xmax>
-      <ymax>56.41300191918350038</ymax>
+      <xmin>84.84484512611807361</xmin>
+      <ymin>56.41130693148381425</ymin>
+      <xmax>84.84961111351431384</xmax>
+      <ymax>56.4134890575290413</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -73,8 +73,8 @@
         <legendlayerfile isInOverview="0" layerid="Точки20151127170916347" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="Части границ" showFeatureCount="0">
-      <filegroup open="false" hidden="false">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Части границ" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
         <legendlayerfile isInOverview="0" layerid="Части_границ20151127171009065" visible="1"/>
       </filegroup>
     </legendlayer>
@@ -646,6 +646,9 @@
         <edittype widgetv2type="TextEdit" name="y">
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
+        <edittype widgetv2type="TextEdit" name="order">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
       </edittypes>
       <renderer-v2 attr="utiliz" symbollevels="0" type="categorizedSymbol">
         <categories>
@@ -810,7 +813,7 @@
           </symbol>
         </source-symbol>
         <rotation/>
-        <sizescale scalemethod="area"/>
+        <sizescale scalemethod="diameter"/>
       </renderer-v2>
       <customproperties>
         <property key="labeling" value="pal"/>
@@ -842,7 +845,7 @@
         <property key="labeling/distMapUnitMaxScale" value="0"/>
         <property key="labeling/distMapUnitMinScale" value="0"/>
         <property key="labeling/enabled" value="true"/>
-        <property key="labeling/fieldName" value="name"/>
+        <property key="labeling/fieldName" value="name+'('+ tostring(  &quot;order&quot; ) + ')'"/>
         <property key="labeling/fontBold" value="false"/>
         <property key="labeling/fontCapitals" value="0"/>
         <property key="labeling/fontFamily" value="MS Shell Dlg 2"/>
@@ -860,7 +863,7 @@
         <property key="labeling/fontWeight" value="50"/>
         <property key="labeling/fontWordSpacing" value="0"/>
         <property key="labeling/formatNumbers" value="false"/>
-        <property key="labeling/isExpression" value="false"/>
+        <property key="labeling/isExpression" value="true"/>
         <property key="labeling/labelOffsetInMapUnits" value="true"/>
         <property key="labeling/labelOffsetMapUnitMaxScale" value="0"/>
         <property key="labeling/labelOffsetMapUnitMinScale" value="0"/>
@@ -993,6 +996,7 @@
         <alias field="areagpzu" index="5" name="Площадь в Га"/>
         <alias field="locate" index="3" name="Местоположение"/>
         <alias field="name" index="1" name="Наименование"/>
+        <alias field="order" index="9" name="Порядок в МЗУ"/>
         <alias field="terrzone" index="2" name="Террзона"/>
         <alias field="utiliz" index="6" name="Назначение"/>
       </aliases>
@@ -1034,6 +1038,9 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
         <edittype widgetv2type="TextEdit" name="y">
+          <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
+        </edittype>
+        <edittype widgetv2type="TextEdit" name="order">
           <widgetv2config IsMultiline="0" fieldEditable="1" UseHtml="0" labelOnTop="0"/>
         </edittype>
       </edittypes>
@@ -1467,7 +1474,7 @@
           </symbol>
         </source-symbol>
         <rotation/>
-        <sizescale scalemethod="area"/>
+        <sizescale scalemethod="diameter"/>
       </renderer-v2>
       <customproperties>
         <property key="labeling" value="pal"/>
@@ -1836,7 +1843,7 @@
           </symbol>
         </symbols>
         <rotation/>
-        <sizescale scalemethod="area"/>
+        <sizescale scalemethod="diameter"/>
       </renderer-v2>
       <customproperties>
         <property key="labeling" value="pal"/>
@@ -2454,7 +2461,7 @@
         </spatialrefsys>
       </srs>
       <provider encoding="UTF-8">spatialite</provider>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE( "type", '&lt;NULL>' )</previewExpression>
       <vectorjoins/>
       <expressionfields/>
       <map-layer-style-manager current="">
