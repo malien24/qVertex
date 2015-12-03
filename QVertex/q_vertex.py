@@ -296,6 +296,10 @@ class QVertex:
         else:
             return False
 
+    def isMultiPart(self, feature):
+        if feature.attribute(u'order') != NULL:
+            return True
+
     def doCreatePublicVertexes(self):
         for clayer in self.iface.mapCanvas().layers():
             if clayer.name() == u'ЗУ':
@@ -493,32 +497,28 @@ class QVertex:
             transform = QgsCoordinateTransform(crsSrc, crsDest)
 
             contour = 1
-
-            if self.isObjectsSelected():
-                geom = self.iface.mapCanvas().currentLayer().selectedFeatures()[0].geometry()
-                if geom.isMultipart():
-                    multiGeom = geom.asMultiPolygon()
-                    for i in multiGeom:
-                        poly = QgsGeometry().fromPolygon(i)
-                        gt = QgsGeometry(poly)
-                        gt.transform(transform)
-                        csvdata += self.prepareExportPoint(pointLayer, poly.asPolygon(), contour, transform)
-                        if len(multiGeom) > contour:
-                            csvdata += u';;;;;;;;;;;\n'
-                        contour += 1
+            for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
+                geom = feat.geometry()
+                if self.isMultiPart(feat):
+                    gt = QgsGeometry(geom)
+                    gt.transform(transform)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
+                    if len(self.iface.mapCanvas().currentLayer().selectedFeatures()) > contour:
+                        csvdata += u';;;;;;;;;;;\n'
+                    contour += 1
                 else:
                     gt = QgsGeometry(geom)
                     gt.transform(transform)
-                    csvdata += self.prepareExportPoint(pointLayer, geom.asPolygon(), 1, transform)
-            # try:
-            #     ccf = open(file_name, 'w') # + u'.csv'
-            #     ccf.write(csvdata.encode('cp1251'))
-            # except Exception as err:
-            #     print err
-            #     #self.iface.messageBar().pushMessage(u'Ошибка при экспорте в Технокад! ' + err.encode('UTF-8'),
-            #                                                       # QgsMessageBar.ERROR, 5)
-            # finally:
-            #     ccf.close()
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
+            try:
+                ccf = open(file_name, 'w') # + u'.csv'
+                ccf.write(csvdata.encode('cp1251'))
+            except Exception as err:
+                print err
+                #self.iface.messageBar().pushMessage(u'Ошибка при экспорте в Технокад! ' + err.encode('UTF-8'),
+                                                                  # QgsMessageBar.ERROR, 5)
+            finally:
+                ccf.close()
 
     def prepareExportPoint(self, pointLayer, polygon, contour, transform):
         ringq = 0
@@ -563,15 +563,15 @@ class QVertex:
                 #newgeomarr = []
                 #newgeom = null
                 geom = feat.geometry()
-                if geom.isMultipart():
-                    polygons = geom.asMultiPolygon()
+                if self.isMultiPart(feat):
+                    polygons = geom.asMultiPolygon()[0]
                     for polygone in polygons:
                         print 'parse multipolygon part'
                         for ring in polygone:
                             findPointIdx = findNorthWestPoint(ring)
                             changeGeometryPointOrder(ring, findPointIdx)
                 else:
-                    for ring in geom.asPolygon():
+                    for ring in geom.asMultiPolygon()[0]:
                         findPointIdx = findNorthWestPoint(ring)
                         changeGeometryPointOrder(ring, findPointIdx)
         except:
