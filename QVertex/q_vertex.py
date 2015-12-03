@@ -10,7 +10,7 @@
         copyright            : (C) 2014 by Филиппов Владислав
         email                : filippov70@gmail.com
  ***************************************************************************/
-fgfgf
+
 /***************************************************************************
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,15 +19,6 @@ fgfgf
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-Условности и ограничения.
-
-Для большей гибкости для многоконтурных ЗУ могут быть использованы мультиполигоны
-или несколько полигонов с укзанием порядкого номера в специальном атрибуте (order).
-
-Так как в БД SpatiaLite полигон хранящийся в таблице с типом геометрии multipolygon
-определяется как многоконтурная геометрия, то проверка if geom.isMultipart(): всегда
-будет True.
-
 """
 from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QObject, SIGNAL
 from PyQt4.QtGui import QAction, QIcon, QMenu, QFileDialog
@@ -106,8 +97,10 @@ class QVertex:
         self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
         self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 15)
 
-        msk_names = self.settings.value('msk_names')
-        self.dlg = QVertexDialogBase(self.iface, msk_names)
+        #msk_names = self.settings.value('msk_names')
+        self.dlg = None#QVertexDialogBase(self.iface, msk_names)
+        #self.showSettings()
+
     # noinspection PyMethodMayBeStatic
     # def tr(self, message):
     #     """Get the translation for a string using Qt translation API.
@@ -303,12 +296,6 @@ class QVertex:
         else:
             return False
 
-    def isMultiPart(self, feature):
-        if feature.attribute(u'order') != NULL:
-            return True
-        elif len(feature.geometry().asMultiPolygon()) > 1:
-            return True
-
     def doCreatePublicVertexes(self):
         for clayer in self.iface.mapCanvas().layers():
             if clayer.name() == u'ЗУ':
@@ -373,17 +360,16 @@ class QVertex:
 
     def showSettings(self):
         msk_names = self.settings.value('msk_names')
-        #print msk_names
         if self.dlg is None:
             self.dlg = QVertexDialogBase(self.iface, msk_names)
-        self.dlg.exec_()
-        msk = self.dlg.listCrs.currentItem().text()
-        #print msk
-        self.settings.setValue('current_crs', msk)
-        self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
-        self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 5)
-        print self.current_crs
-        #del(dlg)
+            self.dlg.setWindowModality(Qt.WindowModal)
+        if self.dlg.exec_() == 1:
+            msk = self.dlg.listCrs.currentItem().text()
+            #print msk
+            self.settings.setValue('current_crs', msk)
+            self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
+            self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 5)
+
 
     def doCreatepoint(self):
         if self.isObjectsSelected():
@@ -414,48 +400,45 @@ class QVertex:
                 idx = -1
 
         for point in ring:
-            try:
-                if curr < c:
-                    point1 = point
-                    point2 = ring[curr]
-                    isEqual = False
-                    pt1stst = False
-                    pt2stst = False
-                    curr += 1
-                    #print point1, point2
-                    line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()),
-                                                           QgsPoint(point2.x(), point2.y())])
-                    # find point
-                    for pointfeature in pointLayer.getFeatures():
-                        if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point1.x(), point1.y()))):
-                            name = unicode(pointfeature.attribute(u'name'))
-                            if name[0] == u'н':
-                                pt1stst = True
-                        if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point2.x(), point2.y()))):
-                            name = unicode(pointfeature.attribute(u'name'))
-                            if name[0] == u'н':
-                                pt2stst = True
-                    # check for identity
-                    features = layer.getFeatures()
-                    for f in features:
-                        if line_geometry.equals(f.geometry()):
-                            # self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена',
-                            #                                     level=QgsMessageBar.INFO)
-                            isEqual = True
-                            break
+            if curr < c:
+                point1 = point
+                point2 = ring[curr]
+                isEqual = False
+                pt1stst = False
+                pt2stst = False
+                curr += 1
+                #print point1, point2
+                line_geometry=QgsGeometry.fromPolyline([QgsPoint(point1.x(), point1.y()),
+                                                       QgsPoint(point2.x(), point2.y())])
+                # find point
+                for pointfeature in pointLayer.getFeatures():
+                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point1.x(), point1.y()))):
+                        name = unicode(pointfeature.attribute(u'name'))
+                        if name[0] == u'н':
+                            pt1stst = True
+                    if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(point2.x(), point2.y()))):
+                        name = unicode(pointfeature.attribute(u'name'))
+                        if name[0] == u'н':
+                            pt2stst = True
+                # check for identity
+                features = layer.getFeatures()
+                for f in features:
+                    if line_geometry.equals(f.geometry()):
+                        self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена',
+                                                            level=QgsMessageBar.INFO)
+                        isEqual = True
+                        break
 
-                    if not isEqual:
-                        feat = QgsFeature()
-                        feat.setGeometry(line_geometry)
-                        typeidx = layer.fieldNameIndex('type')
-                        feat.initAttributes(1)
-                        if pt1stst or pt2stst:
-                            feat.setAttribute(typeidx, 2)
-                        else:
-                            feat.setAttribute(typeidx, 0)
-                        layer.dataProvider().addFeatures([feat])
-            except Exception as err:
-                print err
+                if not isEqual:
+                    feat = QgsFeature()
+                    feat.setGeometry(line_geometry)
+                    typeidx = layer.fieldNameIndex('type')
+                    feat.initAttributes(1)
+                    if pt1stst or pt2stst:
+                        feat.setAttribute(typeidx, 2)
+                    else:
+                        feat.setAttribute(typeidx, 0)
+                    layer.dataProvider().addFeatures([feat])
 
     def createBoundPart(self):
         for clayer in self.iface.mapCanvas().layers():
@@ -484,7 +467,7 @@ class QVertex:
 
             except Exception as err:
                 #self.iface.messageBar().pushMessage(err, QgsMessageBar.ERROR, 5)
-                print err
+                print 'error in createBoundPart!', err
             finally:
                 print 'commit'
                 partLayer.commitChanges()
@@ -499,7 +482,7 @@ class QVertex:
                 return
 
         file_name = QFileDialog.getSaveFileName(None, u'Сохраните данные для Технокада', self.lastDir, u'CSV файлы(*.csv *.CSV)')
-        #print file_name
+        print file_name
         if not file_name == '' or not file_name == u'':
             csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
             #delimLine = u';;;;;;;;;;;\n'
@@ -527,14 +510,15 @@ class QVertex:
                     gt = QgsGeometry(geom)
                     gt.transform(transform)
                     csvdata += self.prepareExportPoint(pointLayer, geom.asPolygon(), 1, transform)
-            try:
-                ccf = open(file_name, 'w') # + u'.csv'
-                ccf.write(csvdata.encode('cp1251'))
-            except Exception as err:
-                self.iface.messageBar().pushMessage(u'Ошибка при экспорте в Технокад! ' + err.encode('UTF-8'),
-                                                                   QgsMessageBar.ERROR, 5)
-            finally:
-                ccf.close()
+            # try:
+            #     ccf = open(file_name, 'w') # + u'.csv'
+            #     ccf.write(csvdata.encode('cp1251'))
+            # except Exception as err:
+            #     print err
+            #     #self.iface.messageBar().pushMessage(u'Ошибка при экспорте в Технокад! ' + err.encode('UTF-8'),
+            #                                                       # QgsMessageBar.ERROR, 5)
+            # finally:
+            #     ccf.close()
 
     def prepareExportPoint(self, pointLayer, polygon, contour, transform):
         ringq = 0
