@@ -374,7 +374,6 @@ class QVertex:
             self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
             self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 5)
 
-
     def doCreatepoint(self):
         if self.isObjectsSelected():
             CreatePoints(self.iface)
@@ -437,7 +436,7 @@ class QVertex:
                     feat = QgsFeature()
                     feat.setGeometry(line_geometry)
                     typeidx = layer.fieldNameIndex('type')
-                    feat.initAttributes(1)
+                    feat.initAttributes(2)
                     if pt1stst or pt2stst:
                         feat.setAttribute(typeidx, 2)
                     else:
@@ -451,30 +450,22 @@ class QVertex:
                 break
             else:
                 partLayer = None
-        if self.isObjectsSelected() and partLayer is not None:
+        if partLayer is not None:
             partLayer.startEditing()
-            print 'edit'
             try:
                 for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
                     geom = feat.geometry()
-                    if geom.isMultipart():
-                        polygons = geom.asMultiPolygon()
-                        for polygone in polygons:
-                            print 'parse multipolygon part'
-                            for ring in polygone:
-                                print 'parse multipolygon part ring'
-                                self.createPart(partLayer, ring)
-
-                    else:
-                        for ring in geom.asPolygon():
-                            self.createPart(partLayer, ring)
-
+                    polygone = geom.asMultiPolygon()[0]
+                    for ring in polygone:
+                        #print 'parse multipolygon part ring'
+                        self.createPart(partLayer, ring)
             except Exception as err:
                 #self.iface.messageBar().pushMessage(err, QgsMessageBar.ERROR, 5)
                 print 'error in createBoundPart!', err
             finally:
-                print 'commit'
                 partLayer.commitChanges()
+                self.iface.messageBar().pushMessage(u'Создание частей границ завершено',
+                                                    level=QgsMessageBar.INFO)
 
     def exportTechno(self):
         pointLayer = None
@@ -555,7 +546,6 @@ class QVertex:
         return csvdata
 
     # Упорядочить точки (первая на северо-западе)
-
     def doChangePointPos(self):
         try:
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
