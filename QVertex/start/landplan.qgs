@@ -1,12 +1,12 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis projectname="" version="2.8.2-Wien">
+<qgis projectname="" version="2.8.4-Wien">
   <title></title>
   <layer-tree-group expanded="1" checked="Qt::Checked" name="">
     <customproperties/>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="Точки20151127170916347" name="Точки">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="0" checked="Qt::Checked" id="Части_границ20151127171009065" name="Части границ">
+    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Части_границ20151127171009065" name="Части границ">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="чЗУ20151204110250907" name="чЗУ">
@@ -26,10 +26,10 @@
   <mapcanvas>
     <units>degrees</units>
     <extent>
-      <xmin>84.8457108941052951</xmin>
-      <ymin>56.41067878071177688</ymin>
-      <xmax>84.85047688150153533</xmax>
-      <ymax>56.41286090675700393</ymax>
+      <xmin>84.84559824749412371</xmin>
+      <ymin>56.41081993623929947</ymin>
+      <xmax>84.85036423489036395</xmax>
+      <ymax>56.41300206228452652</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -75,8 +75,8 @@
         <legendlayerfile isInOverview="0" layerid="Точки20151127170916347" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="Части границ" showFeatureCount="0">
-      <filegroup open="false" hidden="false">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Части границ" showFeatureCount="0">
+      <filegroup open="true" hidden="false">
         <legendlayerfile isInOverview="0" layerid="Части_границ20151127171009065" visible="1"/>
       </filegroup>
     </legendlayer>
@@ -2631,10 +2631,10 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -2737,10 +2737,10 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>

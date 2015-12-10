@@ -296,6 +296,11 @@ class QVertex:
         else:
             return False
 
+    def getLayerByName(self, layerName):
+        for layer in self.iface.mapCanvas().layers():
+            if layer.name() == layerName:
+                return layer
+
     def isMultiPart(self, feature):
         if feature.attribute(u'order') != NULL:
             return True
@@ -357,7 +362,7 @@ class QVertex:
                 proj = QgsProject.instance()
                 proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'landplan.qgs'))
             except shutil.Error as ex:
-                self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 5)
+                self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 1)
             finally:
                 pass
         self.showSettings()
@@ -372,7 +377,7 @@ class QVertex:
             #print msk
             self.settings.setValue('current_crs', msk)
             self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
-            self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 5)
+            self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 1)
 
     def doCreatepoint(self):
         if self.isObjectsSelected():
@@ -393,15 +398,13 @@ class QVertex:
     def createPart(self, layer, ring):
         c = len(ring)
         curr = 1
-        for clayer in self.iface.mapCanvas().layers():
-            if clayer.name() == u'Точки':
-                pointLayer = clayer
-                idx = pointLayer.fieldNameIndex('name')
-                break
-            else:
-                pointLayer = None
-                idx = -1
-
+        cadCurr = 1
+        pointLayer = self.getLayerByName(u'Точки')
+        if pointLayer is None:
+            idx = -1
+        else:
+            idx = pointLayer.fieldNameIndex('name')
+        cadastreLayer = self.getLayerByName(u'Кадастр')
         for point in ring:
             if curr < c:
                 point1 = point
@@ -431,6 +434,51 @@ class QVertex:
                                                             level=QgsMessageBar.INFO)
                         isEqual = True
                         break
+                #check for cadastre
+                if not pt1stst and not pt2stst:
+                    findInCadastre = False
+                    #print 'cadastre check'
+                    if cadastreLayer is not None and not findInCadastre:
+                        cadObjs = cadastreLayer.getFeatures()
+                        for cadObj in cadObjs:
+                            #print 'cadastre check iteration'
+                            if cadObj.geometry().isMultipart():
+                                for cpoly in cadObj.geometry().asMultiPolygon():
+                                    if not findInCadastre:
+                                        for cring in cpoly:
+                                            if not findInCadastre:
+                                                cc = len(cring)
+                                                for cpoint in cring:
+                                                    if cadCurr < cc:
+                                                        cpoint1 = cpoint
+                                                        cpoint2 = cring[cadCurr]
+                                                        cadCurr += 1
+                                                    cadLine=QgsGeometry.fromPolyline([QgsPoint(cpoint1.x(), cpoint1.y()), QgsPoint(cpoint2.x(), cpoint2.y())])
+                                                    if line_geometry.equals(cadLine):
+                                                        pt2stst = False
+                                                        print 'find in cadastre'
+                                                        findInCadastre = True
+                                                        break
+                                                    else:
+                                                        findInCadastre = False
+                            else:
+                                if not findInCadastre:
+                                    for cring in cadObj.geometry().asPolygon():
+                                        if not findInCadastre:
+                                            cc = len(cring)
+                                            for cpoint in rcing:
+                                                if cadCurr < cc:
+                                                    cpoint1 = cpoint
+                                                    cpoint2 = rcing[cadCurr]
+                                                    cadCurr += 1
+                                                cadLine=QgsGeometry.fromPolyline([QgsPoint(cpoint1.x(), cpoint1.y()), QgsPoint(cpoint2.x(), cpoint2.y())])
+                                                if line_geometry.equals(cadLine):
+                                                    pt2stst = False
+                                                    print 'finded in cadastre'
+                                                    findInCadastre = True
+                                                    break
+                                                else:
+                                                    findInCadastre = False
 
                 if not isEqual:
                     feat = QgsFeature()
@@ -444,12 +492,7 @@ class QVertex:
                     layer.dataProvider().addFeatures([feat])
 
     def createBoundPart(self):
-        for clayer in self.iface.mapCanvas().layers():
-            if clayer.name() == u'Части границ': # TODO
-                partLayer = clayer
-                break
-            else:
-                partLayer = None
+        partLayer = self.getLayerByName(u'Части границ')
         if partLayer is not None:
             partLayer.startEditing()
             try:
@@ -457,7 +500,6 @@ class QVertex:
                     geom = feat.geometry()
                     polygone = geom.asMultiPolygon()[0]
                     for ring in polygone:
-                        #print 'parse multipolygon part ring'
                         self.createPart(partLayer, ring)
             except Exception as err:
                 #self.iface.messageBar().pushMessage(err, QgsMessageBar.ERROR, 5)
