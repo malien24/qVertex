@@ -437,7 +437,7 @@ class QVertex:
                 #check for cadastre
                 if not pt1stst and not pt2stst:
                     findInCadastre = False
-                    #print 'cadastre check'
+                    print 'cadastre check'
                     if cadastreLayer is not None and not findInCadastre:
                         cadObjs = cadastreLayer.getFeatures()
                         for cadObj in cadObjs:
@@ -454,8 +454,8 @@ class QVertex:
                                                         cpoint2 = cring[cadCurr]
                                                         cadCurr += 1
                                                     cadLine=QgsGeometry.fromPolyline([QgsPoint(cpoint1.x(), cpoint1.y()), QgsPoint(cpoint2.x(), cpoint2.y())])
-                                                    if line_geometry.equals(cadLine):
-                                                        pt2stst = False
+                                                    #print 'checking ' + str(cadLine.asPolyline())
+                                                    if line_geometry.contains(cadLine.buffer(0.000001, 16)):
                                                         print 'find in cadastre'
                                                         findInCadastre = True
                                                         break
@@ -466,20 +466,20 @@ class QVertex:
                                     for cring in cadObj.geometry().asPolygon():
                                         if not findInCadastre:
                                             cc = len(cring)
-                                            for cpoint in rcing:
+                                            for cpoint in cring:
                                                 if cadCurr < cc:
                                                     cpoint1 = cpoint
-                                                    cpoint2 = rcing[cadCurr]
+                                                    cpoint2 = cring[cadCurr]
                                                     cadCurr += 1
                                                 cadLine=QgsGeometry.fromPolyline([QgsPoint(cpoint1.x(), cpoint1.y()), QgsPoint(cpoint2.x(), cpoint2.y())])
                                                 if line_geometry.equals(cadLine):
-                                                    pt2stst = False
                                                     print 'finded in cadastre'
                                                     findInCadastre = True
                                                     break
                                                 else:
                                                     findInCadastre = False
-
+                    if not findInCadastre:
+                        pt2stst = True
                 if not isEqual:
                     feat = QgsFeature()
                     feat.setGeometry(line_geometry)
