@@ -349,8 +349,8 @@ class QVertex:
         if curr_path == u'':
             curr_path = os.getcwd()
         work_dir_name = QFileDialog.getExistingDirectory(None, u'Выберите папку для нового проекта', curr_path)
-
-        if not work_dir_name is None or not work_dir_name == u'':
+        #print type(work_dir_name)
+        if work_dir_name != u'':
             if sys.platform.startswith('win'):
                 current_path = work_dir_name.encode('cp1251')
             else:
@@ -358,14 +358,19 @@ class QVertex:
             try:
                 shutil.copytree(self.plugin_dir+ os.sep + 'start', current_path + os.sep + 'qvertex')
                 #print 'shutil.copytree'
-                self.settings.setValue('last_dir', current_path + os.sep + 'qvertex')
+
                 proj = QgsProject.instance()
+                print current_path + os.sep + 'qvertex'+ os.sep + 'landplan.qgs'
                 proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'landplan.qgs'))
+                self.settings.setValue('last_dir', current_path + os.sep + 'qvertex')
+                self.showSettings()
             except shutil.Error as ex:
                 self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 1)
             finally:
                 pass
-        self.showSettings()
+        else:
+            print 'cancelled'
+
 
     def showSettings(self):
         msk_names = self.settings.value('msk_names')

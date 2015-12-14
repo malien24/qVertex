@@ -165,8 +165,6 @@ class CatalogData():
     def isMultiPart(self, feature):
         if feature.attribute(u'order') != NULL:
             return True
-        elif len(feature.geometry().asMultiPolygon()) > 1:
-            return True
 
     def convertGeom(self, g):
         pass
