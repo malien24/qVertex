@@ -398,7 +398,6 @@ class QVertex:
     def createPart(self, layer, ring):
         c = len(ring)
         curr = 1
-        cadCurr = 1
         pointLayer = self.getLayerByName(u'Точки')
         if pointLayer is None:
             idx = -1
@@ -430,8 +429,7 @@ class QVertex:
                 features = layer.getFeatures()
                 for f in features:
                     if line_geometry.equals(f.geometry()):
-                        self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена',
-                                                            level=QgsMessageBar.INFO)
+                        self.iface.messageBar().pushMessage(u'Найдена дублирующая часть границы, пропущена', level=QgsMessageBar.INFO)
                         isEqual = True
                         break
                 #check for cadastre
@@ -446,6 +444,7 @@ class QVertex:
                                 for cpoly in cadObj.geometry().asMultiPolygon():
                                     if not findInCadastre:
                                         for cring in cpoly:
+                                            cadCurr = 1
                                             if not findInCadastre:
                                                 cc = len(cring)
                                                 for cpoint in cring:
@@ -454,8 +453,8 @@ class QVertex:
                                                         cpoint2 = cring[cadCurr]
                                                         cadCurr += 1
                                                     cadLine=QgsGeometry.fromPolyline([QgsPoint(cpoint1.x(), cpoint1.y()), QgsPoint(cpoint2.x(), cpoint2.y())])
-                                                    #print 'checking ' + str(cadLine.asPolyline())
-                                                    if line_geometry.contains(cadLine.buffer(0.000001, 16)):
+                                                    #print 'checking line'
+                                                    if line_geometry.within(cadLine.buffer(0.000001, 16)):
                                                         print 'find in cadastre'
                                                         findInCadastre = True
                                                         break
@@ -464,6 +463,7 @@ class QVertex:
                             else:
                                 if not findInCadastre:
                                     for cring in cadObj.geometry().asPolygon():
+                                        cadCurr = 1
                                         if not findInCadastre:
                                             cc = len(cring)
                                             for cpoint in cring:
@@ -472,7 +472,8 @@ class QVertex:
                                                     cpoint2 = cring[cadCurr]
                                                     cadCurr += 1
                                                 cadLine=QgsGeometry.fromPolyline([QgsPoint(cpoint1.x(), cpoint1.y()), QgsPoint(cpoint2.x(), cpoint2.y())])
-                                                if line_geometry.equals(cadLine):
+                                                #print 'checking line'
+                                                if  line_geometry.within(cadLine.buffer(0.000001, 16)):
                                                     print 'finded in cadastre'
                                                     findInCadastre = True
                                                     break
