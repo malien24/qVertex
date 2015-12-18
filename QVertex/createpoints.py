@@ -82,7 +82,7 @@ class CreatePoints():
         feature.initAttributes(len(self.targetLayer.dataProvider().attributeIndexes()))
         feature.setGeometry(QgsGeometry.fromPoint(point))
         if isNew:
-            numvalue = u'н' + str(name)
+            numvalue = str(name)
         else:
             numvalue = str(name)
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'name'), numvalue)
