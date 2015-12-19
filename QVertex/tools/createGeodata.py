@@ -12,8 +12,6 @@ from PyQt4.QtGui import QDialog, QMessageBox, QFileDialog
 from QVertex.tools.createGeodata_ui import Ui_CoordGeodata
 from QVertex.tools.coordcatalog import CatalogData
 from qgis.core import *
-from common import *
-
 
 # Геоданные создаются на один ЗУ с любым количеством контуров
 class CreateGeodata(QDialog, Ui_CoordGeodata):
