@@ -13,9 +13,8 @@ from QVertex.tools.createCoordCatalog_ui import Ui_CoordCatalog
 
 # Ведомость создаётся на один ЗУ с любым количеством контуров
 class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
-    def __init__(self, iface, crs):
+    def __init__(self, iface):
         self.html_cataloga_data = u''
-        self.crs = crs
         QDialog.__init__(self, iface.mainWindow())
         self.iface = iface
         self.setupUi(self)
@@ -27,7 +26,7 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
         if (self.iface.mapCanvas().currentLayer() is not None) \
             and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
 
-            ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), True, self.spinBoxFontSize.value(), self.crs)
+            ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), True, self.spinBoxFontSize.value())
             data = ved.catalog
             self.textEdit.setHtml(data)
             self.btnSave.setEnabled(True)

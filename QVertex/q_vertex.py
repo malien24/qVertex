@@ -93,9 +93,9 @@ class QVertex:
         else:
             self.lastDir = self.settings.value('last_dir', self.plugin_dir)
 
-        msk = self.settings.value('current_crs')
-        self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
-        self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 15)
+        # msk = self.settings.value('current_crs')
+        # self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
+        # self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 15)
 
         #msk_names = self.settings.value('msk_names')
         self.dlg = None#QVertexDialogBase(self.iface, msk_names)
@@ -192,17 +192,17 @@ class QVertex:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
         self.menu = QMenu()
-        self.menu.setTitle(u"Землеустройство")
+        self.menu.setTitle(u"QVertex")
 
         self.qvertex_createProject = QAction(u"Создать проект", self.iface.mainWindow())
         self.qvertex_createProject.setEnabled(True)
         # self.qvertex_createProject.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.menu.addAction(self.qvertex_createProject)
 
-        self.qvertex_showSettings = QAction(u"Настройка МСК", self.iface.mainWindow())
-        self.qvertex_showSettings.setEnabled(True)
-        # self.qvertex_showSettings.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
-        self.menu.addAction(self.qvertex_showSettings)
+        # self.qvertex_showSettings = QAction(u"Настройка МСК", self.iface.mainWindow())
+        # self.qvertex_showSettings.setEnabled(True)
+        # # self.qvertex_showSettings.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        # self.menu.addAction(self.qvertex_showSettings)
 
 
         self.pointMenu = QMenu()
@@ -231,12 +231,14 @@ class QVertex:
 
         self.qvertex_createCtalog = QAction(u"HTML-ведомость координат", self.iface.mainWindow())
         self.qvertex_createCtalog.setEnabled(True)
-        # self.qvertex_createCtalog.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+
+        self.qvertex_createMapPlan = QAction(u"HTML-ведомость карта(план)", self.iface.mainWindow())
+        self.qvertex_createMapPlan.setEnabled(True)
 
         self.qvertex_createGeodata = QAction(u"SVG-ведомость и описание границ", self.iface.mainWindow())
         self.qvertex_createGeodata.setEnabled(True)
         # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
-        self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createGeodata])
+        self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createMapPlan, self.qvertex_createGeodata])
         self.menu.addMenu(self.reportMenu)
 
         self.qvertex_exportTechno = QAction(u"Экспорт в Технокад", self.iface.mainWindow())
@@ -262,9 +264,9 @@ class QVertex:
         QObject.connect(self.qvertex_createVertex, SIGNAL("triggered()"), self.doCreatePublicVertexes)
         QObject.connect(self.qvertex_createPoint, SIGNAL("triggered()"), self.doCreatepoint)
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
+        QObject.connect(self.qvertex_createMapPlan, SIGNAL("triggered()"), self.doCatalogMapPlan)
         QObject.connect(self.qvertex_createGeodata, SIGNAL("triggered()"), self.doCreateGeodata)
         QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
-        QObject.connect(self.qvertex_showSettings, SIGNAL("triggered()"), self.showSettings)
         QObject.connect(self.qvertex_exportTechno, SIGNAL("triggered()"), self.exportTechno)
 
     def unload(self):
@@ -314,7 +316,6 @@ class QVertex:
                 pointLayer = None
         if self.isObjectsSelected() and pointLayer is not None:
             pointLayer.startEditing()
-            #print 'edit'
             try:
                 for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
                     geom = feat.geometry()
@@ -363,14 +364,13 @@ class QVertex:
                 print current_path + os.sep + 'qvertex'+ os.sep + 'landplan.qgs'
                 proj.read(QFileInfo(current_path + os.sep + 'qvertex'+ os.sep + 'landplan.qgs'))
                 self.settings.setValue('last_dir', current_path + os.sep + 'qvertex')
-                self.showSettings()
+                #self.showSettings()
             except shutil.Error as ex:
                 self.iface.messageBar().pushMessage(ex.message, QgsMessageBar.ERROR, 1)
             finally:
                 pass
         else:
             print 'cancelled'
-
 
     def showSettings(self):
         msk_names = self.settings.value('msk_names')
@@ -515,6 +515,50 @@ class QVertex:
                 self.iface.messageBar().pushMessage(u'Создание частей границ завершено',
                                                     level=QgsMessageBar.INFO)
 
+    def doCatalogMapPlan(self):
+        pointLayer = self.getLayerByName(u'Точки')
+        file_name = QFileDialog.getSaveFileName(None, u'Сохраните ведомость координат для карта(план)', self.lastDir, u'HTML файлы(*.html *.HTML)')
+        if not file_name == u'':
+            htmldata_start = u'<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv=Content-Type content="text/html; charset=windows-1251"><meta name=ProgId content=Word.Document><meta name=Generator content="Microsoft Word 15"><meta name=Originator content="Microsoft Word 15"></head><body lang=RU link=blue vlink=purple style=\'tab-interval:35.4pt\'><table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=756 style=\'width:567.05pt;margin-left:-15.9pt;border-collapse:collapse;border: none;mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt: 0cm 5.4pt 0cm 5.4pt\'>'
+            htmldata_row = u'<tr style=\'mso-yfti-irow:0;mso-yfti-firstrow:yes\'>  <td width=95 style=\'width:70.95pt;border:solid windowtext 1.0pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=centerstyle=\'text-align:center\'><span  style=\'font-size:10.0pt;color:black\'>{0}<o:p></o:p></span></p>  </td>  <td width=123 valign=top style=\'width:92.1pt;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'>{1}</p>  </td>  <td width=113 valign=top style=\'width:3.0cm;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'>{2}</p>  </td>  <td width=227 valign=top style=\'width:6.0cm;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'><span  style=\'font-size:10.0pt;color:black\'>{4}<o:p></o:p></span></p>  </td>  <td width=198 valign=top style=\'width:148.85pt;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'><b  style=\'mso-bidi-font-weight:normal\'><sub><span style=\'font-size:10.0pt\'>{3}</span></sub></b><span  style=\'font-size:10.0pt\'><o:p></o:p></span></p>  </td> </tr>'
+            htmldata_end = u'</table></body></html>'
+
+            exportData = htmldata_start
+            for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
+                polygone = feat.geometry().asMultiPolygon()[0]
+                ringq = 0
+                for ring in polygone:
+                    for pt in ring:
+                        for pointfeature in pointLayer.getFeatures():
+                            if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(pt.x(), pt.y()))):
+                                fullname = unicode(pointfeature.attribute(u'name'))
+                                if fullname[0] == u'н':
+                                    name = fullname[1:]+u';'
+                                    prefix = u'н;'
+                                else:
+                                    name = fullname + u';'
+                                    prefix = u';'
+
+                                x = round(QgsGeometry.fromPoint(pt).asPoint().y(), 2)
+                                sx = unicode('{:.2f}'.format(x))
+                                y = round(QgsGeometry.fromPoint(pt).asPoint().x(), 2)
+                                sy = unicode('{:.2f}'.format(y))
+                                exportData += htmldata_row.format(fullname, sx, sy, u'–––––––', u'картометрический')
+                                # pref = unicode(pointfeature.attribute(u'prec'))+u';'
+                                # hold = unicode(pointfeature.attribute(u'hold'))
+
+                    if len(polygone) >= ringq+2:
+                        exportData += htmldata_row.format(u'', u'', u'', u'', u'')
+                    ringq += 1
+            exportData += htmldata_end
+            try:
+                ccf = open(file_name, 'w') # + u'.csv'
+                ccf.write(exportData.encode('cp1251'))
+            except Exception as err:
+                print err
+            finally:
+                ccf.close()
+
     def exportTechno(self):
         pointLayer = None
         for clayer in self.iface.mapCanvas().layers():
@@ -525,30 +569,30 @@ class QVertex:
                 return
 
         file_name = QFileDialog.getSaveFileName(None, u'Сохраните данные для Технокада', self.lastDir, u'CSV файлы(*.csv *.CSV)')
-        print file_name
-        if not file_name == '' or not file_name == u'':
+        #print file_name
+        if not file_name == u'':
             csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
             #delimLine = u';;;;;;;;;;;\n'
 
-            crsSrc = QgsCoordinateReferenceSystem(4326)
-            crsDest = QgsCoordinateReferenceSystem()
-            crsDest.createFromProj4(self.current_crs)
-            transform = QgsCoordinateTransform(crsSrc, crsDest)
+            # crsSrc = QgsCoordinateReferenceSystem(4326)
+            # crsDest = QgsCoordinateReferenceSystem()
+            # crsDest.createFromProj4(self.current_crs)
+            # transform = QgsCoordinateTransform(crsSrc, crsDest)
 
             contour = 1
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
                 geom = feat.geometry()
                 if self.isMultiPart(feat):
-                    gt = QgsGeometry(geom)
-                    gt.transform(transform)
-                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
+                    # gt = QgsGeometry(geom)
+                    # gt.transform(transform)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1)
                     if len(self.iface.mapCanvas().currentLayer().selectedFeatures()) > contour:
                         csvdata += u';;;;;;;;;;;\n'
                     contour += 1
                 else:
-                    gt = QgsGeometry(geom)
-                    gt.transform(transform)
-                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
+                    # gt = QgsGeometry(geom)
+                    # gt.transform(transform)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1)
             try:
                 ccf = open(file_name, 'w') # + u'.csv'
                 ccf.write(csvdata.encode('cp1251'))
@@ -559,7 +603,7 @@ class QVertex:
             finally:
                 ccf.close()
 
-    def prepareExportPoint(self, pointLayer, polygon, contour, transform):
+    def prepareExportPoint(self, pointLayer, polygon, contour):
         ringq = 0
         csvdata = u''
         for ring in polygon:
@@ -574,10 +618,9 @@ class QVertex:
                             name = fullname + u';'
                             prefix = u';'
 
-                        trans_point = transform.transform(pointfeature.geometry().asPoint())
-                        x = round(QgsGeometry.fromPoint(trans_point).asPoint().y(), 2)
+                        x = round(QgsGeometry.fromPoint(pt).asPoint().y(), 2)
                         sx = unicode('{:.2f}'.format(x))+u';'
-                        y = round(QgsGeometry.fromPoint(trans_point).asPoint().x(), 2)
+                        y = round(QgsGeometry.fromPoint(pt).asPoint().x(), 2)
                         sy = unicode('{:.2f}'.format(y))+u';'
                         pref = unicode(pointfeature.attribute(u'prec'))+u';'
                         hold = unicode(pointfeature.attribute(u'hold'))
