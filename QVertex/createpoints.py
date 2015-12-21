@@ -39,11 +39,10 @@ class CreatePoints():
         self.getLastPointIndexes()
         countExist = self.existPointIndex
         countNew = self.newPointIndex
-        #print u'номер последней точки ' + str(numPoint)
         for every in self.selection:
             geom = every.geometry()
             if geom.isMultipart():
-                #print 'Multipart geometry'
+                print 'Multipart geometry'
                 polygons = geom.asMultiPolygon()
                 for polygone in polygons:
                     for ring in polygone:
@@ -60,6 +59,7 @@ class CreatePoints():
                                     countNew += 1
                                     self.createPointOnLayer(i, countNew, True)
             else:
+                print 'not Multipart geometry'
                 rings = geom.asPolygon()
                 for ring in rings:
                     count = 0
@@ -81,6 +81,7 @@ class CreatePoints():
         feature = QgsFeature()
         feature.initAttributes(len(self.targetLayer.dataProvider().attributeIndexes()))
         feature.setGeometry(QgsGeometry.fromPoint(point))
+        print point.x(), point.y()
         if isNew:
             #TODO 'Сделать возможность настройки'
             numvalue = str(name)#u'н' + str(name)
@@ -92,8 +93,6 @@ class CreatePoints():
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'type'), 0)
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'hold'), u'Закрепление отсутствует')
         self.targetLayer.dataProvider().addFeatures([feature])
-        del feature
-        return True
 
     # проверка на наличие существующих точек (вершин) на кадастровом слое и
     # на слое с ЗУ
