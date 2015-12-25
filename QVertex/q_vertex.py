@@ -39,6 +39,7 @@ from qgis.gui import QgsMessageBar
 from createpoints import CreatePoints
 from tools.createCoordCatalog import CreateCoordCatalog
 from tools.createGeodata import CreateGeodata
+from shiftSheet import ShiftSheet
 import shutil
 import math
 
@@ -99,6 +100,7 @@ class QVertex:
 
         #msk_names = self.settings.value('msk_names')
         self.dlg = None#QVertexDialogBase(self.iface, msk_names)
+        self.dlgShiftSheet = None
         #self.showSettings()
 
     # noinspection PyMethodMayBeStatic
@@ -241,6 +243,11 @@ class QVertex:
         self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createMapPlan, self.qvertex_createGeodata])
         self.menu.addMenu(self.reportMenu)
 
+        self.qvertex_siftSheet = QAction(u"Сдвинуть листы", self.iface.mainWindow())
+        self.qvertex_siftSheet.setEnabled(True)
+        # self.qvertex_siftSheet.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.menu.addAction(self.qvertex_siftSheet)
+
         self.qvertex_exportTechno = QAction(u"Экспорт в Технокад", self.iface.mainWindow())
         self.qvertex_exportTechno.setEnabled(True)
         # self.qvertex_exportTechno.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
@@ -269,6 +276,7 @@ class QVertex:
         QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
         QObject.connect(self.qvertex_showSettings, SIGNAL("triggered()"), self.showSettings)
         QObject.connect(self.qvertex_exportTechno, SIGNAL("triggered()"), self.exportTechno)
+        QObject.connect(self.qvertex_exportTechno, SIGNAL("triggered()"), self.doShiftSheet)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -608,6 +616,12 @@ class QVertex:
                                                                   # QgsMessageBar.ERROR, 5)
             finally:
                 ccf.close()
+
+    def doShiftSheet(self):
+        if self.dlgShiftSheet is None:
+            self.dlgShiftSheet = ShiftSheet(self.iface, self.current_crs)
+            self.dlgShiftSheet.setWindowModality(Qt.NonModal)
+        self.dlgShiftSheet.show()
 
     def prepareExportPoint(self, pointLayer, polygon, contour, transform):
         ringq = 0

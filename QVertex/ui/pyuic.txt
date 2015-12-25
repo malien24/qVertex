@@ -3,3 +3,6 @@ http://gis-lab.info/qa/qgis-standalone.html
 
 OSGeo4W Shell
 pyuic4 -o D:\home\src\qVertex\QVertex\tools\startup_ui.py D:\home\src\qVertex\tools\startup.ui
+
+linux console
+/usr/bin/pyuic4 -o shiftSheet_ui.py shiftSheet.ui
