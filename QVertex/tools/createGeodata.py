@@ -16,9 +16,8 @@ from qgis.core import *
 
 # Геоданные создаются на один ЗУ с любым количеством контуров
 class CreateGeodata(QDialog, Ui_CoordGeodata):
-    def __init__(self, iface, crs):
+    def __init__(self, iface):
         QDialog.__init__(self, iface.mainWindow())
-        self.crs = crs
         self.iface = iface
         self.setupUi(self)
         self.curr_path = QgsProject.instance().fileName()[:-4]#get_defailt_path()
@@ -33,7 +32,7 @@ class CreateGeodata(QDialog, Ui_CoordGeodata):
         if (self.iface.mapCanvas().currentLayer() is not None) \
             and (self.iface.mapCanvas().currentLayer().selectedFeatures() is not None):
             #for feature in self.iface.mapCanvas().currentLayer().selectedFeatures():
-            ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), True, 1, self.crs)
+            ved = CatalogData(self.iface, self.radioBtnRumb.isChecked(), True, 1)
             #data = ved.geodata
             ved.createSvgGeodata(self.curr_path)
             #self.svg = ved.geodataSVG
