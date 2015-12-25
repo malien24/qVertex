@@ -20,22 +20,22 @@
  ***************************************************************************/
 """
 
-from qgis._core import QgsGeometry
-# базовый класс
-class TopoObject:
-    def __init__(self, features):
-        self.geometries = []
-        self.names = []
-        self.areas = []
-        self.isValid = False
-        for feature in features:
-            self.parseGeometry(feature.geometry())
-
-    def parseGeometry(self, geometry):
-        polygon = geometry.asPolygon()
-        for ring in polygon:
-            for pt in ring:
-                pass
+# from qgis._core import QgsGeometry
+# # базовый класс
+# class TopoObject:
+#     def __init__(self, features):
+#         self.geometries = []
+#         self.names = []
+#         self.areas = []
+#         self.isValid = False
+#         for feature in features:
+#             self.parseGeometry(feature.geometry())
+#
+#     def parseGeometry(self, geometry):
+#         polygon = geometry.asPolygon()
+#         for ring in polygon:
+#             for pt in ring:
+#                 pass
 
 
 def getSelectedObject(mapCanvas, isMultipart = False):
@@ -56,8 +56,7 @@ def getObjectRings(feature):
     if len(feature) > 1:
         pass
     else:
-
-
+        pass
 def getLayerByName(layers, layerName):
     for layer in layers:
         if layer.name() == layerName:

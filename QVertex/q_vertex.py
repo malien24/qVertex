@@ -101,6 +101,8 @@ class QVertex:
         #msk_names = self.settings.value('msk_names')
         self.dlg = None#QVertexDialogBase(self.iface, msk_names)
         self.dlgShiftSheet = None
+        # счётчик для нумерации листов чертежей
+        self.sheetNumber = 0
         #self.showSettings()
 
     # noinspection PyMethodMayBeStatic
@@ -621,7 +623,6 @@ class QVertex:
             finally:
                 ccf.close()
 
-
     def doShiftSheet(self):
         if self.dlgShiftSheet is None:
             self.dlgShiftSheet = ShiftSheet(self.iface, self.current_crs)
@@ -665,10 +666,22 @@ class QVertex:
     @pyqtSlot('QgsFeatureIds', 'QgsFeatureIds', bool)
     def onSelectionChanged(self, added, removed, cleared ):
         print added
-        feature = self.iface.activeLayer().selectedFeatures()[0]
-
+        if added != []:
+            fid = added[0]
+            numberField = self.iface.activeLayer().fieldNameIndex('number')
+            #feature = self.iface.activeLayer().selectedFeatures()[0]
+            #if feature is not None:
+            # caps = self.iface.activeLayer().dataProvider().capabilities()
+            # print caps
+            # if caps & QgsVectorDataProvider.ChangeAttributeValues:
+            attrs = { numberField : self.sheetNumber }
+            self.iface.activeLayer().dataProvider().changeAttributeValues({ fid : attrs })
+            self.sheetNumber += 1
+            print attrs
 
     def doMarkingSheets(self):
+        self.sheetNumber = 1
+
         self.iface.activeLayer().selectionChanged.connect(self.onSelectionChanged)
     #
     # # Упорядочить точки (первая на северо-западе)
