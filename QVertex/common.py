@@ -22,6 +22,22 @@
 """
 
 from qgis._core import QgsGeometry
+# базовый класс
+class TopoObject:
+    def __init__(self, features):
+        self.geometries = []
+        self.names = []
+        self.areas = []
+        self.isValid = False
+        for feature in features:
+            self.parseGeometry(feature.geometry())
+
+    def parseGeometry(self, geometry):
+        polygon = geometry.asPolygon()
+        for ring in polygon:
+            for pt in ring:
+                pass
+
 
 def getSelectedObject(mapCanvas, isMultipart = False):
     if mapCanvas().currentLayer().selectedFeatures() is not None:
@@ -29,11 +45,19 @@ def getSelectedObject(mapCanvas, isMultipart = False):
             return mapCanvas().currentLayer().selectedFeatures()[0]
         else:
             name = mapCanvas().currentLayer().selectedFeatures()[0].attribute(u'name')
-            
+            objects = [mapCanvas().currentLayer().selectedFeatures()[0]]
             for obj in mapCanvas().currentLayer().features():
-
+                if obj.attribute(u'name') == name:
+                    objects.append(obj)
+            return objects
     else:
         return None
+
+def getObjectRings(feature):
+    if len(feature) > 1:
+        pass
+    else:
+
 
 def getLayerByName(layers, layerName):
     for layer in layers:
@@ -41,6 +65,6 @@ def getLayerByName(layers, layerName):
             return layer
     return None
 
-def isMultiPart(self, feature):
+def isMultiPart(feature):
     if feature.attribute(u'order') != NULL:
         return True
