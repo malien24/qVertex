@@ -201,10 +201,10 @@ class QVertex:
         # self.qvertex_createProject.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.menu.addAction(self.qvertex_createProject)
 
-        # self.qvertex_showSettings = QAction(u"Настройка МСК", self.iface.mainWindow())
-        # self.qvertex_showSettings.setEnabled(True)
-        # # self.qvertex_showSettings.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
-        # self.menu.addAction(self.qvertex_showSettings)
+        self.qvertex_showSettings = QAction(u"Настройка МСК", self.iface.mainWindow())
+        self.qvertex_showSettings.setEnabled(True)
+        # self.qvertex_showSettings.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.menu.addAction(self.qvertex_showSettings)
 
 
         self.pointMenu = QMenu()
