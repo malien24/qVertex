@@ -1,7 +1,7 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis projectname="" version="2.8.4-Wien">
+<qgis projectname="" version="2.8.5-Wien">
   <title></title>
-  <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
+  <layer-tree-group expanded="1" checked="Qt::Checked" name="">
     <customproperties/>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="Точки20151127170916347" name="Точки">
       <customproperties/>
@@ -19,9 +19,6 @@
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="Кадастр20151127170928566" name="Кадастр">
-      <customproperties/>
-    </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Карта_Спутник20151216164207873" name="Карта Спутник">
       <customproperties/>
     </layer-tree-layer>
   </layer-tree-group>
@@ -67,7 +64,6 @@
       <item>Зоны20151127171015177</item>
       <item>ЗУ20151127171029079</item>
       <item>чЗУ20151204110250907</item>
-      <item>Карта_Спутник20151216164207873</item>
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
@@ -99,11 +95,6 @@
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Кадастр" showFeatureCount="0">
       <filegroup open="true" hidden="false">
         <legendlayerfile isInOverview="0" layerid="Кадастр20151127170928566" visible="1"/>
-      </filegroup>
-    </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Карта Спутник" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Карта_Спутник20151216164207873" visible="0"/>
       </filegroup>
     </legendlayer>
   </legend>
@@ -308,7 +299,7 @@
       </ComposerShape>
     </Composition>
   </Composer>
-  <projectlayers layercount="8">
+  <projectlayers layercount="7">
     <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Polygon" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>ЗУ20151127171029079</id>
       <datasource>dbname='./data/storage.sqlite' key='ROWID' table="ЗУ" (Geometry) sql=</datasource>
@@ -1724,43 +1715,6 @@
         </edittype>
       </edittypes>
     </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="plugin" hasScaleBasedVisibilityFlag="0" name="PyTiledLayer">
-      <id>Карта_Спутник20151216164207873</id>
-      <datasource>.</datasource>
-      <title></title>
-      <abstract></abstract>
-      <keywordList>
-        <value></value>
-      </keywordList>
-      <layername>Карта Спутник</layername>
-      <srs>
-        <spatialrefsys>
-          <proj4>+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs</proj4>
-          <srsid>3857</srsid>
-          <srid>3857</srid>
-          <authid>EPSG:3857</authid>
-          <description>WGS 84 / Pseudo Mercator</description>
-          <projectionacronym>merc</projectionacronym>
-          <ellipsoidacronym>WGS84</ellipsoidacronym>
-          <geographicflag>false</geographicflag>
-        </spatialrefsys>
-      </srs>
-      <customproperties>
-        <property key="blendMode" value="SourceOver"/>
-        <property key="brigthness" value="0"/>
-        <property key="contrast" value="1"/>
-        <property key="credit" value=""/>
-        <property key="creditVisibility" value="0"/>
-        <property key="grayscaleRender" value="0"/>
-        <property key="serviceUrl" value="http://tiles.maps.sputnik.ru/tiles/kmt2/{z}/{x}/{y}.png"/>
-        <property key="smoothRender" value="1"/>
-        <property key="title" value="Карта Спутник"/>
-        <property key="transparency" value="0"/>
-        <property key="yOriginTop" value="1"/>
-        <property key="zmax" value="19"/>
-        <property key="zmin" value="0"/>
-      </customproperties>
-    </maplayer>
     <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>Точки20151127170916347</id>
       <datasource>dbname='./data/storage.sqlite' key='ROWID' table="Точки" (Geometry) sql=</datasource>
@@ -2819,17 +2773,17 @@
     </Paths>
     <WMSServiceTitle type="QString"></WMSServiceTitle>
     <WFSLayers type="QStringList"/>
-    <WMSRestrictedLayers type="QStringList"/>
     <WMSContactMail type="QString"></WMSContactMail>
     <WMSRestrictedComposers type="QStringList"/>
+    <WMSRestrictedLayers type="QStringList"/>
     <PositionPrecision>
       <DecimalPlaces type="int">2</DecimalPlaces>
       <Automatic type="bool">true</Automatic>
       <DegreeFormat type="QString">D</DegreeFormat>
     </PositionPrecision>
     <WCSUrl type="QString"></WCSUrl>
-    <WMSContactPhone type="QString"></WMSContactPhone>
     <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
+    <WMSContactPhone type="QString"></WMSContactPhone>
     <WMSServiceAbstract type="QString"></WMSServiceAbstract>
     <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
     <Measure>
@@ -2842,12 +2796,12 @@
       <Delete type="QStringList"/>
     </WFSTLayers>
     <Gui>
-      <SelectionColorBluePart type="int">0</SelectionColorBluePart>
+      <SelectionColorBluePart type="int">255</SelectionColorBluePart>
       <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
       <CanvasColorRedPart type="int">255</CanvasColorRedPart>
-      <SelectionColorRedPart type="int">255</SelectionColorRedPart>
+      <SelectionColorRedPart type="int">37</SelectionColorRedPart>
       <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
-      <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
+      <SelectionColorGreenPart type="int">13</SelectionColorGreenPart>
       <CanvasColorBluePart type="int">255</CanvasColorBluePart>
     </Gui>
     <Digitizing>
