@@ -10,6 +10,7 @@ import os.path
 from PyQt4.QtGui import QDialog, QFileDialog
 from QVertex.tools.coordcatalog import CatalogData
 from QVertex.tools.createCoordCatalog_ui import Ui_CoordCatalog
+from qgis.core import QgsProject
 
 # Ведомость создаётся на один ЗУ с любым количеством контуров
 class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
