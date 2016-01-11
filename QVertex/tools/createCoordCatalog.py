@@ -10,7 +10,6 @@ import os.path
 from PyQt4.QtGui import QDialog, QFileDialog
 from QVertex.tools.coordcatalog import CatalogData
 from QVertex.tools.createCoordCatalog_ui import Ui_CoordCatalog
-from common import *
 
 # Ведомость создаётся на один ЗУ с любым количеством контуров
 class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
@@ -44,7 +43,7 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
             #current_path = os.path.dirname(unicode(file_name))
             #self.curr_path = current_path
             #filepath = os.path.join(current_path, '.html')
-            
+
             ccf = open(file_name+u'.html', 'w')
             ccf.write(self.html_cataloga_data.encode('utf8'))
             ccf.close()

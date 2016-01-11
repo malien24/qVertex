@@ -73,4 +73,3 @@ class Ui_Dialog(object):
         self.pushUp.setText(_translate("Dialog", "вверх", None))
         self.pushDown.setText(_translate("Dialog", "вниз", None))
         self.label.setText(_translate("Dialog", "Шаг (метры):", None))
-
