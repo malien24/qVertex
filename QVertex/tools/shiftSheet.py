@@ -111,8 +111,9 @@ class ShiftSheet(QDialog, Ui_Dialog):
             for ring in rings:
                 points = []
                 for i in ring:
-                    newX = i.x()+dx
-                    newY = i.y()+dy
+                    print dx, dy
+                    newX = i.x() + (dx * (1+math.cos(i.y())))
+                    newY = i.y() + dy
                     point = QgsGeometry.fromPoint(QgsPoint(newX, newY))
                     points.append(point.asPoint())
                 if isFirstRing:
