@@ -20,79 +20,83 @@ class ShiftSheet(QDialog, Ui_Dialog):
         self.crs = crs
         self.iface = iface
         self.setupUi(self)
-        self.selection = iface.mapCanvas().currentLayer().selectedFeatures()
 
         self.connect(self.pushUp, QtCore.SIGNAL("clicked()"), self.moveUp)
         self.connect(self.pushDown, QtCore.SIGNAL("clicked()"), self.moveDown)
         self.connect(self.pushRight, QtCore.SIGNAL("clicked()"), self.moveRight)
         self.connect(self.pushLeft, QtCore.SIGNAL("clicked()"), self.moveLeft)
 
+    def select(self):
+        self.selection = self.iface.mapCanvas().currentLayer().selectedFeatures()
+
     def moveLeft(self):
-        if self.selection is not None:
-            for feature in self.selection:
-                fid = feature.id()
-                geom = feature.geometry()
-                shift = int(self.spinValue.value())
-                # 1 m ~ 0.00001
-                shiftDegree = shift * 0.00001
-                newgeom = self.changeGeometry(geom, -shiftDegree, 0)
-                if newgeom is not None:
-                    self.iface.mapCanvas().currentLayer().startEditing()
-                    feature.setGeometry(newgeom)
-                    if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
-                        self.iface.mapCanvas().currentLayer().commitChanges()
-                    else:
-                        self.iface.mapCanvas().currentLayer().rollBack()
+        self.select()
+        for feature in self.selection:
+            fid = feature.id()
+            geom = feature.geometry()
+            shift = int(self.spinValue.value())
+            # 1 m ~ 0.00001
+            shiftDegree = shift * 0.00001
+            newgeom = self.changeGeometry(geom, -shiftDegree, 0)
+            if newgeom is not None:
+                self.iface.mapCanvas().currentLayer().startEditing()
+                feature.setGeometry(newgeom)
+                if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
+                    self.iface.mapCanvas().currentLayer().commitChanges()
+                else:
+                    self.iface.mapCanvas().currentLayer().rollBack()
 
     def moveRight(self):
-        if self.selection is not None:
-            for feature in self.selection:
-                fid = feature.id()
-                geom = feature.geometry()
-                shift = int(self.spinValue.value())
-                # 1 m ~ 0.00001
-                shiftDegree = shift * 0.00001
-                newgeom = self.changeGeometry(geom, shiftDegree, 0)
-                if newgeom is not None:
-                    self.iface.mapCanvas().currentLayer().startEditing()
-                    feature.setGeometry(newgeom)
-                    if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
-                        self.iface.mapCanvas().currentLayer().commitChanges()
-                    else:
-                        self.iface.mapCanvas().currentLayer().rollBack()
+        self.select()
+        for feature in self.selection:
+            fid = feature.id()
+            geom = feature.geometry()
+            shift = int(self.spinValue.value())
+            # 1 m ~ 0.00001
+            shiftDegree = shift * 0.00001
+            newgeom = self.changeGeometry(geom, shiftDegree, 0)
+            if newgeom is not None:
+                self.iface.mapCanvas().currentLayer().startEditing()
+                feature.setGeometry(newgeom)
+                if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
+                    self.iface.mapCanvas().currentLayer().commitChanges()
+                else:
+                    self.iface.mapCanvas().currentLayer().rollBack()
+
     def moveUp(self):
-        if self.selection is not None:
-            for feature in self.selection:
-                fid = feature.id()
-                geom = feature.geometry()
-                shift = int(self.spinValue.value())
-                # 1 m ~ 0.00001
-                shiftDegree = shift * 0.00001
-                newgeom = self.changeGeometry(geom, 0, shiftDegree)
-                if newgeom is not None:
-                    self.iface.mapCanvas().currentLayer().startEditing()
-                    feature.setGeometry(newgeom)
-                    if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
-                        self.iface.mapCanvas().currentLayer().commitChanges()
-                    else:
-                        self.iface.mapCanvas().currentLayer().rollBack()
+        self.select()
+        for feature in self.selection:
+            fid = feature.id()
+            geom = feature.geometry()
+            shift = int(self.spinValue.value())
+            # 1 m ~ 0.00001
+            shiftDegree = shift * 0.00001
+            newgeom = self.changeGeometry(geom, 0, shiftDegree)
+            if newgeom is not None:
+                self.iface.mapCanvas().currentLayer().startEditing()
+                feature.setGeometry(newgeom)
+                if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
+                    self.iface.mapCanvas().currentLayer().commitChanges()
+                else:
+                    self.iface.mapCanvas().currentLayer().rollBack()
 
     def moveDown(self):
-        if self.selection is not None:
-            for feature in self.selection:
-                fid = feature.id()
-                geom = feature.geometry()
-                shift = int(self.spinValue.value())
-                # 1 m ~ 0.00001
-                shiftDegree = shift * 0.00001
-                newgeom = self.changeGeometry(geom, 0, -shiftDegree)
-                if newgeom is not None:
-                    self.iface.mapCanvas().currentLayer().startEditing()
-                    feature.setGeometry(newgeom)
-                    if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
-                        self.iface.mapCanvas().currentLayer().commitChanges()
-                    else:
-                        self.iface.mapCanvas().currentLayer().rollBack()
+        self.select()
+        for feature in self.selection:
+            fid = feature.id()
+            geom = feature.geometry()
+            shift = int(self.spinValue.value())
+            # 1 m ~ 0.00001
+            shiftDegree = shift * 0.00001
+            newgeom = self.changeGeometry(geom, 0, -shiftDegree)
+            if newgeom is not None:
+                self.iface.mapCanvas().currentLayer().startEditing()
+                feature.setGeometry(newgeom)
+                if self.iface.mapCanvas().currentLayer().changeGeometry(fid, newgeom):
+                    self.iface.mapCanvas().currentLayer().commitChanges()
+                else:
+                    self.iface.mapCanvas().currentLayer().rollBack()
+
     def changeGeometry(self, geom, dx, dy):
         if geom.isGeosValid():
             isFirstRing = True

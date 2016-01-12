@@ -613,14 +613,11 @@ class QVertex:
 
 
     def doShiftSheet(self):
-        print 'dlgShiftSheet'
         if self.dlgShiftSheet is None:
-            print 'dlgShiftSheet is None'
             self.dlgShiftSheet = ShiftSheet(self.iface, self.current_crs)
-            print 'dlgShiftSheet created'
             self.dlgShiftSheet.setWindowModality(Qt.NonModal)
+
         self.dlgShiftSheet.show()
-        print 'dlgShiftSheet show'
 
     def prepareExportPoint(self, pointLayer, polygon, contour, transform):
         ringq = 0
