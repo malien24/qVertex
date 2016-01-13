@@ -248,6 +248,11 @@ class QVertex:
         # self.qvertex_shiftSheet.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
         self.menu.addAction(self.qvertex_shiftSheet)
 
+        self.qvertex_markSheet = QAction(u"Нумеровать листы", self.iface.mainWindow())
+        self.qvertex_markSheet.setEnabled(True)
+        # self.qvertex_markSheet.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
+        self.menu.addAction(self.qvertex_markSheet)
+
         self.qvertex_exportTechno = QAction(u"Экспорт в Технокад", self.iface.mainWindow())
         self.qvertex_exportTechno.setEnabled(True)
         # self.qvertex_exportTechno.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
@@ -268,6 +273,7 @@ class QVertex:
         #     parent=self.iface.mainWindow())
 
         QObject.connect(self.qvertex_createProject, SIGNAL("triggered()"), self.doCreateProject)
+        QObject.connect(self.qvertex_showSettings, SIGNAL("triggered()"), self.doShowSettings)
         QObject.connect(self.qvertex_createVertex, SIGNAL("triggered()"), self.doCreatePublicVertexes)
         QObject.connect(self.qvertex_createPoint, SIGNAL("triggered()"), self.doCreatepoint)
         QObject.connect(self.qvertex_createCtalog, SIGNAL("triggered()"), self.doCreateCoordcatalog)
@@ -276,6 +282,7 @@ class QVertex:
         QObject.connect(self.qvertex_createBoundPart, SIGNAL("triggered()"), self.createBoundPart)
         QObject.connect(self.qvertex_exportTechno, SIGNAL("triggered()"), self.exportTechno)
         QObject.connect(self.qvertex_shiftSheet, SIGNAL("triggered()"), self.doShiftSheet)
+        QObject.connect(self.qvertex_markSheet, SIGNAL("triggered()"), self.doMarkingSheets)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -380,14 +387,14 @@ class QVertex:
         else:
             print 'cancelled'
 
-    def showSettings(self):
+    def doShowSettings(self):
         msk_names = self.settings.value('msk_names')
         if self.dlg is None:
             self.dlg = QVertexDialogBase(self.iface, msk_names)
             self.dlg.setWindowModality(Qt.WindowModal)
         if self.dlg.exec_() == 1:
             msk = self.dlg.listCrs.currentItem().text()
-            #print msk
+            print msk
             self.settings.setValue('current_crs', msk)
             self.current_crs = self.settings.value(msk, '+proj=longlat +datum=WGS84 +no_defs')
             self.iface.messageBar().pushMessage(u'Используется '+msk, QgsMessageBar.INFO, 1)
@@ -530,7 +537,10 @@ class QVertex:
             htmldata_start = u'<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv=Content-Type content="text/html; charset=windows-1251"><meta name=ProgId content=Word.Document><meta name=Generator content="Microsoft Word 15"><meta name=Originator content="Microsoft Word 15"></head><body lang=RU link=blue vlink=purple style=\'tab-interval:35.4pt\'><table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 width=756 style=\'width:567.05pt;margin-left:-15.9pt;border-collapse:collapse;border: none;mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt: 0cm 5.4pt 0cm 5.4pt\'>'
             htmldata_row = u'<tr style=\'mso-yfti-irow:0;mso-yfti-firstrow:yes\'>  <td width=95 style=\'width:70.95pt;border:solid windowtext 1.0pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=centerstyle=\'text-align:center\'><span  style=\'font-size:10.0pt;color:black\'>{0}<o:p></o:p></span></p>  </td>  <td width=123 valign=top style=\'width:92.1pt;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'>{1}</p>  </td>  <td width=113 valign=top style=\'width:3.0cm;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'>{2}</p>  </td>  <td width=227 valign=top style=\'width:6.0cm;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'><span  style=\'font-size:10.0pt;color:black\'>{4}<o:p></o:p></span></p>  </td>  <td width=198 valign=top style=\'width:148.85pt;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'text-align:center\'><b  style=\'mso-bidi-font-weight:normal\'><sub><span style=\'font-size:10.0pt\'>{3}</span></sub></b><span  style=\'font-size:10.0pt\'><o:p></o:p></span></p>  </td> </tr>'
             htmldata_end = u'</table></body></html>'
-
+            crsSrc = QgsCoordinateReferenceSystem(4326)
+            crsDest = QgsCoordinateReferenceSystem()
+            crsDest.createFromProj4(self.current_crs)
+            transform = QgsCoordinateTransform(crsSrc, crsDest)
             exportData = htmldata_start
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
                 polygone = feat.geometry().asMultiPolygon()[0]
@@ -546,10 +556,10 @@ class QVertex:
                                 else:
                                     name = fullname + u';'
                                     prefix = u';'
-
-                                x = round(QgsGeometry.fromPoint(pt).asPoint().y(), 2)
+                                ptr = transform.transform(pt)
+                                x = round(QgsGeometry.fromPoint(ptr).asPoint().y(), 2)
                                 sx = unicode('{:.2f}'.format(x))
-                                y = round(QgsGeometry.fromPoint(pt).asPoint().x(), 2)
+                                y = round(QgsGeometry.fromPoint(ptr).asPoint().x(), 2)
                                 sy = unicode('{:.2f}'.format(y))
                                 exportData += htmldata_row.format(fullname, sx, sy, u'–––––––', u'картометрический')
                                 # pref = unicode(pointfeature.attribute(u'prec'))+u';'
@@ -582,10 +592,10 @@ class QVertex:
             csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
             #delimLine = u';;;;;;;;;;;\n'
 
-            # crsSrc = QgsCoordinateReferenceSystem(4326)
-            # crsDest = QgsCoordinateReferenceSystem()
-            # crsDest.createFromProj4(self.current_crs)
-            # transform = QgsCoordinateTransform(crsSrc, crsDest)
+            crsSrc = QgsCoordinateReferenceSystem(4326)
+            crsDest = QgsCoordinateReferenceSystem()
+            crsDest.createFromProj4(self.current_crs)
+            transform = QgsCoordinateTransform(crsSrc, crsDest)
 
             contour = 1
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
@@ -593,14 +603,14 @@ class QVertex:
                 if self.isMultiPart(feat):
                     # gt = QgsGeometry(geom)
                     # gt.transform(transform)
-                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
                     if len(self.iface.mapCanvas().currentLayer().selectedFeatures()) > contour:
                         csvdata += u';;;;;;;;;;;\n'
                     contour += 1
                 else:
                     # gt = QgsGeometry(geom)
                     # gt.transform(transform)
-                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
             try:
                 ccf = open(file_name, 'w') # + u'.csv'
                 ccf.write(csvdata.encode('cp1251'))
@@ -633,10 +643,10 @@ class QVertex:
                         else:
                             name = fullname + u';'
                             prefix = u';'
-
-                        x = round(QgsGeometry.fromPoint(pt).asPoint().y(), 2)
+                        ptr = transform.transform(pt)
+                        x = round(QgsGeometry.fromPoint(ptr).asPoint().y(), 2)
                         sx = unicode('{:.2f}'.format(x))+u';'
-                        y = round(QgsGeometry.fromPoint(pt).asPoint().x(), 2)
+                        y = round(QgsGeometry.fromPoint(ptr).asPoint().x(), 2)
                         sy = unicode('{:.2f}'.format(y))+u';'
                         pref = unicode(pointfeature.attribute(u'prec'))+u';'
                         hold = unicode(pointfeature.attribute(u'hold'))
@@ -652,54 +662,63 @@ class QVertex:
 
         return csvdata
 
-    # Упорядочить точки (первая на северо-западе)
-    def doChangePointPos(self):
-        try:
-            for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
-                findPointIdx = 0
-                #newgeomarr = []
-                #newgeom = null
-                geom = feat.geometry()
-                if self.isMultiPart(feat):
-                    polygons = geom.asMultiPolygon()[0]
-                    for polygone in polygons:
-                        print 'parse multipolygon part'
-                        for ring in polygone:
-                            findPointIdx = findNorthWestPoint(ring)
-                            changeGeometryPointOrder(ring, findPointIdx)
-                else:
-                    for ring in geom.asMultiPolygon()[0]:
-                        findPointIdx = findNorthWestPoint(ring)
-                        changeGeometryPointOrder(ring, findPointIdx)
-        except:
-            print 'error in doChangePointPos'
-        finally:
-            feat.setGeometry(newgeom)
-            print 'change geometry'
-        pass
+    @pyqtSlot('QgsFeatureIds', 'QgsFeatureIds', bool)
+    def onSelectionChanged(self, added, removed, cleared ):
+        print added
+        feature = self.iface.activeLayer().selectedFeatures()[0]
 
-    def findNorthWestPoint(self, ring):
-        maxYX = 10000000
-        iter = 0
-        idx = 0
-        for point in ring:
-            if iter < len(ring)-1:
-                x = point.x()
-                y = point.y()
-                if (x - y) < maxYX:
-                    maxYX = (x - y)
-                    idx = iter
-                iter += 1
-        return iter
 
-    def changeGeometryPointOrder(self, ring, newPointIdx):
-        if newPointIdx == 0:
-            return ring
-
-        after = ring[newPointIdx:]
-        del after[-1]
-        firstPoint = after[0]
-        before = ring[:newPointIdx]
-        after.extend(before)
-        after.append(firstPoint)
-        ring = after
+    def doMarkingSheets(self):
+        self.iface.activeLayer().selectionChanged.connect(self.onSelectionChanged)
+    #
+    # # Упорядочить точки (первая на северо-западе)
+    # def doChangePointPos(self):
+    #     try:
+    #         for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
+    #             findPointIdx = 0
+    #             #newgeomarr = []
+    #             #newgeom = null
+    #             geom = feat.geometry()
+    #             if self.isMultiPart(feat):
+    #                 polygons = geom.asMultiPolygon()[0]
+    #                 for polygone in polygons:
+    #                     print 'parse multipolygon part'
+    #                     for ring in polygone:
+    #                         findPointIdx = findNorthWestPoint(ring)
+    #                         changeGeometryPointOrder(ring, findPointIdx)
+    #             else:
+    #                 for ring in geom.asMultiPolygon()[0]:
+    #                     findPointIdx = findNorthWestPoint(ring)
+    #                     changeGeometryPointOrder(ring, findPointIdx)
+    #     except:
+    #         print 'error in doChangePointPos'
+    #     finally:
+    #         feat.setGeometry(newgeom)
+    #         print 'change geometry'
+    #     pass
+    #
+    # def findNorthWestPoint(self, ring):
+    #     maxYX = 10000000
+    #     iter = 0
+    #     idx = 0
+    #     for point in ring:
+    #         if iter < len(ring)-1:
+    #             x = point.x()
+    #             y = point.y()
+    #             if (x - y) < maxYX:
+    #                 maxYX = (x - y)
+    #                 idx = iter
+    #             iter += 1
+    #     return iter
+    #
+    # def changeGeometryPointOrder(self, ring, newPointIdx):
+    #     if newPointIdx == 0:
+    #         return ring
+    #
+    #     after = ring[newPointIdx:]
+    #     del after[-1]
+    #     firstPoint = after[0]
+    #     before = ring[:newPointIdx]
+    #     after.extend(before)
+    #     after.append(firstPoint)
+    #     ring = after

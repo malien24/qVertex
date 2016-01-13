@@ -130,7 +130,11 @@ class CatalogData():
             self.fontsize = u'medium'
         elif font_size == 4:
             self.fontsize = u'large'
-
+        self.crs = crs
+        crsSrc = QgsCoordinateReferenceSystem(4326)
+        crsDest = QgsCoordinateReferenceSystem()
+        crsDest.createFromProj4(self.crs)
+        self.transform = QgsCoordinateTransform(crsSrc, crsDest)  
         self.zu_multi = []  # 1 (если полигон) или N конутуров мультполигона
         self.zu = []  # контуры текущего полигона
         self.catalog = u'<HEAD><meta http-equiv=\"Content-type\" ' \
@@ -157,12 +161,13 @@ class CatalogData():
         else:
             self.calculate()
 
+
     def isMultiPart(self, feature):
         if feature.attribute(u'order') != NULL:
             return True
 
     def convertCoordinate(self, point):
-        #trpoint = self.transform.transform(point)
+        trpoint = self.transform.transform(point)
         return trpoint
 
     def prepare_data(self):
@@ -199,6 +204,7 @@ class CatalogData():
             # else:
             geom = self.features[0].geometry()
             gt = QgsGeometry(geom)
+            gt.transform(self.transform)
             self.area.append(round(gt.area(), 0))
             self.perimeter.append(round(gt.length(), 2))
             self.parse_polygon(geom.asMultiPolygon()[0])
@@ -211,7 +217,7 @@ class CatalogData():
             list_ponts = []
             for node in ring:
                 # Тут происходит переход к геодезической СК
-                point = node
+                point = self.convertCoordinate(node)#point = node
                 x = round(point.y(), 2)
                 y = round(point.x(), 2)
                 name = u""

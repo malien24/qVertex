@@ -1,7 +1,7 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
 <qgis projectname="" version="2.8.4-Wien">
   <title></title>
-  <layer-tree-group expanded="1" checked="Qt::Checked" name="">
+  <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
     <customproperties/>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="Точки20151127170916347" name="Точки">
       <customproperties/>
@@ -18,7 +18,7 @@
     <layer-tree-layer expanded="0" checked="Qt::Checked" id="Зоны20151127171015177" name="Зоны">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" checked="Qt::Checked" id="Кадастр20151127170928566" name="Кадастр">
+    <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="Кадастр20151127170928566" name="Кадастр">
       <customproperties/>
     </layer-tree-layer>
     <layer-tree-layer expanded="1" checked="Qt::Checked" id="atlassheet20160113101328502" name="Листы атласа">
@@ -29,10 +29,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>9445112.45842102915048599</xmin>
-      <ymin>7640766.03593717887997627</ymin>
-      <xmax>9445660.8846818134188652</xmax>
-      <ymax>7641131.51263868808746338</ymax>
+      <xmin>9444628.69643571227788925</xmin>
+      <ymin>7639860.33724885433912277</ymin>
+      <xmax>9446822.4014788493514061</xmax>
+      <ymax>7641322.2440548911690712</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -98,9 +98,9 @@
         <legendlayerfile isInOverview="0" layerid="Зоны20151127171015177" visible="1"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Кадастр" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="true" checked="Qt::Unchecked" name="Кадастр" showFeatureCount="0">
       <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="Кадастр20151127170928566" visible="1"/>
+        <legendlayerfile isInOverview="0" layerid="Кадастр20151127170928566" visible="0"/>
       </filegroup>
     </legendlayer>
     <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="Листы атласа" showFeatureCount="0">
@@ -333,7 +333,7 @@
         </spatialrefsys>
       </srs>
       <provider encoding="System">spatialite</provider>
-      <previewExpression></previewExpression>
+      <previewExpression>COALESCE( "pk", '&lt;NULL>' )</previewExpression>
       <vectorjoins/>
       <expressionfields/>
       <map-layer-style-manager current="">
@@ -536,10 +536,10 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
@@ -3085,7 +3085,7 @@
         <value>Зоны20151127171015177</value>
         <value>Кадастр20151127170928566</value>
       </AvoidIntersectionsList>
-      <IntersectionSnapping type="bool">false</IntersectionSnapping>
+      <IntersectionSnapping type="bool">true</IntersectionSnapping>
       <LayerSnappingToleranceUnitList type="QStringList">
         <value>1</value>
         <value>1</value>
@@ -3094,7 +3094,7 @@
         <value>1</value>
         <value>2</value>
         <value>2</value>
-        <value>2</value>
+        <value>1</value>
       </LayerSnappingToleranceUnitList>
       <LayerSnapToList type="QStringList">
         <value>to_vertex</value>
@@ -3117,7 +3117,7 @@
         <value>5.000000</value>
         <value>0.000010</value>
         <value>0.000010</value>
-        <value>0.000010</value>
+        <value>5.000000</value>
       </LayerSnappingToleranceList>
     </Digitizing>
     <Identify>
