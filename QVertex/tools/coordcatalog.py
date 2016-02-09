@@ -134,7 +134,7 @@ class CatalogData():
         crsSrc = QgsCoordinateReferenceSystem(4326)
         crsDest = QgsCoordinateReferenceSystem()
         crsDest.createFromProj4(self.crs)
-        self.transform = QgsCoordinateTransform(crsSrc, crsDest)  
+        self.transform = QgsCoordinateTransform(crsSrc, crsDest)
         self.zu_multi = []  # 1 (если полигон) или N конутуров мультполигона
         self.zu = []  # контуры текущего полигона
         self.catalog = u'<HEAD><meta http-equiv=\"Content-type\" ' \
@@ -156,7 +156,7 @@ class CatalogData():
         self.is_rumb = is_rumb
         self.prepare_data()
         #print self.list_contours[0]
-        if is_onlyXY:
+        if not is_rumb:
             self.calculateOnlyXY()
         else:
             self.calculate()

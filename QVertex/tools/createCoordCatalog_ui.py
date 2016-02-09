@@ -34,7 +34,7 @@ class Ui_CoordCatalog(object):
         self.textEdit.setObjectName(_fromUtf8("textEdit"))
         self.verticalLayout.addWidget(self.textEdit)
         self.radioBtnRumb = QtGui.QCheckBox(CoordCatalog)
-        self.radioBtnRumb.setEnabled(False)
+        self.radioBtnRumb.setEnabled(True)
         self.radioBtnRumb.setChecked(False)
         self.radioBtnRumb.setObjectName(_fromUtf8("radioBtnRumb"))
         self.verticalLayout.addWidget(self.radioBtnRumb)
