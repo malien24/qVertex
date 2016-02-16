@@ -180,8 +180,8 @@ class CatalogData():
                 gt = QgsGeometry(geom)
                 gt.transform(self.transform)
                 self.names.append(feat.attributes()[nameidx])
-                self.area.append(round(gt.area(), 0))
-                self.perimeter.append(round(gt.length(), 2))
+                self.area.append(ceil(gt.area(), 0))
+                self.perimeter.append(ceil(gt.length(), 2))
                 #self.zu = []
                 self.parse_polygon(geom.asMultiPolygon()[0])
         else:
@@ -205,8 +205,8 @@ class CatalogData():
             geom = self.features[0].geometry()
             gt = QgsGeometry(geom)
             gt.transform(self.transform)
-            self.area.append(round(gt.area(), 0))
-            self.perimeter.append(round(gt.length(), 2))
+            self.area.append(ceil(gt.area(), 0))
+            self.perimeter.append(ceil(gt.length(), 2))
             self.parse_polygon(geom.asMultiPolygon()[0])
 
     # полигон может содержать один внешний и от нуля до N внутренних контуров (дырок)
@@ -218,8 +218,8 @@ class CatalogData():
             for node in ring:
                 # Тут происходит переход к геодезической СК
                 point = self.convertCoordinate(node)#point = node
-                x = round(point.y(), 2)
-                y = round(point.x(), 2)
+                x = ceil(point.y(), 2)
+                y = ceil(point.x(), 2)
                 name = u""
                 for pointfeature in self.pointLayer.getFeatures():
                     if pointfeature.geometry().equals(QgsGeometry.fromPoint(QgsPoint(node.x(), node.y()))):

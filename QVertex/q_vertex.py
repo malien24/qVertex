@@ -425,7 +425,7 @@ class QVertex:
             self.dlg_coordcatalog = CreateCoordCatalog(self.iface, self.current_crs)
             self.dlg_coordcatalog.setWindowModality(Qt.NonModal)
             self.dlg_coordcatalog.radioBtnRumb.setChecked(True)
-            
+
         self.dlg_coordcatalog.show()
 
     def doCreateGeodata(self):
@@ -551,7 +551,7 @@ class QVertex:
 
     def doCatalogMapPlan(self):
         pointLayer = self.getLayerByName(u'Точки')
-        file_name = QFileDialog.getSaveFileName(None, u'Сохраните ведомость координат для карта(план)', self.lastDir, u'HTML файлы(*.html *.HTML)')
+        file_name = QFileDialog.getSaveFileName(None, u'Сохраните ведомость координат для карты(плана)', self.lastDir, u'HTML файлы(*.html *.HTML)')
         if not file_name == u'':
             htmldata_start = u'<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv=Content-Type content="text/html; charset=windows-1251"><meta name=ProgId content=Word.Document><meta name=Generator content="Microsoft Word 15"><meta name=Originator content="Microsoft Word 15"></head><body lang=RU link=blue vlink=purple style=\'tab-interval:35.4pt\'><table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=718 style=\'width:19.0cm;margin-left:-1.7pt;border-collapse:collapse;border:none; mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt: 0cm 5.4pt 0cm 5.4pt\'>'
             htmldata_row = u'<tr style=\'mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes\'>  <td width=85 style=\'width:63.8pt;border:solid windowtext 1.0pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal style=\'mso-margin-top-alt:auto;mso-margin-bottom-alt:auto\'><span  style=\'font-size:10.0pt;color:black\'>{0}<o:p></o:p></span></p>  </td> <td width=113 valign=top style=\'width:3.0cm;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'mso-margin-top-alt:auto;mso-margin-bottom-alt: auto;text-align:center\'><span style=\'font-size:10.0pt\'>{1}<o:p></o:p></span></p> </td> <td width=113 valign=top style=\'width:3.0cm;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'mso-margin-top-alt:auto;mso-margin-bottom-alt: auto;text-align:center\'><span style=\'font-size:10.0pt\'>{2}<o:p></o:p></span></p></td>  <td width=227 valign=top style=\'width:6.0cm;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>  <p class=MsoNormal align=center style=\'mso-margin-top-alt:auto;mso-margin-bottom-alt: auto;text-align:center\'><span style=\'font-size:10.0pt;color:black\'>{4}<o:p></o:p></span></p></td>  <td width=180 valign=top style=\'width:134.65pt;border:solid windowtext 1.0pt;  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'> <p class=MsoNormal align=centerstyle=\'mso-margin-top-alt:auto;mso-margin-bottom-alt:  auto;text-align:center\'><b style=\'mso-bidi-font-weight:normal\'><sub><span style=\'font-size:10.0pt\'>{3}</span></sub></b><spanstyle=\'font-size:10.0pt\'><o:p></o:p></span></p> </td> </tr>'
@@ -562,7 +562,8 @@ class QVertex:
             transform = QgsCoordinateTransform(crsSrc, crsDest)
             exportData = htmldata_start
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
-                polygone = feat.geometry().asPolygon()
+                polygone = feat.geometry().asMultiPolygon()[0]
+                #print feat.geometry().asMultiPolygon()
                 ringq = 0
                 for ring in polygone:
                     for pt in ring:
@@ -576,9 +577,9 @@ class QVertex:
                                     name = fullname + u';'
                                     prefix = u';'
                                 ptr = transform.transform(pt)
-                                x = round(QgsGeometry.fromPoint(ptr).asPoint().y(), 2)
+                                x = math.ceil(QgsGeometry.fromPoint(ptr).asPoint().y())
                                 sx = unicode('{:.2f}'.format(x))
-                                y = round(QgsGeometry.fromPoint(pt).asPoint().x(), 2)
+                                y = math.ceil(QgsGeometry.fromPoint(ptr).asPoint().x())
                                 sy = unicode('{:.2f}'.format(y))
                                 exportData += htmldata_row.format(fullname, sx, sy, u'–––––––', u'картометрический')
                                 # pref = unicode(pointfeature.attribute(u'prec'))+u';'
