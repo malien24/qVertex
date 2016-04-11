@@ -612,10 +612,10 @@ class QVertex:
             csvdata = u'Контур;Префикс номера;Номер;Старый X;Старый Y;Новый X;Новый Y;Метод определения;Формула;Радиус;Погрешность;Описание закрепления\n;;;;;;;;;;;\n'
             #delimLine = u';;;;;;;;;;;\n'
 
-            # crsSrc = QgsCoordinateReferenceSystem(4326)
-            # crsDest = QgsCoordinateReferenceSystem()
-            # crsDest.createFromProj4(self.current_crs)
-            # transform = QgsCoordinateTransform(crsSrc, crsDest)
+            crsSrc = QgsCoordinateReferenceSystem(4326)
+            crsDest = QgsCoordinateReferenceSystem()
+            crsDest.createFromProj4(self.current_crs)
+            transform = QgsCoordinateTransform(crsSrc, crsDest)
 
             contour = 1
             for feat in self.iface.mapCanvas().currentLayer().selectedFeatures():
@@ -623,16 +623,16 @@ class QVertex:
                 if self.isMultiPart(feat):
                     # gt = QgsGeometry(geom)
                     # gt.transform(transform)
-                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
                     if len(self.iface.mapCanvas().currentLayer().selectedFeatures()) > contour:
                         csvdata += u';;;;;;;;;;;\n'
                     contour += 1
                 else:
                     # gt = QgsGeometry(geom)
                     # gt.transform(transform)
-                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1)
+                    csvdata += self.prepareExportPoint(pointLayer, geom.asMultiPolygon()[0], 1, transform)
             try:
-                ccf = open(file_name, 'w') # + u'.csv'
+                ccf = open(file_name + u'.csv', 'w') # + u'.csv'
                 ccf.write(csvdata.encode('cp1251'))
             except Exception as err:
                 print err
@@ -665,7 +665,7 @@ class QVertex:
                         ptr = transform.transform(pt)
                         x = round(QgsGeometry.fromPoint(ptr).asPoint().y(), 2)
                         sx = unicode('{:.2f}'.format(x))+u';'
-                        y = round(QgsGeometry.fromPoint(pt).asPoint().x(), 2)
+                        y = round(QgsGeometry.fromPoint(ptr).asPoint().x(), 2)
                         sy = unicode('{:.2f}'.format(y))+u';'
                         pref = unicode(pointfeature.attribute(u'prec'))+u';'
                         hold = unicode(pointfeature.attribute(u'hold'))
