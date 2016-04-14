@@ -45,7 +45,7 @@ class CreateCoordCatalog(QDialog, Ui_CoordCatalog):
             #self.curr_path = current_path
             #filepath = os.path.join(current_path, '.html')
 
-            ccf = open(file_name+u'.html', 'w')
+            ccf = open(file_name+u'-vedomost.html', 'w')
             ccf.write(self.html_cataloga_data.encode('utf8'))
             ccf.close()
             self.btnSave.setEnabled(False)
