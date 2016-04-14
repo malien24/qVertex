@@ -39,40 +39,40 @@ class CreatePoints():
         self.getLastPointIndexes()
         countExist = self.existPointIndex
         countNew = self.newPointIndex
+        #print countNew, countExist
         for every in self.selection:
             geom = every.geometry()
-            if geom.isMultipart():
-                print 'Multipart geometry'
-                polygons = geom.asMultiPolygon()
-                for polygone in polygons:
-                    for ring in polygone:
-                        count = 0
-                        for i in ring:
-                            if count < len(ring) - 1:
-                                count += 1
-                                print 'counter ' + str(count)
-                                # проверка на наличие существующей точки
-                                if (self.checkExistPoint(i, True)) or (self.checkExistPoint(i, False)):
-                                    countExist += 1
-                                    self.createPointOnLayer(i, countExist, False)
-                                else:
-                                    countNew += 1
-                                    self.createPointOnLayer(i, countNew, True)
-            else:
-                print 'not Multipart geometry'
-                rings = geom.asPolygon()
-                for ring in rings:
+            #if geom.isMultipart():
+            polygons = geom.asMultiPolygon()
+            for polygone in polygons:
+                for ring in polygone:
                     count = 0
                     for i in ring:
                         if count < len(ring) - 1:
                             count += 1
-                            # проверка на наличие существующей точки в кадастре и на слое Точки
+                            #print 'counter ' + str(count)
+                            # проверка на наличие существующей точки
                             if (self.checkExistPoint(i, True)) or (self.checkExistPoint(i, False)):
                                 countExist += 1
                                 self.createPointOnLayer(i, countExist, False)
                             else:
                                 countNew += 1
                                 self.createPointOnLayer(i, countNew, True)
+            # else:
+            #     print 'not Multipart geometry'
+            #     rings = geom.asPolygon()
+            #     for ring in rings:
+            #         count = 0
+            #         for i in ring:
+            #             if count < len(ring) - 1:
+            #                 count += 1
+            #                 # проверка на наличие существующей точки в кадастре и на слое Точки
+            #                 if (self.checkExistPoint(i, True)) or (self.checkExistPoint(i, False)):
+            #                     countExist += 1
+            #                     self.createPointOnLayer(i, countExist, False)
+            #                 else:
+            #                     countNew += 1
+            #                     self.createPointOnLayer(i, countNew, True)
 
         self.targetLayer.commitChanges()
         self.targetLayer.triggerRepaint()
@@ -81,10 +81,10 @@ class CreatePoints():
         feature = QgsFeature()
         feature.initAttributes(len(self.targetLayer.dataProvider().attributeIndexes()))
         feature.setGeometry(QgsGeometry.fromPoint(point))
-        print point.x(), point.y()
+        #print point.x(), point.y()
         if isNew:
             #TODO 'Сделать возможность настройки'
-            numvalue = str(name)#u'н' + str(name)
+            numvalue = u'н' + str(name)
         else:
             numvalue = str(name)
         feature.setAttribute(self.targetLayer.fieldNameIndex(u'name'), numvalue)

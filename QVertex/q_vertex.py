@@ -241,8 +241,8 @@ class QVertex:
         self.qvertex_createCtalog = QAction(u"HTML-ведомость координат", self.iface.mainWindow())
         self.qvertex_createCtalog.setEnabled(True)
 
-        self.qvertex_createRumb = QAction(u"HTML-ведомость с румбами", self.iface.mainWindow())
-        self.qvertex_createRumb.setEnabled(True)
+        # self.qvertex_createRumb = QAction(u"HTML-ведомость с румбами", self.iface.mainWindow())
+        # self.qvertex_createRumb.setEnabled(True)
 
         self.qvertex_createMapPlan = QAction(u"HTML-ведомость карта(план)", self.iface.mainWindow())
         self.qvertex_createMapPlan.setEnabled(True)
@@ -250,7 +250,7 @@ class QVertex:
         self.qvertex_createGeodata = QAction(u"SVG-ведомость и описание границ", self.iface.mainWindow())
         self.qvertex_createGeodata.setEnabled(True)
         # self.qvertex_createGeodata.setIcon(QIcon(":/plugins/QVertex/icons/importkk.png"))
-        self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createRumb, self.qvertex_createMapPlan, self.qvertex_createGeodata])
+        self.reportMenu.addActions([self.qvertex_createCtalog, self.qvertex_createMapPlan, self.qvertex_createGeodata])
         self.menu.addMenu(self.reportMenu)
 
         self.qvertex_shiftSheet = QAction(u"Сдвинуть листы", self.iface.mainWindow())
@@ -293,7 +293,7 @@ class QVertex:
         QObject.connect(self.qvertex_exportTechno, SIGNAL("triggered()"), self.exportTechno)
         QObject.connect(self.qvertex_shiftSheet, SIGNAL("triggered()"), self.doShiftSheet)
         QObject.connect(self.qvertex_markSheet, SIGNAL("triggered()"), self.doMarkingSheets)
-        QObject.connect(self.qvertex_createRumb, SIGNAL("triggered()"), self.doCreateRumb)
+        #QObject.connect(self.qvertex_createRumb, SIGNAL("triggered()"), self.doCreateRumb)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -420,13 +420,13 @@ class QVertex:
             self.dlg_coordcatalog.setWindowModality(Qt.NonModal)
         self.dlg_coordcatalog.show()
 
-    def doCreateRumb(self):
-        if self.dlg_coordcatalog is None:
-            self.dlg_coordcatalog = CreateCoordCatalog(self.iface, self.current_crs)
-            self.dlg_coordcatalog.setWindowModality(Qt.NonModal)
-            self.dlg_coordcatalog.radioBtnRumb.setChecked(True)
-
-        self.dlg_coordcatalog.show()
+    # def doCreateRumb(self):
+    #     if self.dlg_coordcatalog is None:
+    #         self.dlg_coordcatalog = CreateCoordCatalog(self.iface, self.current_crs)
+    #         self.dlg_coordcatalog.setWindowModality(Qt.NonModal)
+    #         self.dlg_coordcatalog.radioBtnRumb.setChecked(True)
+    #
+    #     self.dlg_coordcatalog.show()
 
     def doCreateGeodata(self):
         if self.dlg_geodata is None:
